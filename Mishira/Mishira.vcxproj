@@ -141,4 +141,12 @@ call "$(SolutionDir)PostBuild.bat" release</Command>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LocalDebuggerWorkingDirectory>$(SolutionDir)Deploy\$(Configuration)</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerCommand>$(SolutionDir)Deploy\$(Configuration)\$(TargetFileName)</LocalDebuggerCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LocalDebuggerWorkingDirectory>$(SolutionDir)Deploy\$(Configuration)</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerCommand>$(SolutionDir)Deploy\$(Configuration)\$(TargetFileName)</LocalDebuggerCommand>
+  </PropertyGroup>
 </Project>
