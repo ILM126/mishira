@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MishiraApp", "MishiraApp\MishiraApp.vcxproj", "{B12702AD-ABFB-343A-A199-8E24837244A3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mishira", "Mishira\Mishira.vcxproj", "{B8B7E5E7-3689-4820-9B66-257F174AA9DA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B12702AD-ABFB-343A-A199-8E24837244A3} = {B12702AD-ABFB-343A-A199-8E24837244A3}
+	EndProjectSection
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{2248F74F-8696-4924-84F2-899819EEAFAF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x64 Installer = Debug|x64 Installer
+		Debug|x86 Installer = Debug|x86 Installer
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x64 Installer = Release|x64 Installer
+		Release|x86 Installer = Release|x86 Installer
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|x64 Installer.ActiveCfg = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|x86 Installer.ActiveCfg = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64 Installer.ActiveCfg = Release|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x86 Installer.ActiveCfg = Release|Win32
+		{B8B7E5E7-3689-4820-9B66-257F174AA9DA}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{B8B7E5E7-3689-4820-9B66-257F174AA9DA}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{B8B7E5E7-3689-4820-9B66-257F174AA9DA}.Debug|x64 Installer.ActiveCfg = Debug|Win32
+		{B8B7E5E7-3689-4820-9B66-257F174AA9DA}.Debug|x86 Installer.ActiveCfg = Debug|Win32
+		{B8B7E5E7-3689-4820-9B66-257F174AA9DA}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{B8B7E5E7-3689-4820-9B66-257F174AA9DA}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{B8B7E5E7-3689-4820-9B66-257F174AA9DA}.Release|x64 Installer.ActiveCfg = Release|Win32
+		{B8B7E5E7-3689-4820-9B66-257F174AA9DA}.Release|x86 Installer.ActiveCfg = Release|Win32
+		{2248F74F-8696-4924-84F2-899819EEAFAF}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{2248F74F-8696-4924-84F2-899819EEAFAF}.Debug|x64 Installer.ActiveCfg = Debug|x64
+		{2248F74F-8696-4924-84F2-899819EEAFAF}.Debug|x64 Installer.Build.0 = Debug|x64
+		{2248F74F-8696-4924-84F2-899819EEAFAF}.Debug|x86 Installer.ActiveCfg = Debug|x86
+		{2248F74F-8696-4924-84F2-899819EEAFAF}.Debug|x86 Installer.Build.0 = Debug|x86
+		{2248F74F-8696-4924-84F2-899819EEAFAF}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{2248F74F-8696-4924-84F2-899819EEAFAF}.Release|x64 Installer.ActiveCfg = Release|x64
+		{2248F74F-8696-4924-84F2-899819EEAFAF}.Release|x64 Installer.Build.0 = Release|x64
+		{2248F74F-8696-4924-84F2-899819EEAFAF}.Release|x86 Installer.ActiveCfg = Release|x86
+		{2248F74F-8696-4924-84F2-899819EEAFAF}.Release|x86 Installer.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

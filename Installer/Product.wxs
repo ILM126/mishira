@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Name="Mishira" Language="1033" Version="1.0.0.0" Manufacturer="Mishira development team" Id="4AF57598-C48C-4DE6-A905-FE0E8559553F" UpgradeCode="22345420-1CB9-4A52-BBD5-CD598DE9AC4D">
+    <Package InstallerVersion="405" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Mishira is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Support building installers for both debug and release binaries -->
+    <?if $(var.Configuration) = "Debug"?>
+    <?define QtDllSuffix = "d" ?>
+    <?define VCRedistDebug = "Debug" ?>
+    <?else?>
+    <?define QtDllSuffix = "" ?>
+    <?define VCRedistDebug = "" ?>
+    <?endif?>
+    <?define DeployDir = "$(var.SolutionDir)/Deploy/$(var.Configuration)" ?>
+
+    <!-- Prevent installing on operating systems prior to Windows Vista -->
+    <Condition Message="This application requires Windows Vista or later.">VersionNT >= 600</Condition>
+
+    <!-- The 64-bit installer must be used on 64-bit systems and the 32-bit installer on 32-bit systems -->
+    <!--
+      The only reason why we have separate 32- and 64-bit installers is
+      because we cannot use the 64-bit merge module in a 32-bit installer and
+      setting up automatic installer chaining takes too long to do.
+      -->
+    <?if $(var.Platform) = "x64"?>
+    <Condition Message="This installer is for 64-bit systems. Please download the 32-bit installer.">VersionNT64</Condition>
+    <?else?>
+    <Condition Message="This installer is for 32-bit systems. Please download the 64-bit installer.">NOT VersionNT64</Condition>
+    <?endif?>
+
+    <!-- Define the user interface -->
+    <UIRef Id="WixUI_Mishira" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)/License.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)/dialog-background.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)/dialog-banner.bmp" />
+
+    <!-- Launch application on successful install by default -->
+    <UI>
+      <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch Mishira when setup exits" />
+      <Property Id="WixShellExecTarget" Value="[#Mishira.exe]" />
+      <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1"></Property>
+      <Publish Dialog="ExitDialog2" Control="Finish" Event="DoAction" Value="LaunchApplication">
+        WIXUI_EXITDIALOGOPTIONALCHECKBOX AND NOT Installed
+      </Publish>
+    </UI>
+    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+
+    <Feature Id="Complete" Title="Program files" Description="The base program files that are required to be installed." Level="1" ConfigurableDirectory="INSTALLFOLDER" Absent="disallow">
+      <MergeRef Id="VCRedist" />
+      <?if $(var.Platform) = "x64"?>
+      <MergeRef Id="VCRedist64" />
+      <?endif?>
+
+      <ComponentRef Id="MishiraBinaries" />
+      <ComponentRef Id="MishiraTextFiles" />
+      <ComponentRef Id="MishiraMediaFiles" />
+      <ComponentRef Id="MishiraExampleScripts" />
+
+      <ComponentRef Id="LibbroadcastBinaries" />
+      <ComponentRef Id="LibvidgfxBinaries" />
+      <ComponentRef Id="LibdeskcapBinaries" />
+      <ComponentRef Id="WyUpdateBinaries" />
+      <ComponentRef Id="FfmpegBinaries" />
+      <ComponentRef Id="FdkAacBinaries" />
+      <ComponentRef Id="X264Binaries" />
+      <ComponentRef Id="QtBinaries" />
+      <ComponentRef Id="QtImageFormats" />
+      <ComponentRef Id="QtPlatforms" />
+      <ComponentRef Id="QtAccessible" />
+      <ComponentRef Id="DirectXBinaries" />
+    </Feature>
+    <Feature Id="StartMenu" Title="Start menu shortcut" Description="Install a shortcut to Mishira in the start menu." Level="1">
+      <ComponentRef Id="StartMenuShortcuts" />
+    </Feature>
+    <Feature Id="Desktop" Title="Desktop shortcut" Description="Install a shortcut to Mishira on the desktop." Level="1">
+      <ComponentRef Id="DesktopShortcut" />
+    </Feature>
+
+    <Icon Id="Mishira.ico" SourceFile="$(var.SolutionDir)/Mishira/Mishira.ico" />
+
+    <!-- Use our icon in the "Add/Remove Programs" window -->
+    <Property Id="ARPPRODUCTICON" Value="Mishira.ico" />
+    <Property Id="ARPHELPLINK" Value="http://www.mishira.com/" />
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- C and C++ runtime library merge modules -->
+      <Merge Id="VCRedist" SourceFile="C:/Program Files (x86)/Common Files/Merge Modules/Microsoft_VC110_$(var.VCRedistDebug)CRT_x86.msm" DiskId="1" Language="0" />
+      <?if $(var.Platform) = "x64"?>
+      <Merge Id="VCRedist64" SourceFile="C:/Program Files (x86)/Common Files/Merge Modules/Microsoft_VC110_$(var.VCRedistDebug)CRT_x64.msm" DiskId="1" Language="0" />
+      <?endif?>
+
+      <!-- Program files -->
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Mishira">
+          <!-- Mishira binaries -->
+          <Component Id="MishiraBinaries" Guid="13F060EE-A4BE-4039-AA0D-A2E63ECC8DD8" Win64="no">
+            <RemoveFolder Id="INSTALLFOLDER" On="uninstall" />
+            <File Source="$(var.DeployDir)/Mishira.exe" Id="Mishira.exe" KeyPath="yes" />
+            <File Source="$(var.DeployDir)/MishiraApp.dll" />
+          </Component>
+
+          <!-- Mishira text files -->
+          <Component Id="MishiraTextFiles" Guid="A14DCB53-40E8-4B83-919A-AE8E20971872" Win64="no">
+            <File Source="$(var.DeployDir)/Legal.html" />
+            <File Source="$(var.DeployDir)/License.html" />
+          </Component>
+
+          <!-- Mishira media files -->
+          <Directory Id="MishiraMediaFilesFolder" Name="Media">
+            <Component Id="MishiraMediaFiles" Guid="55310A5D-88CC-41E0-B973-5E6702797ABA" Win64="no">
+              <!-- File Source="$(var.DeployDir)/Media/Mishira logo background 540p.jpg" / -->
+              <File Source="$(var.DeployDir)/Media/Mishira logo background 1080p.jpg" />
+            </Component>
+          </Directory>
+
+          <!-- Mishira example scripts -->
+          <Directory Id="MishiraExampleScriptsFolder" Name="Example scripts">
+            <Component Id="MishiraExampleScripts" Guid="68F12FEC-F9DC-4FD9-A675-DACC7E508127" Win64="no">
+              <File Source="$(var.DeployDir)/Example scripts/Countdown and up timer script.js" />
+              <File Source="$(var.DeployDir)/Example scripts/File contents script.js" />
+              <File Source="$(var.DeployDir)/Example scripts/Website title script.js" />
+            </Component>
+          </Directory>
+
+          <!-- Libbroadcast binaries -->
+          <Component Id="LibbroadcastBinaries" Guid="255CAEA5-5E46-479A-8C56-4DF0F0836B97" Win64="no">
+            <File Source="$(var.DeployDir)/Libbroadcast$(var.QtDllSuffix).dll" KeyPath="yes" />
+          </Component>
+
+          <!-- Libvidgfx binaries -->
+          <Component Id="LibvidgfxBinaries" Guid="68C5CAA8-37BD-4FAD-80DE-8A04A84ADB65" Win64="no">
+            <File Source="$(var.DeployDir)/Libvidgfx$(var.QtDllSuffix).dll" KeyPath="yes" />
+          </Component>
+
+          <!-- Libdeskcap binaries -->
+          <Component Id="LibdeskcapBinaries" Guid="20FA1633-1969-46D8-93E6-E6DD5F283110" Win64="no">
+            <File Source="$(var.DeployDir)/Libdeskcap$(var.QtDllSuffix).dll" KeyPath="yes" />
+            <File Source="$(var.DeployDir)/MishiraHelper$(var.QtDllSuffix).exe" />
+            <File Source="$(var.DeployDir)/MishiraHook$(var.QtDllSuffix).dll" />
+            <File Source="$(var.DeployDir)/MishiraHelper64$(var.QtDllSuffix).exe" />
+            <File Source="$(var.DeployDir)/MishiraHook64$(var.QtDllSuffix).dll" />
+          </Component>
+
+          <!-- wyUpdate binaries -->
+          <Component Id="WyUpdateBinaries" Guid="03E46A80-352A-4C7B-949E-4755D7298FA0" Win64="no">
+            <File Source="$(var.DeployDir)/wyUpdate.exe" KeyPath="yes" />
+            <File Source="$(var.DeployDir)/client.wyc" />
+          </Component>
+
+          <!-- ffmpeg binaries -->
+          <Component Id="FfmpegBinaries" Guid="3241A906-28C1-495D-9B82-51A8CCC04C8E" Win64="no">
+            <File Source="$(var.DeployDir)/avcodec-54.dll" />
+            <File Source="$(var.DeployDir)/avformat-54.dll" />
+            <File Source="$(var.DeployDir)/avutil-52.dll" KeyPath="yes" />
+            <File Source="$(var.DeployDir)/swresample-0.dll" />
+          </Component>
+
+          <!-- FDK-AAC binaries -->
+          <Component Id="FdkAacBinaries" Guid="E25A1B20-258D-49A3-9251-AC87A0D632FE" Win64="no">
+            <File Source="$(var.DeployDir)/libfdk-aac-0.dll" KeyPath="yes" />
+          </Component>
+
+          <!-- x264 binaries -->
+          <Component Id="X264Binaries" Guid="6FC8225D-1944-4754-A0FF-EC717BEBC2F6" Win64="no">
+            <File Source="$(var.DeployDir)/libx264-133.dll" KeyPath="yes" />
+          </Component>
+
+          <!-- Root Qt binaries -->
+          <Component Id="QtBinaries" Guid="30ADC959-64C7-4ED3-A37A-BD56CD442A69" Win64="no">
+            <File Source="$(var.DeployDir)/Qt5Core$(var.QtDllSuffix).dll" KeyPath="yes" />
+            <File Source="$(var.DeployDir)/Qt5Gui$(var.QtDllSuffix).dll" />
+            <File Source="$(var.DeployDir)/Qt5Network$(var.QtDllSuffix).dll" />
+            <File Source="$(var.DeployDir)/Qt5Widgets$(var.QtDllSuffix).dll" />
+            <File Source="$(var.DeployDir)/Qt5Script$(var.QtDllSuffix).dll" />
+            <File Source="$(var.DeployDir)/libEGL$(var.QtDllSuffix).dll" />
+            <File Source="$(var.DeployDir)/libGLESv2$(var.QtDllSuffix).dll" />
+          </Component>
+
+          <!-- Qt image format plugins -->
+          <Directory Id="QtImageFormatsFolder" Name="imageformats">
+            <Component Id="QtImageFormats" Guid="950F27B4-4A73-4EAD-90D6-D4372789E262" Win64="no">
+              <File Source="$(var.DeployDir)/imageformats/qgif$(var.QtDllSuffix).dll" />
+              <File Source="$(var.DeployDir)/imageformats/qjpeg$(var.QtDllSuffix).dll" KeyPath="yes" />
+            </Component>
+          </Directory>
+
+          <!-- Qt platform plugins -->
+          <Directory Id="QtPlatformsFolder" Name="platforms">
+            <Component Id="QtPlatforms" Guid="7840B73D-98A9-4E7F-90BD-192661FFD50D" Win64="no">
+              <File Source="$(var.DeployDir)/platforms/qwindows$(var.QtDllSuffix).dll" KeyPath="yes" />
+            </Component>
+          </Directory>
+
+          <!-- Qt accessible plugins -->
+          <Directory Id="QtAccessibleFolder" Name="accessible">
+            <Component Id="QtAccessible" Guid="1B22DFBB-F206-482C-A29E-4C035169A37A" Win64="no">
+              <File Source="$(var.DeployDir)/accessible/qtaccessiblewidgets$(var.QtDllSuffix).dll" KeyPath="yes" />
+            </Component>
+          </Directory>
+
+          <!-- DirectX binaries -->
+          <Component Id="DirectXBinaries" Guid="6CF42080-C281-40AE-B78F-E58F07E9C056" Win64="no">
+            <File Source="$(var.DeployDir)/d3dcompiler_46.dll" KeyPath="yes" />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <!-- Start menu -->
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id="ProgramMenuDir" Name="Mishira">
+          <Component Id="StartMenuShortcuts" Guid="4EF0CEDF-BDB8-4D97-9FE0-2810921D47AF">
+            <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
+            <Shortcut Id="MishiraStartMenuShortcut" Target="[INSTALLFOLDER]/Mishira.exe" WorkingDirectory="INSTALLFOLDER" Name="Mishira" Icon="Mishira.ico" IconIndex="0" />
+            <!-- TODO: User manual shortcut? -->
+            <!-- Registry value is required for `KeyPath` attribute -->
+            <!--
+            NOTE: While `ProgramMenuFolder` will most likely install to the
+            "All Users" directory this registry value is located in HKCU
+            instead of HKLM because otherwise WiX will not compile the
+            installer.
+            -->
+            <RegistryValue Root="HKCU" Key="Software\Mishira\Mishira" Type="string" Name="StartMenu" Value="" KeyPath="yes" />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <!-- Desktop -->
+      <Directory Id="DesktopFolder" Name="Desktop">
+        <Component Id="DesktopShortcut" Guid="4F7CF562-B067-4C3A-BE9F-106E5814747B">
+          <Shortcut Id="MishiraDesktopShortcut" Target="[INSTALLFOLDER]/Mishira.exe" WorkingDirectory="INSTALLFOLDER" Name="Mishira" Icon="Mishira.ico" IconIndex="0" />
+          <!-- Registry value is required for `KeyPath` attribute -->
+          <RegistryValue Root="HKCU" Key="Software\Mishira\Mishira" Type="string" Name="Desktop" Value="" KeyPath="yes" />
+        </Component>
+      </Directory>
+    </Directory>
+  </Fragment>
+</Wix>

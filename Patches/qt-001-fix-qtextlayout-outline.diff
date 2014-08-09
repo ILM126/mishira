@@ -1,0 +1,19 @@
+diff -rupN a/qtbase/src/gui/text/qtextlayout.cpp b/qtbase/src/gui/text/qtextlayout.cpp
+--- a/qtbase/src/gui/text/qtextlayout.cpp	2013-01-30 03:03:00.000000000 +0800
++++ b/qtbase/src/gui/text/qtextlayout.cpp	2013-08-02 15:08:02.561937800 +0800
+@@ -2518,9 +2518,13 @@ void QTextLine::draw(QPainter *p, const
+                 QPainterPath path;
+                 path.setFillRule(Qt::WindingFill);
+ 
+-                if (gf.glyphs.numGlyphs)
++                if (gf.glyphs.numGlyphs) {
+                     gf.fontEngine->addOutlineToPath(pos.x(), pos.y(), gf.glyphs, &path, gf.flags);
+-                if (gf.flags) {
++                    
++                    // HACK: Fix "holes" appearing at large outline widths. This is actually
++                    // a problem with the stroke algorithm but this works for our purposes.
++                    path = path.simplified();
++                } if (gf.flags) {
+                     const QFontEngine *fe = gf.fontEngine;
+                     const qreal lw = fe->lineThickness().toReal();
+                     if (gf.flags & QTextItem::Underline) {

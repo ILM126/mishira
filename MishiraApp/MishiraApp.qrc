@@ -1,0 +1,46 @@
+<RCC>
+  <qresource prefix="/">
+    <file>Resources/target-18x18-file.png</file>
+    <file>Resources/target-18x18-twitch.png</file>
+    <file>Resources/target-18x18-rtmp.png</file>
+    <file>Resources/target-18x18-youtube.png</file>
+    <file>Resources/target-160x70-file.png</file>
+    <file>Resources/target-160x70-livestream.png</file>
+    <file>Resources/target-160x70-rtmp.png</file>
+    <file>Resources/target-160x70-twitch.png</file>
+    <file>Resources/target-160x70-ustream.png</file>
+    <file>Resources/target-160x70-youtube.png</file>
+    <file>Resources/target-200x100-file.png</file>
+    <file>Resources/target-200x100-livestream.png</file>
+    <file>Resources/target-200x100-rtmp.png</file>
+    <file>Resources/target-200x100-twitch.png</file>
+    <file>Resources/target-200x100-ustream.png</file>
+    <file>Resources/target-200x100-youtube.png</file>
+    <file>Resources/wizard-logo.png</file>
+    <file>Resources/crop-diagram.png</file>
+    <file>Resources/dark-indicator-up.png</file>
+    <file>Resources/dark-indicator-up-white.png</file>
+    <file>Resources/group-shared.png</file>
+    <file>Resources/logo-emboss-60.png</file>
+    <file>Resources/logo-emboss-100.png</file>
+    <file>Resources/zoom-handle.png</file>
+    <file>Resources/zoom-fill-screen.png</file>
+    <file>Resources/white-cross.png</file>
+    <file>Resources/white-cross-hover.png</file>
+    <file>Resources/white-plus.png</file>
+    <file>Resources/logo-emboss-dark-60.png</file>
+    <file>Resources/audio-disabled.png</file>
+    <file>Resources/audio-enabled.png</file>
+    <file>Resources/icon-16.png</file>
+    <file>Resources/icon-32.png</file>
+    <file>Resources/icon-48.png</file>
+    <file>Resources/icon-256.png</file>
+    <file>Resources/wysiwyg-bold.png</file>
+    <file>Resources/wysiwyg-center.png</file>
+    <file>Resources/wysiwyg-italic.png</file>
+    <file>Resources/wysiwyg-justify.png</file>
+    <file>Resources/wysiwyg-left.png</file>
+    <file>Resources/wysiwyg-right.png</file>
+    <file>Resources/wysiwyg-underline.png</file>
+  </qresource>
+</RCC>

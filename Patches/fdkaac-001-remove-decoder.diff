@@ -1,0 +1,164 @@
+From 8697479c5e44648e1def0af7ea65145304cd9f93 Mon Sep 17 00:00:00 2001
+From: Lucas Murray <lmurray@undefinedfire.com>
+Date: Fri, 20 Dec 2013 22:43:04 +0800
+Subject: [PATCH] Do not compile the decoder at all
+
+---
+ Makefile.am | 67 ++++---------------------------------------------------------
+ fdk-aac.sym | 11 ----------
+ 2 files changed, 4 insertions(+), 74 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index e995b0a..f2da471 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -2,11 +2,8 @@ ACLOCAL_AMFLAGS = -I m4
+ AUTOMAKE_OPTIONS = subdir-objects
+
+ AM_CPPFLAGS = \
+-    -I$(top_srcdir)/libAACdec/include \
+     -I$(top_srcdir)/libAACenc/include \
+-    -I$(top_srcdir)/libSBRdec/include \
+     -I$(top_srcdir)/libSBRenc/include \
+-    -I$(top_srcdir)/libMpegTPDec/include \
+     -I$(top_srcdir)/libMpegTPEnc/include \
+     -I$(top_srcdir)/libSYS/include \
+     -I$(top_srcdir)/libFDK/include \
+@@ -22,8 +19,7 @@ fdk_aacinclude_HEADERS = \
+     $(top_srcdir)/libSYS/include/machine_type.h \
+     $(top_srcdir)/libSYS/include/genericStds.h \
+     $(top_srcdir)/libSYS/include/FDK_audio.h \
+-    $(top_srcdir)/libAACenc/include/aacenc_lib.h \
+-    $(top_srcdir)/libAACdec/include/aacdecoder_lib.h
++    $(top_srcdir)/libAACenc/include/aacenc_lib.h
+
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = fdk-aac.pc
+@@ -42,28 +38,6 @@ aac_enc_SOURCES = aac-enc.c wavreader.c
+ noinst_HEADERS = wavreader.h
+ endif
+
+-AACDEC_SRC = \
+-    libAACdec/src/aacdec_drc.cpp \
+-    libAACdec/src/aacdec_hcr.cpp \
+-    libAACdec/src/aacdecoder.cpp \
+-    libAACdec/src/aacdec_pns.cpp \
+-    libAACdec/src/aac_ram.cpp \
+-    libAACdec/src/block.cpp \
+-    libAACdec/src/channelinfo.cpp \
+-    libAACdec/src/ldfiltbank.cpp \
+-    libAACdec/src/rvlcbit.cpp \
+-    libAACdec/src/rvlc.cpp \
+-    libAACdec/src/aacdec_hcr_bit.cpp \
+-    libAACdec/src/aacdec_hcrs.cpp \
+-    libAACdec/src/aacdecoder_lib.cpp \
+-    libAACdec/src/aacdec_tns.cpp \
+-    libAACdec/src/aac_rom.cpp \
+-    libAACdec/src/channel.cpp \
+-    libAACdec/src/conceal.cpp \
+-    libAACdec/src/pulsedata.cpp \
+-    libAACdec/src/rvlcconceal.cpp \
+-    libAACdec/src/stereo.cpp
+-
+ AACENC_SRC = \
+     libAACenc/src/aacenc.cpp \
+     libAACenc/src/aacEnc_ram.cpp \
+@@ -115,13 +89,6 @@ FDK_SRC = \
+     libFDK/src/qmf.cpp \
+     libFDK/src/scale.cpp
+
+-MPEGTPDEC_SRC = \
+-    libMpegTPDec/src/tpdec_adif.cpp \
+-    libMpegTPDec/src/tpdec_adts.cpp \
+-    libMpegTPDec/src/tpdec_asc.cpp \
+-    libMpegTPDec/src/tpdec_latm.cpp \
+-    libMpegTPDec/src/tpdec_lib.cpp
+-
+ MPEGTPENC_SRC = \
+     libMpegTPEnc/src/tpenc_adif.cpp \
+     libMpegTPEnc/src/tpenc_adts.cpp \
+@@ -132,24 +99,6 @@ MPEGTPENC_SRC = \
+ PCMUTILS_SRC = \
+     libPCMutils/src/pcmutils_lib.cpp
+
+-SBRDEC_SRC = \
+-    libSBRdec/src/env_calc.cpp \
+-    libSBRdec/src/env_dec.cpp \
+-    libSBRdec/src/env_extr.cpp \
+-    libSBRdec/src/huff_dec.cpp \
+-    libSBRdec/src/lpp_tran.cpp \
+-    libSBRdec/src/psbitdec.cpp \
+-    libSBRdec/src/psdec.cpp \
+-    libSBRdec/src/psdec_hybrid.cpp \
+-    libSBRdec/src/sbr_crc.cpp \
+-    libSBRdec/src/sbr_deb.cpp \
+-    libSBRdec/src/sbr_dec.cpp \
+-    libSBRdec/src/sbrdec_drc.cpp \
+-    libSBRdec/src/sbrdec_freq_sca.cpp \
+-    libSBRdec/src/sbrdecoder.cpp \
+-    libSBRdec/src/sbr_ram.cpp \
+-    libSBRdec/src/sbr_rom.cpp
+-
+ SBRENC_SRC = \
+     libSBRenc/src/bit_sbr.cpp \
+     libSBRenc/src/env_bit.cpp \
+@@ -178,9 +127,9 @@ SYS_SRC = \
+     libSYS/src/wav_file.cpp
+
+ libfdk_aac_la_SOURCES = \
+-    $(AACDEC_SRC) $(AACENC_SRC) \
+-    $(MPEGTPDEC_SRC) $(MPEGTPENC_SRC) \
+-    $(SBRDEC_SRC) $(SBRENC_SRC) \
++    $(AACENC_SRC) \
++    $(MPEGTPENC_SRC) \
++    $(SBRENC_SRC) \
+     $(PCMUTILS_SRC) $(FDK_SRC) $(SYS_SRC)
+
+ EXTRA_DIST = \
+@@ -188,14 +137,9 @@ EXTRA_DIST = \
+     $(top_srcdir)/Android.mk \
+     $(top_srcdir)/fdk-aac.sym \
+     $(top_srcdir)/documentation/*.pdf \
+-    $(top_srcdir)/libAACdec/src/*.h \
+-    $(top_srcdir)/libAACdec/src/arm/*.cpp \
+     $(top_srcdir)/libAACenc/src/*.h \
+     $(top_srcdir)/libSBRenc/src/*.h \
+     $(top_srcdir)/libSBRenc/include/*.h \
+-    $(top_srcdir)/libSBRdec/src/*.h \
+-    $(top_srcdir)/libSBRdec/src/arm/*.cpp \
+-    $(top_srcdir)/libSBRdec/include/*.h \
+     $(top_srcdir)/libSYS/include/*.h \
+     $(top_srcdir)/libSYS/src/linux/*.cpp \
+     $(top_srcdir)/libSYS/src/mips/*.cpp \
+@@ -203,9 +147,6 @@ EXTRA_DIST = \
+     $(top_srcdir)/libMpegTPEnc/include/*.h \
+     $(top_srcdir)/libMpegTPEnc/src/*.h \
+     $(top_srcdir)/libMpegTPEnc/src/version \
+-    $(top_srcdir)/libMpegTPDec/include/*.h \
+-    $(top_srcdir)/libMpegTPDec/src/*.h \
+-    $(top_srcdir)/libMpegTPDec/src/version \
+     $(top_srcdir)/libFDK/include/*.h \
+     $(top_srcdir)/libFDK/include/arm/*.h \
+     $(top_srcdir)/libFDK/include/mips/*.h \
+diff --git a/fdk-aac.sym b/fdk-aac.sym
+index 2a06c41..87c227f 100644
+--- a/fdk-aac.sym
++++ b/fdk-aac.sym
+@@ -1,14 +1,3 @@
+-aacDecoder_AncDataGet
+-aacDecoder_AncDataInit
+-aacDecoder_Close
+-aacDecoder_ConfigRaw
+-aacDecoder_DecodeFrame
+-aacDecoder_Fill
+-aacDecoder_GetFreeBytes
+-aacDecoder_GetLibInfo
+-aacDecoder_GetStreamInfo
+-aacDecoder_Open
+-aacDecoder_SetParam
+ aacEncClose
+ aacEncEncode
+ aacEncGetLibInfo
+--
+1.8.3.msysgit.0
+

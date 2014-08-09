@@ -1,0 +1,33 @@
+From 89e2319322e2e29d6297e72431c9327358e3be21 Mon Sep 17 00:00:00 2001
+From: Andy Shaw <andy.shaw@digia.com>
+Date: Mon, 22 Apr 2013 23:28:06 +0200
+Subject: [PATCH] Don't do any transitions if the widget is disabled
+
+On Windows 8 it would end up changing the look of the QLineEdit when the
+mouse hovered over it even though it was not enabled. None of the
+Windows platforms show the lineedit changing when hovered over if it is
+disabled so we can skip the whole thing.
+
+Task-number: QTBUG-29224
+
+Change-Id: Ib9495bf395477f114e91b744e1b1209c9e11f336
+Reviewed-by: J-P Nurmi <jpnurmi@digia.com>
+---
+ src/widgets/styles/qwindowsvistastyle.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/qtbase/src/widgets/styles/qwindowsvistastyle.cpp b/qtbase/src/widgets/styles/qwindowsvistastyle.cpp
+index f65e523..b08eab5 100644
+--- a/qtbase/src/widgets/styles/qwindowsvistastyle.cpp
++++ b/qtbase/src/widgets/styles/qwindowsvistastyle.cpp
+@@ -314,7 +314,7 @@ void QWindowsVistaStyle::drawPrimitive(PrimitiveElement element, const QStyleOpt
+         return;
+     }
+ 
+-    if (d->transitionsEnabled() && canAnimate(option)) {
++    if ((option->state & State_Enabled) && d->transitionsEnabled() && canAnimate(option)) {
+         {
+             QRect oldRect;
+             QRect newRect;
+-- 
+1.7.1

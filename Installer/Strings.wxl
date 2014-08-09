@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-US" Codepage="1252" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <!-- Redefine all the subtitle strings so that they use the subtitle font and are slightly shorter so they don't overlap the logo -->
+  <String Id="BrowseDlgDescription">{\WixUI_Font_Subtitle}Browse to the destination folder</String>
+  <String Id="CustomizeDlgDescription">{\WixUI_Font_Subtitle}Select the way you want features to be installed.</String>
+  <String Id="DiskCostDlgDescription">{\WixUI_Font_Subtitle}The disk space required for the installation.</String>
+  <String Id="FeaturesDlgDescription">{\WixUI_Font_Subtitle}Select the way you want features to be installed.</String>
+  <String Id="FilesInUseDescription">{\WixUI_Font_Subtitle}Some files that need to be updated are currently in use.</String>
+  <String Id="InstallDirDlgDescription">{\WixUI_Font_Subtitle}Click Next to install to the default folder or click Change to choose another.</String>
+  <String Id="InstallScopeDlgDescription">{\WixUI_Font_Subtitle}Choose the installation scope and folder</String>
+  <String Id="LicenseAgreementDlgDescription">{\WixUI_Font_Subtitle}Please read the following license agreement carefully</String>
+  <String Id="MaintenanceTypeDlgDescription">{\WixUI_Font_Subtitle}Select the operation you wish to perform.</String>
+  <String Id="MsiRMFilesInUseDescription">{\WixUI_Font_Subtitle}Some files that need to be updated are currently in use.</String>
+  <String Id="OutOfDiskDlgDescription">{\WixUI_Font_Subtitle}Disk space required for the installation exceeds available disk space.</String>
+  <String Id="OutOfRbDiskDlgDescription">{\WixUI_Font_Subtitle}Disk space required for the installation exceeds available disk space.</String>
+  <String Id="PrepareDlgDescription">{\WixUI_Font_Subtitle}Please wait while the Setup Wizard prepares to guide you through the installation.</String>
+  <String Id="SetupTypeDlgDescription">{\WixUI_Font_Subtitle}Choose the setup type that best suits your needs</String>
+
+  <!-- We use the term "Software License Agreement" instead of "End User License Agreement" -->
+  <String Id="LicenseAgreementDlgTitle">{\WixUI_Font_Title}Software License Agreement</String>
+  <String Id="LicenseAgreementDlgLicenseAcceptedCheckBox">I &amp;accept the terms in the above Software License Agreement</String>
+</WixLocalization>

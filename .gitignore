@@ -1,0 +1,28 @@
+# Visual Studio
+*.aps
+*.cso
+*.opensdf
+*.pdb
+*.sdf
+*.suo
+*.user
+*.psess
+*.vsp
+*.vspx
+Debug/
+Release/
+GeneratedFiles/
+Win32/
+x64/
+
+# Visual Leak Detector
+memory_leak_report.txt
+
+# OS X
+.DS_Store
+
+# Doxygen
+docs/
+
+# Project build scripts
+Deploy/

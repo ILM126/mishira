@@ -1,0 +1,49 @@
+//*****************************************************************************
+// Mishira: An audiovisual production tool for broadcasting live video
+//
+// Copyright (C) 2014 Lucas Murray <lmurray@undefinedfire.com>
+// All rights reserved.
+//
+// This program is free software; you can redistribute it and/or modify it
+// under the terms of the GNU General Public License as published by the Free
+// Software Foundation; either version 2 of the License, or (at your option)
+// any later version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+// more details.
+//*****************************************************************************
+
+#include "uploadpage.h"
+#include "common.h"
+
+UploadPage::UploadPage(QWidget *parent)
+	: QWidget(parent)
+	, m_ui()
+{
+	m_ui.setupUi(this);
+
+	// Setup validators
+	m_ui.uploadEdit->setValidator(new QDoubleValidator(this));
+	connect(m_ui.uploadEdit, &QLineEdit::textChanged,
+		this, &UploadPage::uploadEditChanged);
+	doQLineEditValidate(m_ui.uploadEdit);
+}
+
+UploadPage::~UploadPage()
+{
+}
+
+bool UploadPage::isValid() const
+{
+	if(!m_ui.uploadEdit->hasAcceptableInput())
+		return false;
+	return true;
+}
+
+void UploadPage::uploadEditChanged(const QString &text)
+{
+	doQLineEditValidate(m_ui.uploadEdit);
+	emit validityMaybeChanged(isValid());
+}
