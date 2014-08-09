@@ -31,7 +31,7 @@ Dependency map
 
 A basic overview diagram of Mishira's dependencies can be found in `dependencies.png`. If you are viewing this file on GitHub it will be embedded below.
 
-![Mishira dependency map](blob/master/dependencies.png?raw=true)
+![Mishira dependency map](dependencies.png?raw=true)
 
 Building
 ========
