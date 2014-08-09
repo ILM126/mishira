@@ -282,7 +282,7 @@ The procedure for building x264 from Git is as follows:
 1.	Clone the [official Git repository](http://www.videolan.org/developers/x264.html) into `C:\src\x264` and switch to the above Git commit.
 2.	Navigate to x264's root directory using the "**MinGW shell**" and execute the following in order to build it. Note that any error relating to Git not being installed can be safely ignored.
 	```
-	$ configure --prefix=./build/ --enable-shared --disable-interlaced --extra-ldflags=-Wl,--output-def=libx264-133.def
+	$ configure --prefix=./build/ --enable-shared --enable-win32thread --disable-interlaced --extra-ldflags=-Wl,--output-def=libx264-133.def
 	$ mingw32-make
 	$ mingw32-make install
 	```
