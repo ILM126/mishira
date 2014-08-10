@@ -35,7 +35,7 @@
 #define APP_VER_STR "1.0.0-rc1"
 
 // Set this define to `1` in order to enable the automatic updater
-#define IS_UPDATER_ENABLED 0
+#define IS_UPDATER_ENABLED 1
 
 // The dynamic range of 24-bit audio is theoretically 144 dB
 const int	MIN_MB = -14400;
