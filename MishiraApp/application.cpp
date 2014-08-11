@@ -202,6 +202,7 @@ Application::Application(int &argc, char **argv, AppSharedSegment *shm)
 	, m_activeCursor(Qt::ArrowCursor)
 	, m_dataDir()
 	, m_isBroadcasting(false)
+	, m_isBroadcastingChanging(false)
 	, m_broadcastCpuUsage(NULL)
 	, m_isInLowCPUMode(false)
 
@@ -1376,11 +1377,14 @@ void Application::setActiveCursor(Qt::CursorShape cursor)
 
 void Application::setBroadcasting(bool broadcasting)
 {
+	if(m_isBroadcastingChanging)
+		return; // Prevent recursion
 	if(m_isBroadcasting == broadcasting)
 		return; // No change
 	if(m_profile == NULL)
 		return;
 	m_isBroadcasting = broadcasting;
+	m_isBroadcastingChanging = true;
 
 	if(m_isBroadcasting) {
 		appLog()
@@ -1431,6 +1435,8 @@ void Application::setBroadcasting(bool broadcasting)
 
 	// Disable or enable profile menu
 	updateMenuBar();
+
+	m_isBroadcastingChanging = false;
 }
 
 /// <summary>
