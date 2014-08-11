@@ -127,6 +127,7 @@ private: // Members -----------------------------------------------------------
 	AudioMixer *			m_mixer;
 	int						m_frameSize;
 	int						m_inSampleRate;
+	qint64					m_timestampAdjust; // For invalid timestamps
 	quint64					m_firstSampleQPC100ns; // Timestamp of the first sample
 	quint64					m_numFramesProcessed;
 	int						m_ref;

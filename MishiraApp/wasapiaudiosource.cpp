@@ -745,6 +745,7 @@ WASAPIAudioSource::WASAPIAudioSource(IMMDevice *device, AsrcType type)
 	, m_frameSize(0)
 	, m_inSampleRate(0)
 	, m_numFramesProcessed(0)
+	, m_timestampAdjust(0LL)
 	, m_firstSampleQPC100ns(UINT64_MAX)
 	, m_ref(0)
 	//, m_refMutex(QMutex::Recursive)
@@ -1051,6 +1052,7 @@ bool WASAPIAudioSource::initializeCapture()
 		goto exitInitialize4;
 	}
 	m_numFramesProcessed = 0;
+	m_timestampAdjust = 0LL;
 	m_firstSampleQPC100ns = UINT64_MAX;
 
 	// Clean up
@@ -1230,8 +1232,26 @@ void WASAPIAudioSource::process(int numTicks)
 		// Convert timestamp to something that we understand
 		WinApplication *winApp = static_cast<WinApplication *>(App);
 		qint64 timestamp = winApp->qpcPosToUsecSinceFrameOrigin(qpcPos);
+
+		// Sanitise the timestamp. Some devices have timestamps that are far in
+		// into the past or into the future. For these devices we just adjust
+		// them as if the first sample received was captured at that exact time
+		qint64 now = App->getUsecSinceFrameOrigin();
+		if(m_firstSampleQPC100ns == UINT64_MAX &&
+			qAbs(timestamp - now) > 10000000LL)
+		{
+			// More than 10 seconds difference, assuming invalid timestamp. If
+			// a user reports a bug about sound being out-of-sync by a second
+			// or two then this is most likely the cause.
+			m_timestampAdjust = now - timestamp;
+			appLog(LOG_CAT, Log::Warning) << QStringLiteral(
+				"Audio device timestamps may be invalid, adjusting by %L1 ms")
+				.arg(m_timestampAdjust / 1000LL);
+		}
+		timestamp += m_timestampAdjust;
+
+		// Throw away samples that were recorded before our mainloop started
 		if(timestamp < 0LL) {
-			// Audio was recorded before our mainloop started, ignore it
 			res = m_captureClient->ReleaseBuffer(releaseNumFrames);
 			if(FAILED(res)) {
 				//appLog(LOG_CAT, Log::Warning)
