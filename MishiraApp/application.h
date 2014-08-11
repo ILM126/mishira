@@ -83,6 +83,7 @@ protected: // Members ---------------------------------------------------------
 	Qt::CursorShape			m_activeCursor;
 	QDir					m_dataDir;
 	bool					m_isBroadcasting;
+	bool					m_isBroadcastingChanging;
 	CPUUsage *				m_broadcastCpuUsage;
 	bool					m_isInLowCPUMode;
 
