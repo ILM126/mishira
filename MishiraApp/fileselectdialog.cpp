@@ -125,7 +125,7 @@ void FileOpenDialog::setViewMode(ViewMode mode)
 void FileOpenDialog::run()
 {
 	// Because this is a brand new thread we need to initialize COM manually
-	HRESULT res = CoInitializeEx(NULL, COINIT_MULTITHREADED);
+	HRESULT res = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
 	if(FAILED(res)) {
 		appLog(Log::Warning)
 			<< "Failed to initialize COM. Reason = " << getCOMErrorCode(res);
@@ -238,7 +238,7 @@ void FileOpenDialog::run()
 	res = dialog->Show(hwnd);
 	if(FAILED(res)) {
 		// We receive a failed result when the user clicks cancels
-		//appLog()
+		//appLog(Log::Warning)
 		//	<< "Failed to display an open file dialog. "
 		//	<< "Reason = " << getCOMErrorCode(res);
 		emit rejected();
@@ -249,12 +249,18 @@ void FileOpenDialog::run()
 	IShellItem *result;
 	res = dialog->GetResult(&result);
 	if(FAILED(res)) {
+		appLog(Log::Warning)
+			<< "Failed to get the IShellItem from the dialog. "
+			<< "Reason = " << getCOMErrorCode(res);
 		emit rejected();
 		return;
 	}
 	wchar_t *wFilename = NULL;
 	res = result->GetDisplayName(SIGDN_FILESYSPATH, &wFilename);
 	if(FAILED(res)) {
+		appLog(Log::Warning)
+			<< "Failed to get the display name from the IShellItem. "
+			<< "Reason = " << getCOMErrorCode(res);
 		result->Release();
 		emit rejected();
 		return;
