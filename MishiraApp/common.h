@@ -41,7 +41,7 @@ enum X264Preset;
 
 #if LIBDESKCAP_VER_MAJOR != 0 || \
 	LIBDESKCAP_VER_MINOR != 5 || \
-	LIBDESKCAP_VER_BUILD != 0
+	LIBDESKCAP_VER_BUILD != 1
 #error Mismatched Libdeskcap version!
 #endif
 
