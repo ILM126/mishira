@@ -1741,6 +1741,12 @@ void Application::updateMenuBar()
 
 	menu->addSeparator();
 
+	action = menu->addAction(tr("Open &log file directory..."));
+	connect(action, &QAction::triggered,
+		this, &Application::logDirectoryClicked);
+
+	menu->addSeparator();
+
 	action = menu->addAction(tr("View &online manual..."));
 	connect(action, &QAction::triggered,
 		this, &Application::onlineManualClicked);
@@ -2032,6 +2038,13 @@ void Application::startStopBroadcastDialogClosed(QAbstractButton *button)
 		setBroadcasting(isStart);
 
 	// Don't delete the dialog here or we will crash
+}
+
+void Application::logDirectoryClicked()
+{
+	QDesktopServices::openUrl(
+		QUrl(QStringLiteral("file:///%1")
+		.arg(getDataDirectory().absolutePath())));
 }
 
 void Application::onlineManualClicked()

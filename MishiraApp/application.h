@@ -269,6 +269,7 @@ Q_SLOTS: // Private slots -----------------------------------------------------
 	void				runUpdaterDialogClosed(QAbstractButton *button);
 	void				startStopBroadcastDialogClosed(
 		QAbstractButton *button);
+	void				logDirectoryClicked();
 	void				onlineManualClicked();
 
 	void				capEnterLowJitterMode();
