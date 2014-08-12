@@ -182,7 +182,7 @@ bool RTMPTargetBase::rtmpActivate(const RTMPTargetInfo &info)
 	m_numDroppedFrames = 0; // TODO: Don't reset when auto-reconnecting
 	m_numDroppedPadding = 0; // TODO: Don't reset when auto-reconnecting
 	m_avgVideoFrameSize =
-		(float)m_videoEnc->getAvgBitrateForCongestion() * 1024.0f / 8.0f /
+		(float)m_videoEnc->getAvgBitrateForCongestion() * 1000.0f / 8.0f /
 		m_videoEnc->getFramerate().asFloat();
 	m_conSucceededOnce = false;
 	m_firstReconnectAttempt = true;
@@ -193,7 +193,7 @@ bool RTMPTargetBase::rtmpActivate(const RTMPTargetInfo &info)
 	int avgUpload = m_videoEnc->getAvgBitrateForCongestion();
 	if(m_audioEnc != NULL)
 		avgUpload += m_audioEnc->getAvgBitrateForCongestion();
-	avgUpload *= 1024; // Kb/s -> b/s
+	avgUpload *= 1000; // Kb/s -> b/s (1000 for bits, 1024 for bytes)
 	avgUpload /= 8; // b/s -> B/s
 	m_rtmp->gamerSetAverageUpload(avgUpload);
 
@@ -1334,7 +1334,7 @@ int RTMPTargetBase::calcMaximumOutputBufferSize() const
 	int bufSize = m_videoEnc->getAvgBitrateForCongestion();
 	if(m_audioEnc != NULL)
 		bufSize += m_audioEnc->getAvgBitrateForCongestion();
-	bufSize *= 1024; // Kb/s -> b/s
+	bufSize *= 1000; // Kb/s -> b/s (1000 for bits, 1024 for bytes)
 	bufSize /= 8; // b/s -> B/s
 	return (int)((float)bufSize * dropBufLength);
 }
@@ -1422,7 +1422,7 @@ void RTMPTargetBase::frameReady(EncodedFrame frame)
 		// If we are currently under the target average bitrate then fill in
 		// the gap.
 		float trgtFrmSize =
-			(float)m_videoEnc->getAvgBitrateForCongestion() * 1024.0f / 8.0f /
+			(float)m_videoEnc->getAvgBitrateForCongestion() * 1000.0f / 8.0f /
 			m_videoEnc->getFramerate().asFloat();
 		data.bytesPadding = (int)((trgtFrmSize - m_avgVideoFrameSize) *
 			m_videoEnc->getFramerate().asFloat());
@@ -1567,7 +1567,7 @@ void RTMPTargetBase::rtmpConnected()
 	int sendBufSize = m_videoEnc->getAvgBitrateForCongestion();
 	if(m_audioEnc != NULL)
 		sendBufSize += m_audioEnc->getAvgBitrateForCongestion();
-	sendBufSize *= 1024; // Kb/s -> b/s
+	sendBufSize *= 1000; // Kb/s -> b/s (1000 for bits, 1024 for bytes)
 	sendBufSize /= 8; // b/s -> B/s
 	sendBufSize = (int)((float)sendBufSize * SEND_BUF_SIZE_SECS);
 	if(m_rtmp->setOSWriteBufferSize(sendBufSize) == 0) {

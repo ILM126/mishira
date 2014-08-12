@@ -111,13 +111,13 @@ void BitrateCalcWidget::unitsComboChanged(int index)
 		m_unitMultiplier = 1.0f;
 		break;
 	case 1: // Mb/s
-		m_unitMultiplier = 1024.0f;
+		m_unitMultiplier = 1000.0f;
 		break;
 	case 2: // KB/s
-		m_unitMultiplier = 1.0f * 8.0f;
+		m_unitMultiplier = 1024.0f * 8.0f / 1000.0f;
 		break;
 	case 3: // MB/s
-		m_unitMultiplier = 1024.0f * 8.0f;
+		m_unitMultiplier = 1024.0f * 1024.0f * 8.0f / 1000.0f;
 		break;
 	}
 	recalculate();

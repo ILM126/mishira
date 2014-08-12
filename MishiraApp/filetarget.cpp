@@ -225,7 +225,7 @@ bool FileTarget::activateEvent()
 		codec->profile = FF_PROFILE_AAC_LOW; // AAC-LC
 		codec->codec_type = AVMEDIA_TYPE_AUDIO;
 		codec->flags = CODEC_FLAG_GLOBAL_HEADER;
-		codec->bit_rate = aacEnc->getBitrate() * 1024;
+		codec->bit_rate = aacEnc->getBitrate() * 1000; // (1000 for bits)
 		codec->sample_rate = m_audioEnc->getSampleRate();
 		codec->channels = mixer->getNumChannels();
 		codec->frame_size = m_audioEnc->getFrameSize();

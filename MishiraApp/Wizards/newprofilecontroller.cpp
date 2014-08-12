@@ -771,17 +771,17 @@ void NewProfileController::nextUploadPage()
 		unitMultiplier = 1.0f;
 		break;
 	case 1: // Mb/s
-		unitMultiplier = 1024.0f;
+		unitMultiplier = 1000.0f;
 		break;
 	case 2: // KB/s
-		unitMultiplier = 1.0f * 8.0f;
+		unitMultiplier = 1024.0f * 8.0f / 1000.0f;
 		break;
 	case 3: // MB/s
-		unitMultiplier = 1024.0f * 8.0f;
+		unitMultiplier = 1024.0f * 1024.0f * 8.0f / 1000.0f;
 		break;
 	}
 	float uploadBitsPerSec =
-		ui->uploadEdit->text().toFloat() * unitMultiplier;
+		ui->uploadEdit->text().toFloat() * unitMultiplier; // Kb/s
 
 	// Calculate maximum safe video and audio bitrates from upload speed
 	Recommendations::maxVidAudBitratesFromTotalUpload(

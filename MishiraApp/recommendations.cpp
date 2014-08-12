@@ -39,7 +39,7 @@ void Recommendations::maxVidAudBitratesFromTotalUpload(
 	if(bitrate <= 1000.0f)
 		maxVidBitrateOut = qRound(bitrate / 50.0f) * 50;
 
-	// No point recommending below 100 kB/s as it's below our minimum video
+	// No point recommending below 100 Kb/s as it's below our minimum video
 	// bitrate
 	if(maxVidBitrateOut < 100)
 		maxVidBitrateOut = 100;

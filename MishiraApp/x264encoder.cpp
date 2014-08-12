@@ -474,7 +474,7 @@ bool X264Encoder::initializeEncoder()
 	// Setup rate control method: Constant/average bitrate
 	m_params.rc.i_rc_method = X264_RC_ABR;
 	m_params.b_vfr_input = 0;
-	m_params.rc.i_bitrate = m_bitrate; // Target bitrate (kB)
+	m_params.rc.i_bitrate = m_bitrate; // Target bitrate (Kb)
 
 	// Setup the "video buffer verifier" (VBV) so that the output stream can
 	// have a concept of a "X second buffer". Without this there is no set
@@ -482,15 +482,15 @@ bool X264Encoder::initializeEncoder()
 	// Larger buffers improves quality as it allows for larger keyframes.
 	//
 	// While VBV should be able to be summarised as "To decode the next frame I
-	// need to never read more than <i_vbv_buffer_size> kB ahead" this is not
+	// need to never read more than <i_vbv_buffer_size> Kb ahead" this is not
 	// actually the case when looking at the output as VBV-constrained video
 	// still vastly overshoots the VBV buffer size.
 	//
 	// Twitch's player uses a 1 second playback buffer so if we never want the
 	// stream to freeze after it has buffered once we should have a 1 second
 	// VBV buffer ourselves.
-	m_params.rc.i_vbv_buffer_size = m_bitrate; // Buffer size (kB)
-	m_params.rc.i_vbv_max_bitrate = m_bitrate; // Fill speed (kB/s)
+	m_params.rc.i_vbv_buffer_size = m_bitrate; // Buffer size (Kb)
+	m_params.rc.i_vbv_max_bitrate = m_bitrate; // Fill speed (Kb/s)
 
 	// Setup the "hypothetical reference decoder" (HRD)
 	//m_params.i_nal_hrd = X264_NAL_HRD_CBR;
