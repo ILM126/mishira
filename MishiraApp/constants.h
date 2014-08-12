@@ -32,7 +32,7 @@
 // final is "2". If there is no pre-releases then the final would be "0".
 #define ORG_NAME "Mishira"
 #define APP_NAME "Mishira"
-#define APP_VER_STR "1.0.0-rc1"
+#define APP_VER_STR "1.0.0-rc2"
 
 // Set this define to `1` in order to enable the automatic updater
 #define IS_UPDATER_ENABLED 1
