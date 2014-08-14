@@ -1107,6 +1107,24 @@
     <ClCompile Include="log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Wizards\hitboxtargetsettingspage.cpp">
+      <Filter>Source Files\Wizards</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_hitboxtargetsettingspage.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_hitboxtargetsettingspage.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_hitboxtarget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_hitboxtarget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="hitboxtarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -1545,6 +1563,15 @@
     <CustomBuild Include="Layers\scripttextlayer.h">
       <Filter>Header Files\Layers</Filter>
     </CustomBuild>
+    <CustomBuild Include="Wizards\hitboxtargetsettingspage.ui">
+      <Filter>Form Files\Wizards</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Wizards\hitboxtargetsettingspage.h">
+      <Filter>Header Files\Wizards</Filter>
+    </CustomBuild>
+    <CustomBuild Include="hitboxtarget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logfilemanager.h">
@@ -1702,6 +1729,9 @@
     </ClInclude>
     <ClInclude Include="constants.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_hitboxtargetsettingspage.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

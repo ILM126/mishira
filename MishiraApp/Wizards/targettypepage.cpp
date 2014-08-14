@@ -91,8 +91,11 @@ void TargetTypePage::sharedReset(
 		layout, TrgtUstreamType, tr("Ustream"),
 		QPixmap(":/Resources/target-200x100-ustream.png"), 0, 2);
 	addTargetType(
+		layout, TrgtHitboxType, tr("Hitbox"),
+		QPixmap(":/Resources/target-200x100-hitbox.png"), 1, 0);
+	addTargetType(
 		layout, TrgtRtmpType, tr("Other RTMP"),
-		QPixmap(":/Resources/target-200x100-rtmp.png"), 1, 0);
+		QPixmap(":/Resources/target-200x100-rtmp.png"), 1, 1);
 
 	// Spacer to make sure all targets are at the top of the scroll area
 	layout->addItem(

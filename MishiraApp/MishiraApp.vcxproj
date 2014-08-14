@@ -151,6 +151,12 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_fileimagetexture.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_hitboxtarget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_hitboxtargetsettingspage.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_imagelayer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -280,6 +286,12 @@
     <ClCompile Include="GeneratedFiles\Release\moc_fileimagetexture.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_hitboxtarget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_hitboxtargetsettingspage.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_imagelayer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -379,6 +391,7 @@
     <ClCompile Include="GeneratedFiles\Release\moc_welcomepage.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="hitboxtarget.cpp" />
     <ClCompile Include="Layers\monitorlayer.cpp" />
     <ClCompile Include="Layers\monitorlayerdialog.cpp" />
     <ClCompile Include="Layers\scripttextlayer.cpp" />
@@ -874,6 +887,7 @@
     <ClCompile Include="Wizards\editprofilepage.cpp" />
     <ClCompile Include="Wizards\edittargetscontroller.cpp" />
     <ClCompile Include="Wizards\filetargetsettingspage.cpp" />
+    <ClCompile Include="Wizards\hitboxtargetsettingspage.cpp" />
     <ClCompile Include="Wizards\newedittargetcontroller.cpp" />
     <ClCompile Include="Wizards\newprofilecontroller.cpp" />
     <ClCompile Include="Wizards\newprofilepage.cpp" />
@@ -916,6 +930,16 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="Wizards\hitboxtargetsettingspage.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing hitboxtargetsettingspage.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing hitboxtargetsettingspage.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+    </CustomBuild>
     <CustomBuild Include="videosource.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing videosource.h...</Message>
@@ -1727,6 +1751,7 @@
     <ClInclude Include="GeneratedFiles\ui_colorlayerdialog.h" />
     <ClInclude Include="GeneratedFiles\ui_editprofilepage.h" />
     <ClInclude Include="GeneratedFiles\ui_filetargetsettingspage.h" />
+    <ClInclude Include="GeneratedFiles\ui_hitboxtargetsettingspage.h" />
     <ClInclude Include="GeneratedFiles\ui_imagelayerdialog.h" />
     <ClInclude Include="GeneratedFiles\ui_layerproperties.h" />
     <ClInclude Include="GeneratedFiles\ui_mainemptypage.h" />
@@ -1749,6 +1774,16 @@
     <ClInclude Include="GeneratedFiles\ui_webcamlayerdialog.h" />
     <ClInclude Include="GeneratedFiles\ui_welcomepage.h" />
     <ClInclude Include="GeneratedFiles\ui_windowlayerdialog.h" />
+    <CustomBuild Include="hitboxtarget.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing hitboxtarget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing hitboxtarget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+    </CustomBuild>
     <ClInclude Include="Layers\colorlayer.h" />
     <CustomBuild Include="Layers\colorlayerdialog.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
@@ -2143,7 +2178,7 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Rcc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath);.\Resources\target-18x18-file.png;.\Resources\target-18x18-twitch.png;.\Resources\target-18x18-rtmp.png;.\Resources\target-18x18-youtube.png;.\Resources\target-160x70-file.png;.\Resources\target-160x70-livestream.png;.\Resources\target-160x70-rtmp.png;.\Resources\target-160x70-twitch.png;.\Resources\target-160x70-ustream.png;.\Resources\target-160x70-youtube.png;.\Resources\target-200x100-file.png;.\Resources\target-200x100-livestream.png;.\Resources\target-200x100-rtmp.png;.\Resources\target-200x100-twitch.png;.\Resources\target-200x100-ustream.png;.\Resources\target-200x100-youtube.png;.\Resources\crop-diagram.png;.\Resources\dark-indicator-up.png;.\Resources\dark-indicator-up-white.png;.\Resources\wizard-logo.png;.\Shaders\solid-vs.cso;.\Shaders\solid-ps.cso;.\Shaders\texDecal-vs.cso;.\Shaders\texDecal-ps.cso;.\Shaders\texDecalGbcs-ps.cso;.\Shaders\texDecalRgb-ps.cso;.\Shaders\hdyc-rgb-ps.cso;.\Shaders\resize-vs.cso;.\Shaders\resize-ps.cso;.\Shaders\rgb-nv16-ps.cso;.\Shaders\uyvy-rgb-ps.cso;.\Shaders\yuy2-rgb-ps.cso;.\Shaders\yv12-rgb-ps.cso;.\Resources\fill-checked.png;.\Resources\fill-unchecked.png;.\Resources\group-shared.png;.\Resources\logo-emboss-60.png;.\Resources\logo-emboss-100.png;.\Resources\logo-emboss-dark-60.png;.\Resources\zoom-fill-screen.png;.\Resources\zoom-handle.png;.\Resources\white-cross.png;.\Resources\white-cross-hover.png;.\Resources\white-plus.png;.\Resources\audio-disabled.png;.\Resources\audio-enabled.png;.\Resources\icon-16.png;.\Resources\icon-32.png;.\Resources\icon-48.png;.\Resources\icon-256.png;.\Resources\wysiwyg-bold.png;.\Resources\wysiwyg-center.png;.\Resources\wysiwyg-italic.png;.\Resources\wysiwyg-justify.png;.\Resources\wysiwyg-left.png;.\Resources\wysiwyg-right.png;.\Resources\wysiwyg-underline.png;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath);.\Resources\target-18x18-file.png;.\Resources\target-18x18-hitbox.png;.\Resources\target-18x18-twitch.png;.\Resources\target-18x18-rtmp.png;.\Resources\target-18x18-youtube.png;.\Resources\target-160x70-file.png;.\Resources\target-160x70-livestream.png;.\Resources\target-160x70-rtmp.png;.\Resources\target-160x70-hitbox.png;.\Resources\target-160x70-twitch.png;.\Resources\target-160x70-ustream.png;.\Resources\target-160x70-youtube.png;.\Resources\target-200x100-file.png;.\Resources\target-200x100-livestream.png;.\Resources\target-200x100-rtmp.png;.\Resources\target-200x100-hitbox.png;.\Resources\target-200x100-twitch.png;.\Resources\target-200x100-ustream.png;.\Resources\target-200x100-youtube.png;.\Resources\crop-diagram.png;.\Resources\dark-indicator-up.png;.\Resources\dark-indicator-up-white.png;.\Resources\wizard-logo.png;.\Shaders\solid-vs.cso;.\Shaders\solid-ps.cso;.\Shaders\texDecal-vs.cso;.\Shaders\texDecal-ps.cso;.\Shaders\texDecalGbcs-ps.cso;.\Shaders\texDecalRgb-ps.cso;.\Shaders\hdyc-rgb-ps.cso;.\Shaders\resize-vs.cso;.\Shaders\resize-ps.cso;.\Shaders\rgb-nv16-ps.cso;.\Shaders\uyvy-rgb-ps.cso;.\Shaders\yuy2-rgb-ps.cso;.\Shaders\yv12-rgb-ps.cso;.\Resources\fill-checked.png;.\Resources\fill-unchecked.png;.\Resources\group-shared.png;.\Resources\logo-emboss-60.png;.\Resources\logo-emboss-100.png;.\Resources\logo-emboss-dark-60.png;.\Resources\zoom-fill-screen.png;.\Resources\zoom-handle.png;.\Resources\white-cross.png;.\Resources\white-cross-hover.png;.\Resources\white-plus.png;.\Resources\audio-disabled.png;.\Resources\audio-enabled.png;.\Resources\icon-16.png;.\Resources\icon-32.png;.\Resources\icon-48.png;.\Resources\icon-256.png;.\Resources\wysiwyg-bold.png;.\Resources\wysiwyg-center.png;.\Resources\wysiwyg-italic.png;.\Resources\wysiwyg-justify.png;.\Resources\wysiwyg-left.png;.\Resources\wysiwyg-right.png;.\Resources\wysiwyg-underline.png;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Rcc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
@@ -2500,6 +2535,18 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MishiraApp.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Wizards\hitboxtargetsettingspage.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

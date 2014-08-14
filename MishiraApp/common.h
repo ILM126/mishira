@@ -378,7 +378,8 @@ enum TrgtType {
 	TrgtRtmpType = 1,
 	TrgtTwitchType = 2,
 	//TrgtJustinType, // Removed
-	TrgtUstreamType = 4
+	TrgtUstreamType = 4,
+	TrgtHitboxType = 5
 };
 
 struct FileTrgtOptions {
@@ -404,6 +405,8 @@ struct TwitchTrgtOptions {
 	QString	url;
 	QString username;
 };
+
+typedef TwitchTrgtOptions HitboxTrgtOptions;
 
 struct UstreamTrgtOptions {
 	quint32	videoEncId;
@@ -475,6 +478,7 @@ enum WizPage {
 	WizRTMPTargetSettingsPage,
 	WizTwitchTargetSettingsPage,
 	WizUstreamTargetSettingsPage,
+	WizHitboxTargetSettingsPage,
 
 	WIZ_NUM_PAGES // Must be last
 };
@@ -514,7 +518,7 @@ struct WizTargetSettings {
 	bool			rtmpHideStreamName;
 	bool			rtmpPadVideo;
 
-	// Twitch target settings
+	// Twitch/Hitbox target settings
 	QString			username;
 
 	// Constructor (Needed for QStrings)

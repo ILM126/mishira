@@ -21,6 +21,7 @@
 #include "constants.h"
 #include "cpuusage.h"
 #include "layergroup.h"
+#include "hitboxtarget.h"
 #include "profile.h"
 #include "recommendations.h"
 #include "scene.h"
@@ -47,6 +48,7 @@
 #include "Wizards/rtmptargetsettingspage.h"
 #include "Wizards/twitchtargetsettingspage.h"
 #include "Wizards/ustreamtargetsettingspage.h"
+#include "Wizards/hitboxtargetsettingspage.h"
 #include "Wizards/welcomepage.h"
 #include <QtWidgets/QMessageBox>
 
@@ -114,6 +116,9 @@ void NewProfileController::setPageBasedOnTargetType()
 		break;
 	case TrgtUstreamType:
 		m_curPage = WizUstreamTargetSettingsPage;
+		break;
+	case TrgtHitboxType:
+		m_curPage = WizHitboxTargetSettingsPage;
 		break;
 	}
 	m_wizWin->setPage(m_curPage);
@@ -296,6 +301,14 @@ void NewProfileController::resetUstreamTargetPage()
 	// Use common "reset" button code for this page
 	UstreamTargetSettingsPage *page =
 		static_cast<UstreamTargetSettingsPage *>(m_wizWin->getActivePage());
+	page->sharedReset(m_wizWin, m_targetDefaults);
+}
+
+void NewProfileController::resetHitboxTargetPage()
+{
+	// Use common "reset" button code for this page
+	HitboxTargetSettingsPage *page =
+		static_cast<HitboxTargetSettingsPage *>(m_wizWin->getActivePage());
 	page->sharedReset(m_wizWin, m_targetDefaults);
 }
 
@@ -518,6 +531,9 @@ void NewProfileController::resetPage()
 	case WizUstreamTargetSettingsPage:
 		resetUstreamTargetPage();
 		break;
+	case WizHitboxTargetSettingsPage:
+		resetHitboxTargetPage();
+		break;
 
 	case WizUploadPage:
 		resetUploadPage();
@@ -563,6 +579,7 @@ void NewProfileController::backPage()
 	case WizRTMPTargetSettingsPage:
 	case WizTwitchTargetSettingsPage:
 	case WizUstreamTargetSettingsPage:
+	case WizHitboxTargetSettingsPage:
 		m_curPage = WizTargetTypePage;
 		m_wizWin->setPage(m_curPage);
 		resetPage();
@@ -734,6 +751,19 @@ void NewProfileController::nextUstreamTargetPage()
 	// Use common "next" button code for this page
 	UstreamTargetSettingsPage *page =
 		static_cast<UstreamTargetSettingsPage *>(m_wizWin->getActivePage());
+	page->sharedNext(&m_targetSettings);
+
+	// Go to the upload speed testing page
+	m_curPage = WizUploadPage;
+	m_wizWin->setPage(m_curPage);
+	resetPage();
+}
+
+void NewProfileController::nextHitboxTargetPage()
+{
+	// Use common "next" button code for this page
+	HitboxTargetSettingsPage *page =
+		static_cast<HitboxTargetSettingsPage *>(m_wizWin->getActivePage());
 	page->sharedNext(&m_targetSettings);
 
 	// Go to the upload speed testing page
@@ -915,6 +945,9 @@ void NewProfileController::nextPage()
 	case WizUstreamTargetSettingsPage:
 		nextUstreamTargetPage();
 		break;
+	case WizHitboxTargetSettingsPage:
+		nextHitboxTargetPage();
+		break;
 
 	case WizUploadPage:
 		nextUploadPage();
@@ -1039,6 +1072,15 @@ void NewProfileController::createProfile()
 		opt.streamKey = m_targetSettings.rtmpStreamName;
 		opt.padVideo = m_targetSettings.rtmpPadVideo;
 		target = profile->createUstreamTarget(m_targetSettings.name, opt);
+		break; }
+	case TrgtHitboxType: {
+		HitboxTrgtOptions opt;
+		opt.videoEncId = (vidEnc == NULL) ? 0 : vidEnc->getId();
+		opt.audioEncId = (audEnc == NULL) ? 0 : audEnc->getId();
+		opt.url = m_targetSettings.rtmpUrl;
+		opt.streamKey = m_targetSettings.rtmpStreamName;
+		opt.username = m_targetSettings.username;
+		target = profile->createHitboxTarget(m_targetSettings.name, opt);
 		break; }
 	}
 	target->setEnabled(true);

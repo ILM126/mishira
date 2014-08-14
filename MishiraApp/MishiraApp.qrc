@@ -1,18 +1,21 @@
 <RCC>
   <qresource prefix="/">
     <file>Resources/target-18x18-file.png</file>
+    <file>Resources/target-18x18-hitbox.png</file>
     <file>Resources/target-18x18-twitch.png</file>
     <file>Resources/target-18x18-rtmp.png</file>
     <file>Resources/target-18x18-youtube.png</file>
     <file>Resources/target-160x70-file.png</file>
     <file>Resources/target-160x70-livestream.png</file>
     <file>Resources/target-160x70-rtmp.png</file>
+    <file>Resources/target-160x70-hitbox.png</file>
     <file>Resources/target-160x70-twitch.png</file>
     <file>Resources/target-160x70-ustream.png</file>
     <file>Resources/target-160x70-youtube.png</file>
     <file>Resources/target-200x100-file.png</file>
     <file>Resources/target-200x100-livestream.png</file>
     <file>Resources/target-200x100-rtmp.png</file>
+    <file>Resources/target-200x100-hitbox.png</file>
     <file>Resources/target-200x100-twitch.png</file>
     <file>Resources/target-200x100-ustream.png</file>
     <file>Resources/target-200x100-youtube.png</file>

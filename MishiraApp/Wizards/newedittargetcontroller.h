@@ -59,6 +59,7 @@ private: // Methods -----------------------------------------------------------
 	void			resetRTMPTargetPage();
 	void			resetTwitchTargetPage();
 	void			resetUstreamTargetPage();
+	void			resetHitboxTargetPage();
 
 	void			nextTargetTypePage();
 	void			nextVideoPage();
@@ -67,6 +68,7 @@ private: // Methods -----------------------------------------------------------
 	void			nextRTMPTargetPage();
 	void			nextTwitchTargetPage();
 	void			nextUstreamTargetPage();
+	void			nextHitboxTargetPage();
 
 	void			recreateTarget();
 	VideoEncoder *	getOrCreateVideoEncoder();

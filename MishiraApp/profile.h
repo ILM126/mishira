@@ -156,6 +156,8 @@ public: // Methods ------------------------------------------------------------
 		const QString &name, const TwitchTrgtOptions &opt, int before = -1);
 	Target *		createUstreamTarget(
 		const QString &name, const UstreamTrgtOptions &opt, int before = -1);
+	Target *		createHitboxTarget(
+		const QString &name, const HitboxTrgtOptions &opt, int before = -1);
 	Target *		createTargetSerialized(
 		TrgtType type, QDataStream *stream, int before = -1);
 	void			destroyTarget(Target *target);

@@ -467,6 +467,6 @@ void WizTargetSettings::setTargetSettingsToDefault()
 	rtmpHideStreamName = false;
 	rtmpPadVideo = false;
 
-	// Default Twitch settings
+	// Default Twitch/Hitbox settings
 	username = QString();
 }

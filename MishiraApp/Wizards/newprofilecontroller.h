@@ -91,6 +91,7 @@ private: // Methods -----------------------------------------------------------
 	void			resetRTMPTargetPage();
 	void			resetTwitchTargetPage();
 	void			resetUstreamTargetPage();
+	void			resetHitboxTargetPage();
 
 	void			nextWelcomePage();
 	void			nextNewProfilePage();
@@ -105,6 +106,7 @@ private: // Methods -----------------------------------------------------------
 	void			nextRTMPTargetPage();
 	void			nextTwitchTargetPage();
 	void			nextUstreamTargetPage();
+	void			nextHitboxTargetPage();
 
 	void			leavingTempProfileArea();
 	void			createProfile();

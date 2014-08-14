@@ -22,6 +22,7 @@
 #include "appsettings.h"
 #include "fdkaacencoder.h"
 #include "filetarget.h"
+#include "hitboxtarget.h"
 #include "layergroup.h"
 #include "logfilemanager.h"
 #include "rtmptarget.h"
@@ -1170,6 +1171,26 @@ Target *Profile::createUstreamTarget(
 	return target;
 }
 
+Target *Profile::createHitboxTarget(
+	const QString &name, const HitboxTrgtOptions &opt, int before)
+{
+	if(before < 0) {
+		// Position is relative to the right
+		before += m_targets.count() + 1;
+	}
+	before = qBound(0, before, m_targets.count());
+
+	HitboxTarget *target = new HitboxTarget(this, name, opt);
+	connect(target, &Target::activeChanged,
+		this, &Profile::targetActiveChanged);
+	m_targets.insert(before, target);
+	appLog(LOG_CAT_TRGT) << "Created Hitbox target " << target->getIdString();
+	target->setInitialized();
+
+	emit targetAdded(target, before);
+	return target;
+}
+
 Target *Profile::createTargetSerialized(
 	TrgtType type, QDataStream *stream, int before)
 {
@@ -1219,6 +1240,15 @@ Target *Profile::createTargetSerialized(
 		opt.streamKey = QString();
 		opt.padVideo = false;
 		target = new UstreamTarget(this, QStringLiteral("Dummy"), opt);
+		break; }
+	case TrgtHitboxType: {
+		HitboxTrgtOptions opt;
+		opt.videoEncId = 0;
+		opt.audioEncId = 0;
+		opt.url = QString();
+		opt.streamKey = QString();
+		opt.username = QString();
+		target = new HitboxTarget(this, QStringLiteral("Dummy"), opt);
 		break; }
 	}
 	if(target == NULL)

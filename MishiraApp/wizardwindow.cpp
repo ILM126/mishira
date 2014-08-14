@@ -37,6 +37,7 @@
 #include "Wizards/rtmptargetsettingspage.h"
 #include "Wizards/twitchtargetsettingspage.h"
 #include "Wizards/ustreamtargetsettingspage.h"
+#include "Wizards/hitboxtargetsettingspage.h"
 #include "Wizards/targetlistpage.h"
 #include "Wizards/targettypepage.h"
 #include "Wizards/videosettingspage.h"
@@ -167,6 +168,7 @@ WizardWindow::WizardWindow(QWidget *parent)
 	m_pages[index++] = new RTMPTargetSettingsPage(this);
 	m_pages[index++] = new TwitchTargetSettingsPage(this);
 	m_pages[index++] = new UstreamTargetSettingsPage(this);
+	m_pages[index++] = new HitboxTargetSettingsPage(this);
 	Q_ASSERT(index == WIZ_NUM_PAGES);
 	for(int i = 0; i < WIZ_NUM_PAGES; i++) {
 		if(m_pages[i] != NULL)

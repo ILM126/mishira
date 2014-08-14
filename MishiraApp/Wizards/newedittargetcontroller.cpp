@@ -20,6 +20,7 @@
 #include "common.h"
 #include "fdkaacencoder.h"
 #include "filetarget.h"
+#include "hitboxtarget.h"
 #include "profile.h"
 #include "rtmptarget.h"
 #include "target.h"
@@ -36,6 +37,7 @@
 #include "Wizards/rtmptargetsettingspage.h"
 #include "Wizards/twitchtargetsettingspage.h"
 #include "Wizards/ustreamtargetsettingspage.h"
+#include "Wizards/hitboxtargetsettingspage.h"
 
 /// <summary>
 /// Called just before switching to this controller so that all the settings
@@ -175,6 +177,14 @@ void NewEditTargetController::prepareModifyTarget(
 		settings->rtmpStreamName = ustreamTarget->getStreamName();
 		settings->rtmpPadVideo = ustreamTarget->getPadVideo();
 		break; }
+	case TrgtHitboxType: {
+		HitboxTarget *hitboxTarget = static_cast<HitboxTarget *>(target);
+		settings->rtmpUrl = hitboxTarget->getURL();
+		settings->rtmpStreamName = hitboxTarget->getStreamKey();
+		settings->username = hitboxTarget->getUsername();
+		settings->rtmpHideStreamName = true;
+		settings->rtmpPadVideo = true;
+		break; }
 	}
 }
 
@@ -256,6 +266,9 @@ void NewEditTargetController::setPageBasedOnTargetType()
 		break;
 	case TrgtUstreamType:
 		m_curPage = WizUstreamTargetSettingsPage;
+		break;
+	case TrgtHitboxType:
+		m_curPage = WizHitboxTargetSettingsPage;
 		break;
 	}
 	m_wizWin->setPage(m_curPage);
@@ -490,6 +503,14 @@ void NewEditTargetController::resetUstreamTargetPage()
 	page->sharedReset(m_wizWin, m_defaults);
 }
 
+void NewEditTargetController::resetHitboxTargetPage()
+{
+	// Use common "reset" button code for this page
+	HitboxTargetSettingsPage *page =
+		static_cast<HitboxTargetSettingsPage *>(m_wizWin->getActivePage());
+	page->sharedReset(m_wizWin, m_defaults);
+}
+
 void NewEditTargetController::resetPage()
 {
 	// Reset whatever page we are currently on
@@ -517,6 +538,9 @@ void NewEditTargetController::resetPage()
 		break;
 	case WizUstreamTargetSettingsPage:
 		resetUstreamTargetPage();
+		break;
+	case WizHitboxTargetSettingsPage:
+		resetHitboxTargetPage();
 		break;
 	}
 }
@@ -555,6 +579,7 @@ void NewEditTargetController::backPage()
 	case WizRTMPTargetSettingsPage:
 	case WizTwitchTargetSettingsPage:
 	case WizUstreamTargetSettingsPage:
+	case WizHitboxTargetSettingsPage:
 		m_curPage = WizAudioSettingsPage;
 		m_wizWin->setPage(m_curPage);
 		resetPage();
@@ -705,6 +730,24 @@ void NewEditTargetController::nextUstreamTargetPage()
 		m_wizWin->controllerFinished();
 }
 
+void NewEditTargetController::nextHitboxTargetPage()
+{
+	// Use common "next" button code for this page
+	HitboxTargetSettingsPage *page =
+		static_cast<HitboxTargetSettingsPage *>(m_wizWin->getActivePage());
+	page->sharedNext(&m_settings);
+
+	// Create/edit actual target
+	recreateTarget();
+
+	// Our wizard has completed, close the wizard window or return to previous
+	// controller depending on the shared settings
+	if(m_shared->netReturnToEditTargets)
+		m_wizWin->setController(WizEditTargetsController);
+	else
+		m_wizWin->controllerFinished();
+}
+
 void NewEditTargetController::nextPage()
 {
 	// Save and continue from whatever page we are currently on
@@ -732,6 +775,9 @@ void NewEditTargetController::nextPage()
 		break;
 	case WizUstreamTargetSettingsPage:
 		nextUstreamTargetPage();
+		break;
+	case WizHitboxTargetSettingsPage:
+		nextHitboxTargetPage();
 		break;
 	}
 }
@@ -788,6 +834,15 @@ void NewEditTargetController::recreateTarget()
 		opt.streamKey = m_settings.rtmpStreamName;
 		opt.padVideo = m_settings.rtmpPadVideo;
 		target = profile->createUstreamTarget(m_settings.name, opt, before);
+		break; }
+	case TrgtHitboxType: {
+		HitboxTrgtOptions opt;
+		opt.videoEncId = (vidEnc == NULL) ? 0 : vidEnc->getId();
+		opt.audioEncId = (audEnc == NULL) ? 0 : audEnc->getId();
+		opt.url = m_settings.rtmpUrl;
+		opt.streamKey = m_settings.rtmpStreamName;
+		opt.username = m_settings.username;
+		target = profile->createHitboxTarget(m_settings.name, opt, before);
 		break; }
 	}
 	if(target != NULL) {
