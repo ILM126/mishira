@@ -37,27 +37,6 @@ enum LyrScalingMode;
 enum X264Preset;
 
 //=============================================================================
-// Validate library versions
-
-#if LIBDESKCAP_VER_MAJOR != 0 || \
-	LIBDESKCAP_VER_MINOR != 5 || \
-	LIBDESKCAP_VER_BUILD != 1
-#error Mismatched Libdeskcap version!
-#endif
-
-#if LIBBROADCAST_VER_MAJOR != 0 || \
-	LIBBROADCAST_VER_MINOR != 5 || \
-	LIBBROADCAST_VER_BUILD != 0
-#error Mismatched Libbroadcast version!
-#endif
-
-#if LIBVIDGFX_VER_MAJOR != 0 || \
-	LIBVIDGFX_VER_MINOR != 5 || \
-	LIBVIDGFX_VER_BUILD != 0
-#error Mismatched Libvidgfx version!
-#endif
-
-//=============================================================================
 // Helper functions
 
 QString		getAppBuildVersion();
