@@ -1,6 +1,13 @@
 Version history
 ===============
 
+v1.0.0-rc3 (16 Aug 2014)
+------------------------
+
+Bug fixes:
+- Multiple stability fixes relating to accelerated window capture. Mishira should now not cause other applications to crash as much as they were before. These fixes may cause some applications to no longer be capturable.
+- Stopped spamming the log file with "cannot execute command" messages when running on a 32-bit operating system.
+
 v1.0.0-rc2 (12 Aug 2014)
 ------------------------
 
