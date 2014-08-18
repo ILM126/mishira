@@ -26,7 +26,6 @@
 
 class Layer;
 class Scene;
-class VertexBuffer;
 
 //=============================================================================
 /// <summary>
@@ -77,11 +76,11 @@ protected: // Members ---------------------------------------------------------
 #endif
 
 	// Scene buffers
-	VertexBuffer *	m_canvasBuf;
+	VidgfxVertBuf *	m_canvasBuf;
 	QRectF			m_canvasBufRect;
 	QPointF			m_canvasBufBrUv;
-	VertexBuffer *	m_outlineBuf;
-	VertexBuffer *	m_resizeRectBuf;
+	VidgfxVertBuf *	m_outlineBuf;
+	VidgfxVertBuf *	m_resizeRectBuf;
 
 	// Right-click layer context menu
 	QMenu			m_contextLayerMenu;

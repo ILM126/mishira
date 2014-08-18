@@ -27,7 +27,7 @@ const QString LOG_CAT = QStringLiteral("Scene");
 
 ImageLayer::ImageLayer(LayerGroup *parent)
 	: Layer(parent)
-	, m_vertBuf()
+	, m_vertBuf(vidgfx_texdecalbuf_new(NULL))
 	, m_imgTex(NULL)
 	, m_filenameChanged(true)
 
@@ -49,6 +49,8 @@ ImageLayer::~ImageLayer()
 		delete m_imgTex;
 		m_imgTex = false;
 	}
+
+	vidgfx_texdecalbuf_destroy(m_vertBuf);
 }
 
 void ImageLayer::setFilename(const QString &filename)
@@ -72,7 +74,7 @@ void ImageLayer::setScrollSpeed(const QPoint &speed)
 	if(m_scrollSpeed.x() == 0 || m_scrollSpeed.y() == 0) {
 		// Make changing the speed nicer visually by only resetting it when
 		// required.
-		m_vertBuf.resetScrolling();
+		vidgfx_texdecalbuf_reset_scrolling(m_vertBuf);
 	}
 
 	updateResourcesIfLoaded();
@@ -116,9 +118,9 @@ void ImageLayer::initializeResources(VidgfxContext *gfx)
 
 	// Reset caching and update all resources
 	m_filenameChanged = true;
-	m_vertBuf.setContext(gfx);
-	m_vertBuf.setRect(QRectF());
-	m_vertBuf.setTextureUv(QRectF());
+	vidgfx_texdecalbuf_set_context(m_vertBuf, gfx);
+	vidgfx_texdecalbuf_set_rect(m_vertBuf, QRectF());
+	vidgfx_texdecalbuf_set_tex_uv(m_vertBuf, QRectF());
 	updateResources(gfx);
 }
 
@@ -153,7 +155,7 @@ void ImageLayer::textureMaybeChanged()
 		return;
 	}
 	const QRectF rect = scaledRectFromActualSize(vidgfx_tex_get_size(tex));
-	m_vertBuf.setRect(rect);
+	vidgfx_texdecalbuf_set_rect(m_vertBuf, rect);
 	setVisibleRect(rect.toAlignedRect());
 }
 
@@ -162,8 +164,8 @@ void ImageLayer::destroyResources(VidgfxContext *gfx)
 	appLog(LOG_CAT)
 		<< "Destroying hardware resources for layer " << getIdString();
 
-	m_vertBuf.deleteVertBuf();
-	m_vertBuf.setContext(NULL);
+	vidgfx_texdecalbuf_destroy_vert_buf(m_vertBuf);
+	vidgfx_texdecalbuf_set_context(m_vertBuf, NULL);
 	if(m_imgTex != NULL) {
 		delete m_imgTex;
 		m_imgTex = NULL;
@@ -188,14 +190,16 @@ void ImageLayer::render(
 	tex = vidgfx_context_prepare_tex(
 		gfx, tex, getVisibleRect().size(), GfxBilinearFilter, true,
 		pxSize, botRight);
-	m_vertBuf.setTextureUv(QPointF(), botRight, GfxUnchangedOrient);
+	vidgfx_texdecalbuf_set_tex_uv(
+		m_vertBuf, QPointF(), botRight, GfxUnchangedOrient);
 	vidgfx_context_set_tex(gfx, tex);
 
 	// Do the actual render
-	VertexBuffer *vertBuf = m_vertBuf.getVertBuf();
+	VidgfxVertBuf *vertBuf = vidgfx_texdecalbuf_get_vert_buf(m_vertBuf);
 	if(vertBuf != NULL) {
 		vidgfx_context_set_shader(gfx, GfxTexDecalShader);
-		vidgfx_context_set_topology(gfx, m_vertBuf.getTopology());
+		vidgfx_context_set_topology(
+			gfx, vidgfx_texdecalbuf_get_topology(m_vertBuf));
 		QColor prevCol = vidgfx_context_get_tex_decal_mod_color(gfx);
 		vidgfx_context_set_tex_decal_mod_color(
 			gfx, QColor(255, 255, 255, (int)(getOpacity() * 255.0f)));
@@ -288,5 +292,5 @@ void ImageLayer::queuedFrameEvent(uint frameNum, int numDropped)
 
 	// Apply scroll
 	QPointF scroll = scrollPerFrame * (qreal)(numDropped + 1);
-	m_vertBuf.scrollBy(scroll);
+	vidgfx_texdecalbuf_scroll_by(m_vertBuf, scroll);
 }

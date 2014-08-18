@@ -41,7 +41,7 @@ class SlideshowLayer : public Layer
 	friend class LayerGroup;
 
 private: // Datatypes ---------------------------------------------------------
-	typedef QVector<TexDecalVertBuf *> TexDecalVertBufList;
+	typedef QVector<VidgfxTexDecalBuf *> TexDecalVertBufList;
 	typedef QVector<FileImageTexture *> FileImgTexList;
 
 private: // Members -----------------------------------------------------------

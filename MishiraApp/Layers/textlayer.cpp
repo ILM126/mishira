@@ -78,7 +78,7 @@ float getDistance(const QImage &img, int x, int y, int maxDist)
 
 TextLayer::TextLayer(LayerGroup *parent)
 	: Layer(parent)
-	, m_vertBuf()
+	, m_vertBuf(vidgfx_texdecalbuf_new())
 	, m_texture(NULL)
 	, m_isTexDirty(true)
 	, m_document(this)
@@ -120,6 +120,7 @@ TextLayer::TextLayer(LayerGroup *parent)
 
 TextLayer::~TextLayer()
 {
+	vidgfx_texdecalbuf_destroy(m_vertBuf);
 }
 
 void TextLayer::setDocumentHtml(const QString &html)
@@ -184,7 +185,7 @@ void TextLayer::setScrollSpeed(const QPoint &speed)
 	if(m_scrollSpeed.x() == 0 || m_scrollSpeed.y() == 0) {
 		// Make changing the speed nicer visually by only resetting it when
 		// required.
-		m_vertBuf.resetScrolling();
+		vidgfx_texdecalbuf_reset_scrolling(m_vertBuf);
 	}
 
 	updateResourcesIfLoaded();
@@ -212,9 +213,9 @@ void TextLayer::initializeResources(VidgfxContext *gfx)
 	appLog(LOG_CAT)
 		<< "Creating hardware resources for layer " << getIdString();
 
-	m_vertBuf.setContext(gfx);
-	m_vertBuf.setRect(QRectF());
-	m_vertBuf.setTextureUv(QRectF());
+	vidgfx_texdecalbuf_set_context(m_vertBuf, gfx);
+	vidgfx_texdecalbuf_set_rect(m_vertBuf, QRectF());
+	vidgfx_texdecalbuf_set_tex_uv(m_vertBuf, QRectF());
 	m_isTexDirty = true;
 	updateResources(gfx);
 }
@@ -514,8 +515,9 @@ void TextLayer::updateResources(VidgfxContext *gfx)
 		exStrokeSize, m_rect, LyrActualScale, alignment);
 	rect.adjust(-m_strokeSize, -m_strokeSize, m_strokeSize, m_strokeSize);
 
-	m_vertBuf.setRect(rect);
-	m_vertBuf.setTextureUv(QRectF(0.0, 0.0, 1.0, 1.0), GfxUnchangedOrient);
+	vidgfx_texdecalbuf_set_rect(m_vertBuf, rect);
+	vidgfx_texdecalbuf_set_tex_uv(
+		m_vertBuf, QRectF(0.0, 0.0, 1.0, 1.0), GfxUnchangedOrient);
 	setVisibleRect(rect.toAlignedRect());
 }
 
@@ -524,8 +526,8 @@ void TextLayer::destroyResources(VidgfxContext *gfx)
 	appLog(LOG_CAT)
 		<< "Destroying hardware resources for layer " << getIdString();
 
-	m_vertBuf.deleteVertBuf();
-	m_vertBuf.setContext(NULL);
+	vidgfx_texdecalbuf_destroy_vert_buf(m_vertBuf);
+	vidgfx_texdecalbuf_set_context(m_vertBuf, NULL);
 	vidgfx_context_destroy_tex(gfx, m_texture);
 	m_texture = NULL;
 }
@@ -540,12 +542,13 @@ void TextLayer::render(
 		updateResources(gfx);
 	}
 
-	VertexBuffer *vertBuf = m_vertBuf.getVertBuf();
+	VidgfxVertBuf *vertBuf = vidgfx_texdecalbuf_get_vert_buf(m_vertBuf);
 	if(m_texture == NULL || vertBuf == NULL)
 		return; // Nothing to render
 
 	vidgfx_context_set_shader(gfx, GfxTexDecalShader);
-	vidgfx_context_set_topology(gfx, m_vertBuf.getTopology());
+	vidgfx_context_set_topology(
+		gfx, vidgfx_texdecalbuf_get_topology(m_vertBuf));
 	vidgfx_context_set_blending(gfx, GfxAlphaBlending);
 	QColor prevCol = vidgfx_context_get_tex_decal_mod_color(gfx);
 	vidgfx_context_set_tex_decal_mod_color(
@@ -657,5 +660,5 @@ void TextLayer::queuedFrameEvent(uint frameNum, int numDropped)
 
 	// Apply scroll
 	QPointF scroll = scrollPerFrame * (qreal)(numDropped + 1);
-	m_vertBuf.scrollBy(scroll);
+	vidgfx_texdecalbuf_scroll_by(m_vertBuf, scroll);
 }

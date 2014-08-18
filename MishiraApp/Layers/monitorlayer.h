@@ -36,12 +36,12 @@ private: // Members -----------------------------------------------------------
 	CaptureObject *	m_captureObj;
 	QSize			m_curSize;
 	bool			m_curFlipped;
-	VertexBuffer *	m_vertBuf;
+	VidgfxVertBuf *	m_vertBuf;
 	QRectF			m_vertBufRect;
 	QPointF			m_vertBufTlUv;
 	QPointF			m_vertBufBrUv;
 	bool			m_vertBufFlipped;
-	VertexBuffer *	m_cursorVertBuf;
+	VidgfxVertBuf *	m_cursorVertBuf;
 	QRectF			m_cursorVertBufRect;
 	QPointF			m_cursorVertBufBrUv;
 	bool			m_monitorChanged;

@@ -30,7 +30,6 @@ class AudioMixer;
 class LayerGroup;
 class Scene;
 class Target;
-class VertexBuffer;
 class VideoEncoder;
 
 typedef QVector<Scene *> SceneList;
@@ -66,7 +65,7 @@ private: // Members -----------------------------------------------------------
 	// Transitions
 	PrflTransition		m_transition; // Current transition
 	AnimatedFloat		m_transitionAni; // Current transition
-	VertexBuffer *		m_fadeVertBuf;
+	VidgfxVertBuf *		m_fadeVertBuf;
 	int					m_activeTransition;
 	PrflTransition		m_transitions[NumTransitionSettings];
 	uint				m_transitionDursMsec[NumTransitionSettings];

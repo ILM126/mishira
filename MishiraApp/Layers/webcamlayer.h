@@ -21,7 +21,6 @@
 #include "layer.h"
 
 class LayerDialog;
-class VertexBuffer;
 class VideoSource;
 
 //=============================================================================
@@ -35,7 +34,7 @@ private: // Members -----------------------------------------------------------
 
 	bool			m_deviceIdChanged;
 	VideoSource *	m_vidSource;
-	VertexBuffer *	m_vertBuf;
+	VidgfxVertBuf *	m_vertBuf;
 	QRectF			m_vertBufRect;
 	QPointF			m_vertBufBrUv;
 	GfxOrientation	m_vertOrient;

@@ -361,7 +361,7 @@ void SlideshowLayer::textureMaybeChanged(int id)
 	if(id < 0 || id >= m_imgTexs.size())
 		return; // Invalid image
 	FileImageTexture *imgTex = m_imgTexs.at(id);
-	TexDecalVertBuf *vertBuf = m_vertBufs.at(id);
+	VidgfxTexDecalBuf *vertBuf = m_vertBufs.at(id);
 
 	// Update vertex buffer and visible rectangle
 	if(imgTex == NULL) {
@@ -376,7 +376,7 @@ void SlideshowLayer::textureMaybeChanged(int id)
 		return;
 	}
 	const QRectF rect = scaledRectFromActualSize(vidgfx_tex_get_size(tex));
-	vertBuf->setRect(rect);
+	vidgfx_texdecalbuf_set_rect(vertBuf, rect);
 	if(id == m_curId)
 		setVisibleRect(rect.toAlignedRect());
 }
@@ -400,7 +400,7 @@ void SlideshowLayer::renderImage(VidgfxContext *gfx, int id, float opacity)
 		return; // Invisible image
 	if(id < 0 || id >= m_imgTexs.size())
 		return; // Invalid image
-	TexDecalVertBuf *texVertBuf = m_vertBufs.at(id);
+	VidgfxTexDecalBuf *texVertBuf = m_vertBufs.at(id);
 	FileImageTexture *imgTex = m_imgTexs.at(id);
 	VidgfxTex *tex = imgTex->getTexture();
 	if(tex == NULL)
@@ -415,14 +415,16 @@ void SlideshowLayer::renderImage(VidgfxContext *gfx, int id, float opacity)
 	tex = vidgfx_context_prepare_tex(
 		gfx, tex, getVisibleRect().size(), GfxBilinearFilter, true,
 		pxSize, botRight);
-	texVertBuf->setTextureUv(QPointF(), botRight, GfxUnchangedOrient);
+	vidgfx_texdecalbuf_set_tex_uv(
+		texVertBuf, QPointF(), botRight, GfxUnchangedOrient);
 	vidgfx_context_set_tex(gfx, tex);
 
 	// Do the actual render
-	VertexBuffer *vertBuf = texVertBuf->getVertBuf();
+	VidgfxVertBuf *vertBuf = vidgfx_texdecalbuf_get_vert_buf(texVertBuf);
 	if(vertBuf != NULL) {
 		vidgfx_context_set_shader(gfx, GfxTexDecalShader);
-		vidgfx_context_set_topology(gfx, texVertBuf->getTopology());
+		vidgfx_context_set_topology(
+			gfx, vidgfx_texdecalbuf_get_topology(texVertBuf));
 		if(imgTex->hasTransparency() || opacity < 1.0f)
 			vidgfx_context_set_blending(gfx, GfxAlphaBlending);
 		else

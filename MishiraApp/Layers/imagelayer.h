@@ -19,7 +19,7 @@
 #define IMAGELAYER_H
 
 #include "layer.h"
-#include <Libvidgfx/graphicscontext.h>
+#include <Libvidgfx/libvidgfx.h>
 
 class FileImageTexture;
 class LayerDialog;
@@ -31,7 +31,7 @@ class ImageLayer : public Layer
 	Q_OBJECT
 
 private: // Members -----------------------------------------------------------
-	TexDecalVertBuf		m_vertBuf;
+	VidgfxTexDecalBuf *	m_vertBuf;
 	FileImageTexture *	m_imgTex;
 	bool				m_filenameChanged;
 

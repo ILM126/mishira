@@ -19,12 +19,11 @@
 #define TEXTLAYER_H
 
 #include "layer.h"
-#include <Libvidgfx/graphicscontext.h>
+#include <Libvidgfx/libvidgfx.h>
 #include <QtGui/QColor>
 #include <QtGui/QTextDocument>
 
 class LayerDialog;
-class VertexBuffer;
 
 //=============================================================================
 class TextLayer : public Layer
@@ -33,15 +32,15 @@ class TextLayer : public Layer
 	friend class ScriptTextLayer;
 
 private: // Members -----------------------------------------------------------
-	TexDecalVertBuf	m_vertBuf;
-	VidgfxTex *		m_texture;
-	bool			m_isTexDirty;
-	QTextDocument	m_document;
-	int				m_strokeSize;
-	QColor			m_strokeColor;
-	bool			m_wordWrap;
-	QColor			m_dialogBgColor;
-	QPoint			m_scrollSpeed; // Pixels per second
+	VidgfxTexDecalBuf *	m_vertBuf;
+	VidgfxTex *			m_texture;
+	bool				m_isTexDirty;
+	QTextDocument		m_document;
+	int					m_strokeSize;
+	QColor				m_strokeColor;
+	bool				m_wordWrap;
+	QColor				m_dialogBgColor;
+	QPoint				m_scrollSpeed; // Pixels per second
 
 private: // Constructor/destructor --------------------------------------------
 	TextLayer(LayerGroup *parent);

@@ -22,7 +22,6 @@
 #include <QtGui/QColor>
 
 class LayerDialog;
-class VertexBuffer;
 
 //=============================================================================
 class SyncLayer : public Layer
@@ -30,9 +29,9 @@ class SyncLayer : public Layer
 	friend class LayerGroup;
 
 private: // Members -----------------------------------------------------------
-	VertexBuffer *	m_vertBufA; // Moving metronome
-	VertexBuffer *	m_vertBufB; // Static center
-	VertexBuffer *	m_vertBufC; // Static center
+	VidgfxVertBuf *	m_vertBufA; // Moving metronome
+	VidgfxVertBuf *	m_vertBufB; // Static center
+	VidgfxVertBuf *	m_vertBufC; // Static center
 	QColor			m_color;
 	bool			m_refMetronomeDelayed;
 	bool			m_metronomeReffed;

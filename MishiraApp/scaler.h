@@ -74,9 +74,9 @@ private: // Members -----------------------------------------------------------
 	GfxPixelFormat	m_pixelFormat;
 	int				m_ref;
 
-	VertexBuffer *	m_quarterWidthBuf;
+	VidgfxVertBuf *	m_quarterWidthBuf;
 	QPointF			m_quarterWidthBufBrUv;
-	VertexBuffer *	m_nv12Buf;
+	VidgfxVertBuf *	m_nv12Buf;
 	VidgfxTex *		m_yuvScratchTex[3];
 	VidgfxTex *		m_stagingYTex[2];
 	VidgfxTex *		m_stagingUVTex[2];
