@@ -4,7 +4,7 @@ setlocal
 rem ***************************************************************************
 rem * Mishira: An audiovisual production tool for broadcasting live video
 rem *
-rem * Copyright (C) 2014 Lucas Murray <lmurray@undefinedfire.com>
+rem * Copyright (C) 2014 Lucas Murray <lucas@polyflare.com>
 rem * All rights reserved.
 rem *
 rem * This program is free software; you can redistribute it and/or modify it

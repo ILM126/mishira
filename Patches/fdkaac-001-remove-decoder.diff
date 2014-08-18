@@ -1,5 +1,5 @@
 From 8697479c5e44648e1def0af7ea65145304cd9f93 Mon Sep 17 00:00:00 2001
-From: Lucas Murray <lmurray@undefinedfire.com>
+From: Lucas Murray <lucas@polyflare.com>
 Date: Fri, 20 Dec 2013 22:43:04 +0800
 Subject: [PATCH] Do not compile the decoder at all
 
