@@ -145,10 +145,10 @@ private: // Members -----------------------------------------------------------
 	uint			m_curSampleNum;
 	bool			m_curSampleProcessed;
 	GfxPixelFormat	m_curFormat;
-	Texture *		m_curPlaneA;
-	Texture *		m_curPlaneB;
-	Texture *		m_curPlaneC;
-	Texture *		m_curTexture;
+	VidgfxTex *		m_curPlaneA;
+	VidgfxTex *		m_curPlaneB;
+	VidgfxTex *		m_curPlaneC;
+	VidgfxTex *		m_curTexture;
 
 public: // Static methods -----------------------------------------------------
 	static void			populateSources(
@@ -184,7 +184,7 @@ public: // Interface ----------------------------------------------------------
 	virtual void		dereference();
 	virtual int			getRefCount();
 	virtual void		prepareFrame(uint frameNum, int numDropped);
-	virtual Texture *	getCurrentFrame();
+	virtual VidgfxTex *	getCurrentFrame();
 	virtual bool		isFrameFlipped() const;
 	virtual QVector<float>	getFramerates() const;
 	virtual QVector<QSize>	getSizesForFramerate(float framerate) const;

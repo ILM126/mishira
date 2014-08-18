@@ -1477,7 +1477,7 @@ void Profile::render(VidgfxContext *gfx, uint frameNum, int numDropped)
 			break; }
 		}
 	}
-	Texture *targetTex = vidgfx_context_get_target_tex(gfx, target);
+	VidgfxTex *targetTex = vidgfx_context_get_target_tex(gfx, target);
 	emit frameRendered(targetTex, frameNum, numDropped);
 }
 

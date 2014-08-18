@@ -147,12 +147,12 @@ void ImageLayer::textureMaybeChanged()
 		setVisibleRect(QRect()); // Layer is invisible
 		return;
 	}
-	Texture *tex = m_imgTex->getTexture();
+	VidgfxTex *tex = m_imgTex->getTexture();
 	if(tex == NULL) {
 		setVisibleRect(QRect()); // Layer is invisible
 		return;
 	}
-	const QRectF rect = scaledRectFromActualSize(tex->getSize());
+	const QRectF rect = scaledRectFromActualSize(vidgfx_tex_get_size(tex));
 	m_vertBuf.setRect(rect);
 	setVisibleRect(rect.toAlignedRect());
 }
@@ -175,7 +175,7 @@ void ImageLayer::render(
 {
 	if(m_imgTex == NULL)
 		return; // Nothing to render
-	Texture *tex = m_imgTex->getTexture();
+	VidgfxTex *tex = m_imgTex->getTexture();
 	if(tex == NULL)
 		return; // Image not loaded yet or an error occurred during load
 

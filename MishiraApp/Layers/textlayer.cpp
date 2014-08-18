@@ -507,7 +507,7 @@ void TextLayer::updateResources(VidgfxContext *gfx)
 		alignment = LyrBottomLeftAlign;
 		break;
 	}
-	QSize exStrokeSize = m_texture->getSize();
+	QSize exStrokeSize = vidgfx_tex_get_size(m_texture);
 	exStrokeSize.rwidth() -= m_strokeSize * 2;
 	exStrokeSize.rheight() -= m_strokeSize * 2;
 	QRectF rect = createScaledRectInBounds(

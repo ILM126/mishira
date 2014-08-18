@@ -24,7 +24,6 @@
 #include <QtGui/QTextDocument>
 
 class LayerDialog;
-class Texture;
 class VertexBuffer;
 
 //=============================================================================
@@ -35,7 +34,7 @@ class TextLayer : public Layer
 
 private: // Members -----------------------------------------------------------
 	TexDecalVertBuf	m_vertBuf;
-	Texture *		m_texture;
+	VidgfxTex *		m_texture;
 	bool			m_isTexDirty;
 	QTextDocument	m_document;
 	int				m_strokeSize;

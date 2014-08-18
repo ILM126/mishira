@@ -77,9 +77,9 @@ private: // Members -----------------------------------------------------------
 	VertexBuffer *	m_quarterWidthBuf;
 	QPointF			m_quarterWidthBufBrUv;
 	VertexBuffer *	m_nv12Buf;
-	Texture *		m_yuvScratchTex[3];
-	Texture *		m_stagingYTex[2];
-	Texture *		m_stagingUVTex[2];
+	VidgfxTex *		m_yuvScratchTex[3];
+	VidgfxTex *		m_stagingYTex[2];
+	VidgfxTex *		m_stagingUVTex[2];
 	uint			m_delayedFrameNum[2];
 	int				m_delayedNumDropped[2];
 	int				m_prevStagingTex;
@@ -116,7 +116,7 @@ Q_SIGNALS: // Signals ---------------------------------------------------------
 
 	public
 Q_SLOTS: // Slots -------------------------------------------------------------
-	void	frameRendered(Texture *tex, uint frameNum, int numDropped);
+	void	frameRendered(VidgfxTex *tex, uint frameNum, int numDropped);
 	void	initializeResources(VidgfxContext *gfx);
 	void	destroyResources(VidgfxContext *gfx);
 };

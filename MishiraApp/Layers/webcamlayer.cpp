@@ -201,18 +201,18 @@ void WebcamLayer::render(
 
 	// Get the latest video frame from the video source. The returned texture
 	// is valid only for the duration of this render method.
-	Texture *tex = m_vidSource->getCurrentFrame();
-	if(tex == NULL || tex->getSize().isEmpty())
+	VidgfxTex *tex = m_vidSource->getCurrentFrame();
+	if(tex == NULL || vidgfx_tex_get_size(tex).isEmpty())
 		return; // Nothing to render
 	bool texSizeChanged = false;
-	if(m_lastTexSize != tex->getSize()) {
+	if(m_lastTexSize != vidgfx_tex_get_size(tex)) {
 		texSizeChanged = true;
-		m_lastTexSize = tex->getSize();
+		m_lastTexSize = vidgfx_tex_get_size(tex);
 	}
 
 	// Prepare texture for render. TODO: Filter mode selection?
 	QPointF pxSize, botRight;
-	QSize visSize = scaledRectFromActualSize(tex->getSize()).size();
+	QSize visSize = scaledRectFromActualSize(vidgfx_tex_get_size(tex)).size();
 	tex = vidgfx_context_prepare_tex(
 		gfx, tex, visSize, GfxBilinearFilter, true, pxSize, botRight);
 	if(m_vertBufBrUv != botRight || texSizeChanged)

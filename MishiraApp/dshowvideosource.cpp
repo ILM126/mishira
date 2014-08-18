@@ -362,12 +362,12 @@ QString getDShowErrorCode(HRESULT res)
 /// Copies a single frame's plane to the specified texture.
 /// </summary>
 /// <returns>The first byte after the plane</returns>
-uchar *copyPlaneToTex(Texture *tex, uchar *src, const QSize &planeSizeBytes)
+uchar *copyPlaneToTex(VidgfxTex *tex, uchar *src, const QSize &planeSizeBytes)
 {
-	uchar *texData = reinterpret_cast<uchar *>(tex->map());
-	imgDataCopy(texData, src, tex->getStride(), planeSizeBytes.width(),
-		planeSizeBytes);
-	tex->unmap();
+	uchar *texData = reinterpret_cast<uchar *>(vidgfx_tex_map(tex));
+	imgDataCopy(texData, src, vidgfx_tex_get_stride(tex),
+		planeSizeBytes.width(), planeSizeBytes);
+	vidgfx_tex_unmap(tex);
 	src += planeSizeBytes.width() * planeSizeBytes.height();
 	return src;
 }
@@ -1410,7 +1410,7 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 		}
 	} else {
 		// Make sure the size variable is defined
-		texSize = m_curTexture->getSize();
+		texSize = vidgfx_tex_get_size(m_curTexture);
 	}
 
 	// Do the actual conversion
@@ -1422,8 +1422,9 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 	default:
 	case GfxRGB24Format: {
 		// We must convert from 24-bit RGB to 32-bit RGB
-		uchar *texData = reinterpret_cast<uchar *>(m_curTexture->map());
-		int texStride = m_curTexture->getStride();
+		uchar *texData =
+			reinterpret_cast<uchar *>(vidgfx_tex_map(m_curTexture));
+		int texStride = vidgfx_tex_get_stride(m_curTexture);
 		uchar *in = sampleData;
 		for(int y = 0; y < texSize.height(); y++) {
 			uchar *out = &texData[y*texStride];
@@ -1434,7 +1435,7 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 				*(out++) = 0xFF;
 			}
 		}
-		m_curTexture->unmap();
+		vidgfx_tex_unmap(m_curTexture);
 		break; }
 	case GfxRGB32Format: // DXGI_FORMAT_B8G8R8X8_UNORM
 	case GfxARGB32Format: { // DXGI_FORMAT_B8G8R8A8_UNORM
@@ -1451,7 +1452,7 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 		in = copyPlaneToTex(m_curPlaneC, in, halfSize);
 
 		// Convert to BGRX
-		Texture *tmpTex = vidgfx_context_convert_to_bgrx(
+		VidgfxTex *tmpTex = vidgfx_context_convert_to_bgrx(
 			gfx, m_curFormat, m_curPlaneA, m_curPlaneB, m_curPlaneC);
 		if(tmpTex != NULL) {
 			vidgfx_context_copy_tex_data(gfx, m_curTexture, tmpTex,
@@ -1466,7 +1467,7 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 		in = copyPlaneToTex(m_curPlaneB, in, halfHeight);
 
 		// Convert to BGRX
-		Texture *tmpTex = vidgfx_context_convert_to_bgrx(
+		VidgfxTex *tmpTex = vidgfx_context_convert_to_bgrx(
 			gfx, m_curFormat, m_curPlaneA, m_curPlaneB, NULL);
 		if(tmpTex != NULL) {
 			vidgfx_context_copy_tex_data(gfx, m_curTexture, tmpTex,
@@ -1481,7 +1482,7 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 		copyPlaneToTex(m_curPlaneA, sampleData, packedWidth);
 
 		// Convert to BGRX
-		Texture *tmpTex = vidgfx_context_convert_to_bgrx(
+		VidgfxTex *tmpTex = vidgfx_context_convert_to_bgrx(
 			gfx, m_curFormat, m_curPlaneA, NULL, NULL);
 		if(tmpTex != NULL) {
 			vidgfx_context_copy_tex_data(gfx, m_curTexture, tmpTex,
@@ -1594,7 +1595,7 @@ void DShowVideoSource::prepareFrame(uint frameNum, int numDropped)
 	m_curSampleProcessed = false;
 }
 
-Texture *DShowVideoSource::getCurrentFrame()
+VidgfxTex *DShowVideoSource::getCurrentFrame()
 {
 	if(m_ref <= 0)
 		return NULL; // Not enabled

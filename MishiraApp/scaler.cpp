@@ -200,7 +200,7 @@ void Scaler::release()
 	this->deleteLater();
 }
 
-void Scaler::frameRendered(Texture *tex, uint frameNum, int numDropped)
+void Scaler::frameRendered(VidgfxTex *tex, uint frameNum, int numDropped)
 {
 	// If the user is only previewing, don't waste any resources transferring
 	// the frames to system memory
@@ -251,17 +251,19 @@ void Scaler::frameRendered(Texture *tex, uint frameNum, int numDropped)
 	// video encoders
 	if(!m_startDelay) {
 		// Shorthand
-		Texture *yTex = m_stagingYTex[curStagingTex];
-		Texture *uvTex = m_stagingUVTex[curStagingTex];
+		VidgfxTex *yTex = m_stagingYTex[curStagingTex];
+		VidgfxTex *uvTex = m_stagingUVTex[curStagingTex];
 
-		yTex->map();
-		uvTex->map();
-		if(yTex->isMapped() && uvTex->isMapped()) {
+		vidgfx_tex_map(yTex);
+		vidgfx_tex_map(uvTex);
+		if(vidgfx_tex_is_mapped(yTex) && vidgfx_tex_is_mapped(uvTex)) {
 			NV12Frame frame;
-			frame.yPlane = static_cast<quint8 *>(yTex->getDataPtr());
-			frame.uvPlane = static_cast<quint8 *>(uvTex->getDataPtr());
-			frame.yStride = yTex->getStride();
-			frame.uvStride = uvTex->getStride();
+			frame.yPlane =
+				static_cast<quint8 *>(vidgfx_tex_get_data_ptr(yTex));
+			frame.uvPlane =
+				static_cast<quint8 *>(vidgfx_tex_get_data_ptr(uvTex));
+			frame.yStride = vidgfx_tex_get_stride(yTex);
+			frame.uvStride = vidgfx_tex_get_stride(uvTex);
 			emit nv12FrameReady(
 				frame, m_delayedFrameNum[curStagingTex],
 				m_delayedNumDropped[curStagingTex]);
@@ -270,8 +272,8 @@ void Scaler::frameRendered(Texture *tex, uint frameNum, int numDropped)
 			// fails? What about if all the code below fails?
 		}
 
-		yTex->unmap();
-		uvTex->unmap();
+		vidgfx_tex_unmap(yTex);
+		vidgfx_tex_unmap(uvTex);
 	}
 	if(m_startDelay > 0)
 		m_startDelay--;

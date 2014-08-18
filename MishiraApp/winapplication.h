@@ -48,7 +48,7 @@ private: // Members -----------------------------------------------------------
 	// System cursor
 	bool			m_cursorDirty;
 	HCURSOR			m_cursorCached;
-	Texture *		m_cursorTexture;
+	VidgfxTex *		m_cursorTexture;
 	QPoint			m_cursorPos;
 	QPoint			m_cursorOffset;
 	bool			m_cursorVisible;
@@ -65,7 +65,7 @@ public: // Methods ------------------------------------------------------------
 public: // Interface ----------------------------------------------------------
 	virtual void		logSystemInfo();
 	virtual void		hideLauncherSplash();
-	virtual Texture *	getSystemCursorInfo(
+	virtual VidgfxTex *	getSystemCursorInfo(
 		QPoint *globalPos, QPoint *offset, bool *isVisible);
 private:
 	virtual void		resetSystemCursorInfo();

@@ -369,13 +369,13 @@ void SlideshowLayer::textureMaybeChanged(int id)
 			setVisibleRect(QRect()); // Layer is invisible
 		return;
 	}
-	Texture *tex = imgTex->getTexture();
+	VidgfxTex *tex = imgTex->getTexture();
 	if(tex == NULL) {
 		if(id == m_curId)
 			setVisibleRect(QRect()); // Layer is invisible
 		return;
 	}
-	const QRectF rect = scaledRectFromActualSize(tex->getSize());
+	const QRectF rect = scaledRectFromActualSize(vidgfx_tex_get_size(tex));
 	vertBuf->setRect(rect);
 	if(id == m_curId)
 		setVisibleRect(rect.toAlignedRect());
@@ -402,7 +402,7 @@ void SlideshowLayer::renderImage(VidgfxContext *gfx, int id, float opacity)
 		return; // Invalid image
 	TexDecalVertBuf *texVertBuf = m_vertBufs.at(id);
 	FileImageTexture *imgTex = m_imgTexs.at(id);
-	Texture *tex = imgTex->getTexture();
+	VidgfxTex *tex = imgTex->getTexture();
 	if(tex == NULL)
 		return; // Image not loaded yet or an error occurred during load
 

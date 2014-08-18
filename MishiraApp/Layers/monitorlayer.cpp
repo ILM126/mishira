@@ -326,7 +326,7 @@ void MonitorLayer::render(
 	// TODO: Filter mode selection
 	QPointF pxSize, topLeft, botRight;
 	QRect cropRect = m_cropInfo.calcCroppedRectForSize(m_curSize);
-	Texture *tex = vidgfx_context_prepare_tex(
+	VidgfxTex *tex = vidgfx_context_prepare_tex(
 		gfx, m_captureObj->getTexture(), cropRect,
 		m_vertBufRect.toAlignedRect().size(), GfxBilinearFilter, true, pxSize,
 		topLeft, botRight);
@@ -338,7 +338,7 @@ void MonitorLayer::render(
 	// TODO: 2.233333 gamma isn't really accurate, see:
 	// http://chilliant.blogspot.com.au/2012/08/srgb-approximations-for-hlsl.html
 	float gamma = m_gamma;
-	if(tex->isSrgbHack())
+	if(vidgfx_tex_is_srgb_hack(tex))
 		gamma *= 2.233333f;
 
 	// Do the actual render
@@ -368,7 +368,7 @@ void MonitorLayer::render(
 	QPoint globalPos;
 	QPoint offset;
 	bool isVisible;
-	Texture *cursorTex =
+	VidgfxTex *cursorTex =
 		App->getSystemCursorInfo(&globalPos, &offset, &isVisible);
 	if(cursorTex == NULL || !isVisible)
 		return;
@@ -388,7 +388,8 @@ void MonitorLayer::render(
 		gfx, cursorTex, m_cursorVertBufRect.toAlignedRect().size(),
 		GfxBilinearFilter, true, pxSize, botRight);
 	updateCursorVertBuf( // Always update
-		gfx, botRight, QRect(localPos + offset, cursorTex->getSize()));
+		gfx, botRight, QRect(localPos + offset,
+		vidgfx_tex_get_size(cursorTex)));
 	vidgfx_context_set_tex(gfx, tex);
 
 	// Do the actual render

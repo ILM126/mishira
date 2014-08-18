@@ -465,7 +465,7 @@ void WinApplication::hideLauncherSplash()
 /// Gets the texture, position and state of the current system mouse cursor.
 /// Position is in screen coordinates.
 /// </summary>
-Texture *WinApplication::getSystemCursorInfo(
+VidgfxTex *WinApplication::getSystemCursorInfo(
 	QPoint *globalPos, QPoint *offset, bool *isVisible)
 {
 	if(!m_cursorDirty)

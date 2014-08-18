@@ -97,7 +97,7 @@ bool FileImageTexture::resetAnimation(bool fullReset, bool updateTexture)
 	// Upload the first frame to the texture if requested
 	if(updateTexture) {
 		QImage img = m_imgReader.read();
-		m_tex->updateData(img);
+		vidgfx_tex_update_data(m_tex, img);
 		m_usecToNextFrame = m_imgReader.nextImageDelay() * 1000;
 		return true;
 	}
@@ -146,7 +146,7 @@ bool FileImageTexture::processFrameEvent(uint frameNum, int numDropped)
 				m_loopCount++;
 			}
 		}
-		m_tex->updateData(img);
+		vidgfx_tex_update_data(m_tex, img);
 		return true;
 	}
 

@@ -30,7 +30,6 @@ class AudioMixer;
 class LayerGroup;
 class Scene;
 class Target;
-class Texture;
 class VertexBuffer;
 class VideoEncoder;
 
@@ -194,7 +193,7 @@ Q_SIGNALS: // Signals ---------------------------------------------------------
 	void			canvasSizeChanged(const QSize &oldSize);
 	void			audioModeChanged(PrflAudioMode mode);
 	void			frameRendered(
-		Texture *tex, uint frameNum, int numDropped);
+		VidgfxTex *tex, uint frameNum, int numDropped);
 	void			transitionsChanged();
 
 	public

@@ -40,7 +40,6 @@ class MainWindow;
 class Profile;
 class Scene;
 class SceneItem;
-class Texture;
 class VideoSourceManager;
 class WizardWindow;
 class QAbstractButton;
@@ -208,7 +207,7 @@ protected:
 public: // Interface ----------------------------------------------------------
 	virtual void		logSystemInfo() = 0;
 	virtual void		hideLauncherSplash() = 0;
-	virtual Texture *	getSystemCursorInfo(
+	virtual VidgfxTex *	getSystemCursorInfo(
 		QPoint *globalPos, QPoint *offset, bool *isVisible) = 0;
 private:
 	virtual void		resetSystemCursorInfo() = 0;

@@ -21,7 +21,6 @@
 #include "layer.h"
 
 class LayerDialog;
-class Texture;
 class VertexBuffer;
 class VideoSource;
 

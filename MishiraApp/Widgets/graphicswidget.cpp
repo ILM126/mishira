@@ -286,7 +286,7 @@ void GraphicsWidget::renderScreen(VidgfxContext *gfx)
 #if HIGH_QUALITY_PREVIEW
 	// TODO: Filter mode selection
 	QPointF pxSize, botRight;
-	Texture *tex = vidgfx_context_prepare_tex(
+	VidgfxTex *tex = vidgfx_context_prepare_tex(
 		gfx, vidgfx_context_get_target_tex(gfx, GfxCanvas1Target),
 		m_canvasBufRect.toAlignedRect().size(), GfxBilinearFilter, true,
 		pxSize, botRight);
