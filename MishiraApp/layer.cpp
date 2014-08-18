@@ -377,8 +377,8 @@ QRect Layer::scaledRectFromActualSize(const QSize &size) const
 void Layer::updateResourcesIfLoaded()
 {
 	if(m_isLoaded && !m_isInitializing) {
-		GraphicsContext *gfx = App->getGraphicsContext();
-		if(gfx != NULL && gfx->isValid())
+		VidgfxContext *gfx = App->getGraphicsContext();
+		if(vidgfx_context_is_valid(gfx))
 			updateResources(gfx);
 	}
 }
@@ -389,15 +389,15 @@ void Layer::initializedEvent()
 
 void Layer::loadEvent()
 {
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx != NULL && gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(vidgfx_context_is_valid(gfx))
 		initializeResources(gfx);
 }
 
 void Layer::unloadEvent()
 {
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx != NULL && gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(vidgfx_context_is_valid(gfx))
 		destroyResources(gfx);
 }
 
@@ -417,23 +417,23 @@ void Layer::parentHideEvent()
 {
 }
 
-void Layer::initializeResources(GraphicsContext *gfx)
+void Layer::initializeResources(VidgfxContext *gfx)
 {
 	Q_UNUSED(gfx);
 }
 
-void Layer::updateResources(GraphicsContext *gfx)
+void Layer::updateResources(VidgfxContext *gfx)
 {
 	Q_UNUSED(gfx);
 }
 
-void Layer::destroyResources(GraphicsContext *gfx)
+void Layer::destroyResources(VidgfxContext *gfx)
 {
 	Q_UNUSED(gfx);
 }
 
 void Layer::render(
-	GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped)
+	VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped)
 {
 	Q_UNUSED(gfx);
 	Q_UNUSED(scene);

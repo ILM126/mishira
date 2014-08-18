@@ -27,7 +27,6 @@
 
 class AudioEncoder;
 class AudioMixer;
-class GraphicsContext;
 class LayerGroup;
 class Scene;
 class Target;
@@ -173,9 +172,9 @@ private:
 
 	void			ensureActiveScene();
 
-	void			setupContext(GraphicsContext *gfx);
+	void			setupContext(VidgfxContext *gfx);
 	void			render(
-		GraphicsContext *gfx, uint frameNum, int numDropped);
+		VidgfxContext *gfx, uint frameNum, int numDropped);
 
 	void			serialize(QDataStream *stream) const;
 	bool			unserialize(QDataStream *stream);
@@ -200,8 +199,8 @@ Q_SIGNALS: // Signals ---------------------------------------------------------
 
 	public
 Q_SLOTS: // Slots -------------------------------------------------------------
-	void			graphicsContextInitialized(GraphicsContext *gfx);
-	void			graphicsContextDestroyed(GraphicsContext *gfx);
+	void			graphicsContextInitialized(VidgfxContext *gfx);
+	void			graphicsContextDestroyed(VidgfxContext *gfx);
 	void			queuedFrameEvent(uint frameNum, int numDropped);
 	void			targetActiveChanged(Target *target, bool active);
 	void			unserializeErrorTimeout();

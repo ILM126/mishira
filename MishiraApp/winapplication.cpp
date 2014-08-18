@@ -472,8 +472,8 @@ Texture *WinApplication::getSystemCursorInfo(
 		goto systemCursorInfoDone; // Skip straight to the end of the method
 
 	// Make sure we have a graphics context
-	GraphicsContext *gfx = getGraphicsContext();
-	if(gfx == NULL || !gfx->isValid())
+	VidgfxContext *gfx = getGraphicsContext();
+	if(!vidgfx_context_is_valid(gfx))
 		goto systemCursorInfoDone; // Cannot create texture
 
 	// Query basic cursor information from the OS
@@ -505,8 +505,8 @@ Texture *WinApplication::getSystemCursorInfo(
 		QImage img = imageFromIcon(info.hCursor, iconInfo);
 		img = img.convertToFormat(QImage::Format_ARGB32);
 		if(m_cursorTexture != NULL)
-			gfx->deleteTexture(m_cursorTexture);
-		m_cursorTexture = gfx->createTexture(img, false, false);
+			vidgfx_context_destroy_tex(gfx, m_cursorTexture);
+		m_cursorTexture = vidgfx_context_new_tex(gfx, img, false, false);
 		if(m_cursorTexture == NULL)
 			m_cursorVisible = false;
 
@@ -539,10 +539,10 @@ void WinApplication::resetSystemCursorInfo()
 
 void WinApplication::deleteSystemCursorInfo()
 {
-	GraphicsContext *gfx = getGraphicsContext();
-	if(gfx == NULL || !gfx->isValid())
+	VidgfxContext *gfx = getGraphicsContext();
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Cannot delete texture
-	gfx->deleteTexture(m_cursorTexture);
+	vidgfx_context_destroy_tex(gfx, m_cursorTexture);
 	m_cursorTexture = NULL;
 	m_cursorCached = NULL;
 	m_cursorDirty = true;

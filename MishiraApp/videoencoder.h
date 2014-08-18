@@ -21,7 +21,7 @@
 #include "encodedframe.h"
 #include "fraction.h"
 #include "scaler.h"
-#include <Libvidgfx/graphicscontext.h>
+#include <Libvidgfx/libvidgfx.h>
 #include <QtCore/QObject>
 #include <QtCore/QSize>
 

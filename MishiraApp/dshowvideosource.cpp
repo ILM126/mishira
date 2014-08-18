@@ -1015,16 +1015,16 @@ exitInitialize1:
 void DShowVideoSource::shutdown()
 {
 	// Reset current frame data if we have one
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx != NULL && gfx->isValid()) {
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(vidgfx_context_is_valid(gfx)) {
 		if(m_curPlaneA != NULL)
-			gfx->deleteTexture(m_curPlaneA);
+			vidgfx_context_destroy_tex(gfx, m_curPlaneA);
 		if(m_curPlaneB != NULL)
-			gfx->deleteTexture(m_curPlaneB);
+			vidgfx_context_destroy_tex(gfx, m_curPlaneB);
 		if(m_curPlaneC != NULL)
-			gfx->deleteTexture(m_curPlaneC);
+			vidgfx_context_destroy_tex(gfx, m_curPlaneC);
 		if(m_curTexture != NULL)
-			gfx->deleteTexture(m_curTexture);
+			vidgfx_context_destroy_tex(gfx, m_curTexture);
 		m_curPlaneA = NULL;
 		m_curPlaneB = NULL;
 		m_curPlaneC = NULL;
@@ -1308,8 +1308,8 @@ void DShowVideoSource::fetchAllOutputModes()
 /// </summary>
 void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 {
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx == NULL || !gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(!vidgfx_context_is_valid(gfx))
 		return; // We don't have a valid graphics context yet
 
 	// We delay determining the final sample pixel format and size until now
@@ -1369,33 +1369,43 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 		case GfxARGB32Format: // DXGI_FORMAT_B8G8R8A8_UNORM
 			// We don't use any intermediate textures for these formats, we
 			// write directly to the texture from the CPU.
-			m_curTexture = gfx->createTexture(texSize, true, false, true);
+			m_curTexture = vidgfx_context_new_tex(
+				gfx, texSize, true, false, true);
 			break;
 		case GfxYV12Format: // NxM Y, (N/2)x(M/2) V, (N/2)x(M/2) U
 		case GfxIYUVFormat: { // NxM Y, (N/2)x(M/2) U, (N/2)x(M/2) V
 			// We require 3 separate planes for these formats
 			QSize sizeA(texSize.width() / 4, texSize.height());
 			QSize sizeBC(sizeA.width() / 2, sizeA.height() / 2);
-			m_curPlaneA = gfx->createTexture(sizeA, true, false, false);
-			m_curPlaneB = gfx->createTexture(sizeBC, true, false, false);
-			m_curPlaneC = gfx->createTexture(sizeBC, true, false, false);
-			m_curTexture = gfx->createTexture(texSize, false, false, false);
+			m_curPlaneA = vidgfx_context_new_tex(
+				gfx, sizeA, true, false, false);
+			m_curPlaneB = vidgfx_context_new_tex(
+				gfx, sizeBC, true, false, false);
+			m_curPlaneC = vidgfx_context_new_tex(
+				gfx, sizeBC, true, false, false);
+			m_curTexture = vidgfx_context_new_tex(
+				gfx, texSize, false, false, false);
 			break; }
 		case GfxNV12Format: { // NxM Y, Nx(M/2) interleaved UV
 			// We require 2 separate planes for this formats
 			QSize sizeA(texSize.width() / 4, texSize.height());
 			QSize sizeB(sizeA.width(), sizeA.height() / 2);
-			m_curPlaneA = gfx->createTexture(sizeA, true, false, false);
-			m_curPlaneB = gfx->createTexture(sizeB, true, false, false);
-			m_curTexture = gfx->createTexture(texSize, false, false, false);
+			m_curPlaneA = vidgfx_context_new_tex(
+				gfx, sizeA, true, false, false);
+			m_curPlaneB = vidgfx_context_new_tex(
+				gfx, sizeB, true, false, false);
+			m_curTexture = vidgfx_context_new_tex(
+				gfx, texSize, false, false, false);
 			break; }
 		case GfxUYVYFormat: // UYVY
 		case GfxHDYCFormat: // UYVY with BT.709
 		case GfxYUY2Format: { // YUYV
 			// We only require a single plane for these formats
 			QSize sizeA(texSize.width() / 2, texSize.height());
-			m_curPlaneA = gfx->createTexture(sizeA, true, false, false);
-			m_curTexture = gfx->createTexture(texSize, false, false, false);
+			m_curPlaneA = vidgfx_context_new_tex(
+				gfx, sizeA, true, false, false);
+			m_curTexture = vidgfx_context_new_tex(
+				gfx, texSize, false, false, false);
 			break; }
 		}
 	} else {
@@ -1441,11 +1451,11 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 		in = copyPlaneToTex(m_curPlaneC, in, halfSize);
 
 		// Convert to BGRX
-		Texture *tmpTex = gfx->convertToBgrx(
-			m_curFormat, m_curPlaneA, m_curPlaneB, m_curPlaneC);
+		Texture *tmpTex = vidgfx_context_convert_to_bgrx(
+			gfx, m_curFormat, m_curPlaneA, m_curPlaneB, m_curPlaneC);
 		if(tmpTex != NULL) {
-			gfx->copyTextureData(m_curTexture, tmpTex, QPoint(0, 0),
-				QRect(QPoint(0, 0), texSize));
+			vidgfx_context_copy_tex_data(gfx, m_curTexture, tmpTex,
+				QPoint(0, 0), QRect(QPoint(0, 0), texSize));
 		}
 		break; }
 	case GfxNV12Format: { // NxM Y, Nx(M/2) interleaved UV
@@ -1456,11 +1466,11 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 		in = copyPlaneToTex(m_curPlaneB, in, halfHeight);
 
 		// Convert to BGRX
-		Texture *tmpTex = gfx->convertToBgrx(
-			m_curFormat, m_curPlaneA, m_curPlaneB, NULL);
+		Texture *tmpTex = vidgfx_context_convert_to_bgrx(
+			gfx, m_curFormat, m_curPlaneA, m_curPlaneB, NULL);
 		if(tmpTex != NULL) {
-			gfx->copyTextureData(m_curTexture, tmpTex, QPoint(0, 0),
-				QRect(QPoint(0, 0), texSize));
+			vidgfx_context_copy_tex_data(gfx, m_curTexture, tmpTex,
+				QPoint(0, 0), QRect(QPoint(0, 0), texSize));
 		}
 		break; }
 	case GfxUYVYFormat: // UYVY
@@ -1471,11 +1481,11 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 		copyPlaneToTex(m_curPlaneA, sampleData, packedWidth);
 
 		// Convert to BGRX
-		Texture *tmpTex = gfx->convertToBgrx(
-			m_curFormat, m_curPlaneA, NULL, NULL);
+		Texture *tmpTex = vidgfx_context_convert_to_bgrx(
+			gfx, m_curFormat, m_curPlaneA, NULL, NULL);
 		if(tmpTex != NULL) {
-			gfx->copyTextureData(m_curTexture, tmpTex, QPoint(0, 0),
-				QRect(QPoint(0, 0), texSize));
+			vidgfx_context_copy_tex_data(gfx, m_curTexture, tmpTex,
+				QPoint(0, 0), QRect(QPoint(0, 0), texSize));
 		}
 		break; }
 	}

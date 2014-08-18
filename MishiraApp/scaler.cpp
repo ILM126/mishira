@@ -19,6 +19,7 @@
 #include "application.h"
 #include "scene.h"
 #include "profile.h"
+#include <Libvidgfx/graphicscontext.h>
 
 //=============================================================================
 // Helpers
@@ -55,6 +56,18 @@ static void testNV12Image(
 //=============================================================================
 // Scaler class
 
+static void gfxInitializedHandler(void *opaque, VidgfxContext *context)
+{
+	Scaler *scaler = static_cast<Scaler *>(opaque);
+	scaler->initializeResources(context);
+}
+
+static void gfxDestroyingHandler(void *opaque, VidgfxContext *context)
+{
+	Scaler *scaler = static_cast<Scaler *>(opaque);
+	scaler->destroyResources(context);
+}
+
 QVector<Scaler *> Scaler::s_instances;
 
 Scaler *Scaler::getOrCreate(
@@ -80,7 +93,7 @@ Scaler *Scaler::getOrCreate(
 	return scaler;
 }
 
-void Scaler::graphicsContextInitialized(GraphicsContext *gfx)
+void Scaler::graphicsContextInitialized(VidgfxContext *gfx)
 {
 	if(gfx == NULL)
 		return; // Extra safe
@@ -88,14 +101,14 @@ void Scaler::graphicsContextInitialized(GraphicsContext *gfx)
 	// Forward the signal to all scalers
 	for(int i = 0; i < s_instances.count(); i++) {
 		Scaler *scaler = s_instances.at(i);
-		if(gfx->isValid())
+		if(vidgfx_context_is_valid(gfx))
 			scaler->initializeResources(gfx);
 		else {
-			connect(gfx, &GraphicsContext::initialized,
-				scaler, &Scaler::initializeResources);
+			vidgfx_context_add_initialized_callback(
+				gfx, gfxInitializedHandler, scaler);
 		}
-		connect(gfx, &GraphicsContext::destroying,
-			scaler, &Scaler::destroyResources);
+		vidgfx_context_add_destroying_callback(
+			gfx, gfxDestroyingHandler, scaler);
 	}
 }
 
@@ -139,23 +152,31 @@ Scaler::Scaler(
 
 	// As scalers can be constructed before the graphics context make sure we
 	// delay initialization of our hardware resources until it's safe
-	GraphicsContext *gfx = App->getGraphicsContext();
+	VidgfxContext *gfx = App->getGraphicsContext();
 	if(gfx != NULL) {
-		if(gfx->isValid())
+		if(vidgfx_context_is_valid(gfx))
 			initializeResources(gfx);
 		else {
-			connect(gfx, &GraphicsContext::initialized,
-				this, &Scaler::initializeResources);
+			vidgfx_context_add_initialized_callback(
+				gfx, gfxInitializedHandler, this);
 		}
-		connect(gfx, &GraphicsContext::destroying,
-			this, &Scaler::destroyResources);
+		vidgfx_context_add_destroying_callback(
+			gfx, gfxDestroyingHandler, this);
 	}
 }
 
 Scaler::~Scaler()
 {
+	// Remove callbacks
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(vidgfx_context_is_valid(gfx)) {
+		vidgfx_context_remove_initialized_callback(
+			gfx, gfxInitializedHandler, this);
+		vidgfx_context_remove_destroying_callback(
+			gfx, gfxDestroyingHandler, this);
+	}
+
 	// Destroy hardware resources if required
-	GraphicsContext *gfx = App->getGraphicsContext();
 	if(gfx != NULL)
 		destroyResources(gfx);
 }
@@ -191,8 +212,8 @@ void Scaler::frameRendered(Texture *tex, uint frameNum, int numDropped)
 		return;
 
 	// Get the graphics context
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx == NULL || !gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be usuable
 
 	//-------------------------------------------------------------------------
@@ -259,11 +280,11 @@ void Scaler::frameRendered(Texture *tex, uint frameNum, int numDropped)
 	// Do scaling and texture preparation for the first pass
 
 	QPointF pxSize, botRight;
-	tex = gfx->prepareTexture(
-		tex, m_size, m_scaleFilter, true, pxSize, botRight);
+	tex = vidgfx_context_prepare_tex(
+		gfx, tex, m_size, m_scaleFilter, true, pxSize, botRight);
 	if(botRight != m_quarterWidthBufBrUv)
 		updateVertBuf(gfx, botRight);
-	gfx->setRgbNv16PxSize(pxSize);
+	vidgfx_context_set_rgb_nv16_px_size(gfx, pxSize);
 
 	//-------------------------------------------------------------------------
 	// Do RGB->YUV conversion. Useful information relating to YUV formats can
@@ -274,47 +295,48 @@ void Scaler::frameRendered(Texture *tex, uint frameNum, int numDropped)
 	const QSize nv12Size = m_yuvScratchTex[2]->getSize();
 
 	// Setup render targets
-	gfx->setUserRenderTarget(m_yuvScratchTex[0], m_yuvScratchTex[1]);
-	gfx->setUserRenderTargetViewport(nv16Size);
-	gfx->setRenderTarget(GfxUserTarget);
+	vidgfx_context_set_user_render_target(
+		gfx, m_yuvScratchTex[0], m_yuvScratchTex[1]);
+	vidgfx_context_set_user_render_target_viewport(gfx, nv16Size);
+	vidgfx_context_set_render_target(gfx, GfxUserTarget);
 
 	// Update view and projection matrix for first pass
 	QMatrix4x4 mat;
-	gfx->setViewMatrix(mat); // Must be set as it's undefined otherwise
+	vidgfx_context_set_view_mat(gfx, mat); // Must be set as it's undefined otherwise
 	mat.ortho(0.0f, nv16Size.width(), nv16Size.height(), 0.0f, -1.0f, 1.0f);
-	gfx->setProjectionMatrix(mat);
+	vidgfx_context_set_proj_mat(gfx, mat);
 
 	// Render first pass (RGB->NV16)
-	gfx->setShader(GfxRgbNv16Shader);
-	gfx->setTopology(GfxTriangleStripTopology);
-	gfx->setBlending(GfxNoBlending);
-	gfx->setTexture(tex);
-	gfx->drawBuffer(m_quarterWidthBuf);
+	vidgfx_context_set_shader(gfx, GfxRgbNv16Shader);
+	vidgfx_context_set_topology(gfx, GfxTriangleStripTopology);
+	vidgfx_context_set_blending(gfx, GfxNoBlending);
+	vidgfx_context_set_tex(gfx, tex);
+	vidgfx_context_draw_buf(gfx, m_quarterWidthBuf);
 
 	// Update view and projection matrix for second pass
 	mat.setToIdentity();
-	gfx->setViewMatrix(mat);
+	vidgfx_context_set_view_mat(gfx, mat);
 	mat.setToIdentity();
 	mat.ortho(0.0f, nv12Size.width(), nv12Size.height(), 0.0f, -1.0f, 1.0f);
-	gfx->setProjectionMatrix(mat);
+	vidgfx_context_set_proj_mat(gfx, mat);
 
 	// Render second pass (NV16->NV12)
-	gfx->setUserRenderTarget(m_yuvScratchTex[2]);
-	gfx->setUserRenderTargetViewport(nv12Size);
-	gfx->setShader(GfxTexDecalShader);
-	gfx->setTextureFilter(GfxBilinearFilter);
-	gfx->setTexture(m_yuvScratchTex[1]);
-	gfx->drawBuffer(m_nv12Buf);
+	vidgfx_context_set_user_render_target(gfx, m_yuvScratchTex[2]);
+	vidgfx_context_set_user_render_target_viewport(gfx, nv12Size);
+	vidgfx_context_set_shader(gfx, GfxTexDecalShader);
+	vidgfx_context_set_tex_filter(gfx, GfxBilinearFilter);
+	vidgfx_context_set_tex(gfx, m_yuvScratchTex[1]);
+	vidgfx_context_draw_buf(gfx, m_nv12Buf);
 
 	//-------------------------------------------------------------------------
 	// Copy the output to our staging textures so they are ready to be read at
 	// a later time in the future
 
-	gfx->copyTextureData(
-		m_stagingYTex[curStagingTex], m_yuvScratchTex[0], QPoint(0, 0),
+	vidgfx_context_copy_tex_data(
+		gfx, m_stagingYTex[curStagingTex], m_yuvScratchTex[0], QPoint(0, 0),
 		QRect(0, 0, nv16Size.width(), nv16Size.height()));
-	gfx->copyTextureData(
-		m_stagingUVTex[curStagingTex], m_yuvScratchTex[2], QPoint(0, 0),
+	vidgfx_context_copy_tex_data(
+		gfx, m_stagingUVTex[curStagingTex], m_yuvScratchTex[2], QPoint(0, 0),
 		QRect(0, 0, nv12Size.width(), nv12Size.height()));
 
 	// We need to delay the frame data as well
@@ -325,7 +347,7 @@ void Scaler::frameRendered(Texture *tex, uint frameNum, int numDropped)
 	m_prevStagingTex = curStagingTex;
 }
 
-void Scaler::updateVertBuf(GraphicsContext *gfx, const QPointF &brUv)
+void Scaler::updateVertBuf(VidgfxContext *gfx, const QPointF &brUv)
 {
 	if(m_quarterWidthBuf == NULL || m_yuvScratchTex[0] == NULL)
 		return;
@@ -357,7 +379,8 @@ void Scaler::updateVertBuf(GraphicsContext *gfx, const QPointF &brUv)
 		rect.setRight((float)rect.right() + 0.005f);
 
 	m_quarterWidthBufBrUv = brUv;
-	gfx->createTexDecalRect(m_quarterWidthBuf, rect, m_quarterWidthBufBrUv);
+	vidgfx_create_tex_decal_rect(
+		m_quarterWidthBuf, rect, m_quarterWidthBufBrUv);
 }
 
 LyrScalingMode Scaler::convertScaling(SclrScalingMode mode) const
@@ -378,9 +401,9 @@ LyrScalingMode Scaler::convertScaling(SclrScalingMode mode) const
 	return LyrSnapToInnerScale;
 }
 
-void Scaler::initializeResources(GraphicsContext *gfx)
+void Scaler::initializeResources(VidgfxContext *gfx)
 {
-	if(gfx == NULL || !gfx->isValid())
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be useable
 
 	// TODO: Detect failure
@@ -393,75 +416,75 @@ void Scaler::initializeResources(GraphicsContext *gfx)
 
 	// Scratch textures
 	// 0 = packed Y, 1 = packed UV in NV16 format, 2 = packed UV in NV12 format
-	m_yuvScratchTex[0] = gfx->createTexture(nv16Size, false, true);
-	m_yuvScratchTex[1] = gfx->createTexture(nv16Size, false, true);
-	m_yuvScratchTex[2] = gfx->createTexture(nv12Size, false, true);
+	m_yuvScratchTex[0] = vidgfx_context_new_tex(gfx, nv16Size, false, true);
+	m_yuvScratchTex[1] = vidgfx_context_new_tex(gfx, nv16Size, false, true);
+	m_yuvScratchTex[2] = vidgfx_context_new_tex(gfx, nv12Size, false, true);
 
 	// Initialize textures with YUV black
-	gfx->setUserRenderTarget(m_yuvScratchTex[0]);
-	gfx->setRenderTarget(GfxUserTarget);
-	gfx->clear(QColor(0, 0, 0, 0));
-	//gfx->clear(QColor(16, 16, 16, 16)); // BT.601 black?
-	//gfx->clear(QColor(255, 255, 255, 255)); // White
-	gfx->setUserRenderTarget(m_yuvScratchTex[1]);
-	gfx->clear(QColor(127, 127, 127, 127));
+	vidgfx_context_set_user_render_target(gfx, m_yuvScratchTex[0]);
+	vidgfx_context_set_render_target(gfx, GfxUserTarget);
+	vidgfx_context_clear(gfx, QColor(0, 0, 0, 0));
+	//vidgfx_context_clear(gfx, QColor(16, 16, 16, 16)); // BT.601 black?
+	//vidgfx_context_clear(gfx, QColor(255, 255, 255, 255)); // White
+	vidgfx_context_set_user_render_target(gfx, m_yuvScratchTex[1]);
+	vidgfx_context_clear(gfx, QColor(127, 127, 127, 127));
 
 	// Staging textures
-	m_stagingYTex[0] = gfx->createStagingTexture(nv16Size);
-	m_stagingYTex[1] = gfx->createStagingTexture(nv16Size);
-	m_stagingUVTex[0] = gfx->createStagingTexture(nv12Size);
-	m_stagingUVTex[1] = gfx->createStagingTexture(nv12Size);
+	m_stagingYTex[0] = vidgfx_context_new_staging_tex(gfx, nv16Size);
+	m_stagingYTex[1] = vidgfx_context_new_staging_tex(gfx, nv16Size);
+	m_stagingUVTex[0] = vidgfx_context_new_staging_tex(gfx, nv12Size);
+	m_stagingUVTex[1] = vidgfx_context_new_staging_tex(gfx, nv12Size);
 
 	// RGB->NV16 vertex buffer
-	m_quarterWidthBuf = gfx->createVertexBuffer(
-		GraphicsContext::TexDecalRectBufSize);
+	m_quarterWidthBuf = vidgfx_context_new_vertbuf(
+		gfx, GraphicsContext::TexDecalRectBufSize);
 	m_quarterWidthBufBrUv = QPointF(0.0f, 0.0f);
 	// Assume that the bottom-right UV is at (1, 1) for now
 	updateVertBuf(gfx, QPointF(1.0f, 1.0f));
 
 	// NV16->NV12 vertex buffer
-	m_nv12Buf = gfx->createVertexBuffer(
-		GraphicsContext::TexDecalRectBufSize);
+	m_nv12Buf = vidgfx_context_new_vertbuf(
+		gfx, GraphicsContext::TexDecalRectBufSize);
 	if(m_nv12Buf != NULL) {
-		gfx->createTexDecalRect(
+		vidgfx_create_tex_decal_rect(
 			m_nv12Buf,
 			QRectF(QPoint(0.0f, 0.0f), m_yuvScratchTex[2]->getSize()));
 	}
 }
 
-void Scaler::destroyResources(GraphicsContext *gfx)
+void Scaler::destroyResources(VidgfxContext *gfx)
 {
-	if(gfx == NULL || !gfx->isValid())
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be useable
 
 	// Vertex buffers
 	if(m_quarterWidthBuf != NULL)
-		gfx->deleteVertexBuffer(m_quarterWidthBuf);
+		vidgfx_context_destroy_vertbuf(gfx, m_quarterWidthBuf);
 	if(m_nv12Buf != NULL)
-		gfx->deleteVertexBuffer(m_nv12Buf);
+		vidgfx_context_destroy_vertbuf(gfx, m_nv12Buf);
 	m_quarterWidthBuf = NULL;
 	m_nv12Buf = NULL;
 
 	// Scratch textures
 	if(m_yuvScratchTex[0] != NULL)
-		gfx->deleteTexture(m_yuvScratchTex[0]);
+		vidgfx_context_destroy_tex(gfx, m_yuvScratchTex[0]);
 	if(m_yuvScratchTex[1] != NULL)
-		gfx->deleteTexture(m_yuvScratchTex[1]);
+		vidgfx_context_destroy_tex(gfx, m_yuvScratchTex[1]);
 	if(m_yuvScratchTex[2] != NULL)
-		gfx->deleteTexture(m_yuvScratchTex[2]);
+		vidgfx_context_destroy_tex(gfx, m_yuvScratchTex[2]);
 	m_yuvScratchTex[0] = NULL;
 	m_yuvScratchTex[1] = NULL;
 	m_yuvScratchTex[2] = NULL;
 
 	// Staging textures
 	if(m_stagingYTex[0] != NULL)
-		gfx->deleteTexture(m_stagingYTex[0]);
+		vidgfx_context_destroy_tex(gfx, m_stagingYTex[0]);
 	if(m_stagingYTex[1] != NULL)
-		gfx->deleteTexture(m_stagingYTex[1]);
+		vidgfx_context_destroy_tex(gfx, m_stagingYTex[1]);
 	if(m_stagingUVTex[0] != NULL)
-		gfx->deleteTexture(m_stagingUVTex[0]);
+		vidgfx_context_destroy_tex(gfx, m_stagingUVTex[0]);
 	if(m_stagingUVTex[1] != NULL)
-		gfx->deleteTexture(m_stagingUVTex[1]);
+		vidgfx_context_destroy_tex(gfx, m_stagingUVTex[1]);
 	m_stagingYTex[0] = NULL;
 	m_stagingYTex[1] = NULL;
 	m_stagingUVTex[0] = NULL;

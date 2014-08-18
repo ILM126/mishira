@@ -106,7 +106,7 @@ void ImageLayer::parentHideEvent()
 	hideEvent();
 }
 
-void ImageLayer::initializeResources(GraphicsContext *gfx)
+void ImageLayer::initializeResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Creating hardware resources for layer " << getIdString();
@@ -122,7 +122,7 @@ void ImageLayer::initializeResources(GraphicsContext *gfx)
 	updateResources(gfx);
 }
 
-void ImageLayer::updateResources(GraphicsContext *gfx)
+void ImageLayer::updateResources(VidgfxContext *gfx)
 {
 	// Recreate texture only if it's changed
 	if(m_filenameChanged) {
@@ -157,7 +157,7 @@ void ImageLayer::textureMaybeChanged()
 	setVisibleRect(rect.toAlignedRect());
 }
 
-void ImageLayer::destroyResources(GraphicsContext *gfx)
+void ImageLayer::destroyResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Destroying hardware resources for layer " << getIdString();
@@ -171,7 +171,7 @@ void ImageLayer::destroyResources(GraphicsContext *gfx)
 }
 
 void ImageLayer::render(
-	GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped)
+	VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped)
 {
 	if(m_imgTex == NULL)
 		return; // Nothing to render
@@ -185,26 +185,26 @@ void ImageLayer::render(
 	// layer.
 	// TODO: Filter mode selection and orientation
 	QPointF pxSize, botRight;
-	tex = gfx->prepareTexture(
-		tex, getVisibleRect().size(), GfxBilinearFilter, true,
+	tex = vidgfx_context_prepare_tex(
+		gfx, tex, getVisibleRect().size(), GfxBilinearFilter, true,
 		pxSize, botRight);
 	m_vertBuf.setTextureUv(QPointF(), botRight, GfxUnchangedOrient);
-	gfx->setTexture(tex);
+	vidgfx_context_set_tex(gfx, tex);
 
 	// Do the actual render
 	VertexBuffer *vertBuf = m_vertBuf.getVertBuf();
 	if(vertBuf != NULL) {
-		gfx->setShader(GfxTexDecalShader);
-		gfx->setTopology(m_vertBuf.getTopology());
-		QColor prevCol = gfx->getTexDecalModColor();
-		gfx->setTexDecalModColor(
-			QColor(255, 255, 255, (int)(getOpacity() * 255.0f)));
+		vidgfx_context_set_shader(gfx, GfxTexDecalShader);
+		vidgfx_context_set_topology(gfx, m_vertBuf.getTopology());
+		QColor prevCol = vidgfx_context_get_tex_decal_mod_color(gfx);
+		vidgfx_context_set_tex_decal_mod_color(
+			gfx, QColor(255, 255, 255, (int)(getOpacity() * 255.0f)));
 		if(m_imgTex->hasTransparency() || getOpacity() != 1.0f)
-			gfx->setBlending(GfxAlphaBlending);
+			vidgfx_context_set_blending(gfx, GfxAlphaBlending);
 		else
-			gfx->setBlending(GfxNoBlending);
-		gfx->drawBuffer(vertBuf);
-		gfx->setTexDecalModColor(prevCol);
+			vidgfx_context_set_blending(gfx, GfxNoBlending);
+		vidgfx_context_draw_buf(gfx, vertBuf);
+		vidgfx_context_set_tex_decal_mod_color(gfx, prevCol);
 	}
 }
 

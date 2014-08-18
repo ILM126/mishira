@@ -660,19 +660,19 @@ void ScriptTextLayer::stopScript()
 	m_thread = NULL;
 }
 
-void ScriptTextLayer::initializeResources(GraphicsContext *gfx)
+void ScriptTextLayer::initializeResources(VidgfxContext *gfx)
 {
 	TextLayer::initializeResources(gfx);
 }
 
-void ScriptTextLayer::updateResources(GraphicsContext *gfx)
+void ScriptTextLayer::updateResources(VidgfxContext *gfx)
 {
 	TextLayer::updateResources(gfx);
 	if(!m_ignoreUpdate)
 		textUpdated(m_cachedText);
 }
 
-void ScriptTextLayer::destroyResources(GraphicsContext *gfx)
+void ScriptTextLayer::destroyResources(VidgfxContext *gfx)
 {
 	TextLayer::destroyResources(gfx);
 }

@@ -19,7 +19,6 @@
 #define SCALER_H
 
 #include "common.h"
-#include <Libvidgfx/graphicscontext.h>
 #include <QtCore/QObject>
 
 class Profile;
@@ -90,7 +89,7 @@ public: // Static methods -----------------------------------------------------
 	static Scaler *	getOrCreate(
 		Profile *profile, QSize size, SclrScalingMode scaling,
 		GfxFilter scaleFilter, GfxPixelFormat pixelFormat);
-	static void		graphicsContextInitialized(GraphicsContext *gfx);
+	static void		graphicsContextInitialized(VidgfxContext *gfx);
 
 private: // Constructor/destructor ---------------------------------------------
 	Scaler(
@@ -108,7 +107,7 @@ public: // Methods ------------------------------------------------------------
 	void			release();
 
 private:
-	void			updateVertBuf(GraphicsContext *gfx, const QPointF &brUv);
+	void			updateVertBuf(VidgfxContext *gfx, const QPointF &brUv);
 	LyrScalingMode	convertScaling(SclrScalingMode scaling) const;
 
 Q_SIGNALS: // Signals ---------------------------------------------------------
@@ -118,8 +117,8 @@ Q_SIGNALS: // Signals ---------------------------------------------------------
 	public
 Q_SLOTS: // Slots -------------------------------------------------------------
 	void	frameRendered(Texture *tex, uint frameNum, int numDropped);
-	void	initializeResources(GraphicsContext *gfx);
-	void	destroyResources(GraphicsContext *gfx);
+	void	initializeResources(VidgfxContext *gfx);
+	void	destroyResources(VidgfxContext *gfx);
 };
 //=============================================================================
 

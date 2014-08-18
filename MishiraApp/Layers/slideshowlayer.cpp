@@ -149,7 +149,7 @@ void SlideshowLayer::parentHideEvent()
 	hideEvent();
 }
 
-void SlideshowLayer::initializeResources(GraphicsContext *gfx)
+void SlideshowLayer::initializeResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Creating hardware resources for layer " << getIdString();
@@ -174,7 +174,7 @@ void SlideshowLayer::initializeResources(GraphicsContext *gfx)
 	updateResources(gfx);
 }
 
-void SlideshowLayer::updateResources(GraphicsContext *gfx)
+void SlideshowLayer::updateResources(VidgfxContext *gfx)
 {
 	// Recreate textures only if they have changed
 	if(m_filenamesChanged) {
@@ -381,7 +381,7 @@ void SlideshowLayer::textureMaybeChanged(int id)
 		setVisibleRect(rect.toAlignedRect());
 }
 
-void SlideshowLayer::destroyResources(GraphicsContext *gfx)
+void SlideshowLayer::destroyResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Destroying hardware resources for layer " << getIdString();
@@ -394,7 +394,7 @@ void SlideshowLayer::destroyResources(GraphicsContext *gfx)
 	m_imgTexs.clear();
 }
 
-void SlideshowLayer::renderImage(GraphicsContext *gfx, int id, float opacity)
+void SlideshowLayer::renderImage(VidgfxContext *gfx, int id, float opacity)
 {
 	if(opacity <= 0.0f)
 		return; // Invisible image
@@ -412,31 +412,31 @@ void SlideshowLayer::renderImage(GraphicsContext *gfx, int id, float opacity)
 	// layer.
 	// TODO: Filter mode selection
 	QPointF pxSize, botRight;
-	tex = gfx->prepareTexture(
-		tex, getVisibleRect().size(), GfxBilinearFilter, true,
+	tex = vidgfx_context_prepare_tex(
+		gfx, tex, getVisibleRect().size(), GfxBilinearFilter, true,
 		pxSize, botRight);
 	texVertBuf->setTextureUv(QPointF(), botRight, GfxUnchangedOrient);
-	gfx->setTexture(tex);
+	vidgfx_context_set_tex(gfx, tex);
 
 	// Do the actual render
 	VertexBuffer *vertBuf = texVertBuf->getVertBuf();
 	if(vertBuf != NULL) {
-		gfx->setShader(GfxTexDecalShader);
-		gfx->setTopology(texVertBuf->getTopology());
+		vidgfx_context_set_shader(gfx, GfxTexDecalShader);
+		vidgfx_context_set_topology(gfx, texVertBuf->getTopology());
 		if(imgTex->hasTransparency() || opacity < 1.0f)
-			gfx->setBlending(GfxAlphaBlending);
+			vidgfx_context_set_blending(gfx, GfxAlphaBlending);
 		else
-			gfx->setBlending(GfxNoBlending);
-		QColor oldCol = gfx->getTexDecalModColor();
-		gfx->setTexDecalModColor(
+			vidgfx_context_set_blending(gfx, GfxNoBlending);
+		QColor oldCol = vidgfx_context_get_tex_decal_mod_color(gfx);
+		vidgfx_context_set_tex_decal_mod_color(gfx,
 			QColor(255, 255, 255, (int)(opacity * getOpacity() * 255.0f)));
-		gfx->drawBuffer(vertBuf);
-		gfx->setTexDecalModColor(oldCol);
+		vidgfx_context_draw_buf(gfx, vertBuf);
+		vidgfx_context_set_tex_decal_mod_color(gfx, oldCol);
 	}
 }
 
 void SlideshowLayer::render(
-	GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped)
+	VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped)
 {
 	// Switch to the first image the moment that it loads
 	if(m_curId < 0) {

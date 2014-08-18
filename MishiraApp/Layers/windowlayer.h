@@ -21,7 +21,6 @@
 #include "common.h"
 #include "cropinfo.h"
 #include "layer.h"
-#include <Libvidgfx/graphicscontext.h>
 #include <QtCore/QStringList>
 #include <QtCore/QMargins>
 
@@ -85,16 +84,16 @@ public: // Methods ------------------------------------------------------------
 
 private:
 	void		updateVertBuf(
-		GraphicsContext *gfx, const QPointF &tlUv, const QPointF &brUv);
+		VidgfxContext *gfx, const QPointF &tlUv, const QPointF &brUv);
 	void		updateCursorVertBuf(
-		GraphicsContext *gfx, const QPointF &brUv, const QRect &relRect);
+		VidgfxContext *gfx, const QPointF &brUv, const QRect &relRect);
 
 public: // Interface ----------------------------------------------------------
-	virtual void	initializeResources(GraphicsContext *gfx);
-	virtual void	updateResources(GraphicsContext *gfx);
-	virtual void	destroyResources(GraphicsContext *gfx);
+	virtual void	initializeResources(VidgfxContext *gfx);
+	virtual void	updateResources(VidgfxContext *gfx);
+	virtual void	destroyResources(VidgfxContext *gfx);
 	virtual void	render(
-		GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped);
+		VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped);
 
 	virtual LyrType	getType() const;
 

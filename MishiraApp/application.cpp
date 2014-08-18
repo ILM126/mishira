@@ -178,6 +178,18 @@ static void libavLogHandler(
 	appLog(QStringLiteral("Libav"), lvl) << str;
 }
 
+static void gfxInitializedHandler(void *opaque, VidgfxContext *context)
+{
+	Profile *profile = static_cast<Profile *>(opaque);
+	profile->graphicsContextInitialized(context);
+}
+
+static void gfxDestroyingHandler(void *opaque, VidgfxContext *context)
+{
+	Profile *profile = static_cast<Profile *>(opaque);
+	profile->graphicsContextDestroyed(context);
+}
+
 //=============================================================================
 // Application class
 
@@ -865,6 +877,15 @@ int Application::shutdown(int returnCode)
 	delete m_aboutWindow;
 	m_aboutWindow = NULL;
 
+	// Remove profile callbacks
+	VidgfxContext *gfx = getGraphicsContext();
+	if(vidgfx_context_is_valid(gfx)) {
+		vidgfx_context_remove_initialized_callback(
+			gfx, gfxInitializedHandler, m_profile);
+		vidgfx_context_remove_destroying_callback(
+			gfx, gfxDestroyingHandler, m_profile);
+	}
+
 	// Save profile to disk. Must be done while the graphics context still
 	// exists.
 	if(m_deleteSettingsOnExit) {
@@ -1311,7 +1332,7 @@ void Application::showBasicWarningDialog(
 	box->show();
 }
 
-void Application::setGraphicsContext(GraphicsContext *context)
+void Application::setGraphicsContext(VidgfxContext *context)
 {
 	if(context != NULL && m_gfxContext != NULL) {
 		appLog(Log::Warning)
@@ -1332,11 +1353,11 @@ void Application::setGraphicsContext(GraphicsContext *context)
 		if(context->isValid())
 			m_profile->graphicsContextInitialized(context);
 		else {
-			connect(context, &GraphicsContext::initialized,
-				m_profile, &Profile::graphicsContextInitialized);
+			vidgfx_context_add_initialized_callback(
+				context, gfxInitializedHandler, m_profile);
 		}
-		connect(context, &GraphicsContext::destroying,
-			m_profile, &Profile::graphicsContextDestroyed);
+		vidgfx_context_add_destroying_callback(
+			context, gfxDestroyingHandler, m_profile);
 	}
 	Scaler::graphicsContextInitialized(context);
 }
@@ -1522,6 +1543,15 @@ bool Application::changeActiveProfile(
 			action->setChecked(false);
 			break;
 		}
+	}
+
+	// Remove profile callbacks
+	VidgfxContext *gfx = getGraphicsContext();
+	if(vidgfx_context_is_valid(gfx)) {
+		vidgfx_context_remove_initialized_callback(
+			gfx, gfxInitializedHandler, m_profile);
+		vidgfx_context_remove_destroying_callback(
+			gfx, gfxDestroyingHandler, m_profile);
 	}
 
 	// Save existing profile to disk if one exists. Must be done while the

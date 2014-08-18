@@ -33,7 +33,6 @@ class BitrateCalcWindow;
 class CaptureManager;
 class CPUUsage;
 class DarkStyle;
-class GraphicsContext;
 class Layer;
 class LayerDialog;
 class LayerDialogWindow;
@@ -76,7 +75,7 @@ protected: // Members ---------------------------------------------------------
 	LayerDialogWindow *		m_layerDialogWindow;
 	BitrateCalcWindow *		m_bitrateCalcWindow;
 	AboutWindow *			m_aboutWindow;
-	GraphicsContext *		m_gfxContext;
+	VidgfxContext *			m_gfxContext;
 	AudioSourceManager *	m_audioManager;
 	VideoSourceManager *	m_videoManager;
 	AsyncIO *				m_asyncIo;
@@ -145,8 +144,8 @@ public: // Methods ------------------------------------------------------------
 	void				showBasicWarningDialog(
 		const QString &message, const QString &title = QString());
 
-	void					setGraphicsContext(GraphicsContext *context);
-	GraphicsContext *		getGraphicsContext() const;
+	void					setGraphicsContext(VidgfxContext *context);
+	VidgfxContext *			getGraphicsContext() const;
 	CaptureManager *		getCaptureManager() const;
 	AudioSourceManager *	getAudioSourceManager() const;
 	VideoSourceManager *	getVideoSourceManager() const;
@@ -282,7 +281,7 @@ inline Application *Application::getSingleton()
 	return s_instance;
 }
 
-inline GraphicsContext *Application::getGraphicsContext() const
+inline VidgfxContext *Application::getGraphicsContext() const
 {
 	return m_gfxContext;
 }
