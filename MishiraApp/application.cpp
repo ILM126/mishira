@@ -41,8 +41,6 @@
 #include <Libbroadcast/brolog.h>
 #include <Libdeskcap/caplog.h>
 #include <Libdeskcap/capturemanager.h>
-#include <Libvidgfx/gfxlog.h>
-#include <Libvidgfx/graphicscontext.h>
 #include <QtCore/QDateTime>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QUrl>
@@ -76,17 +74,17 @@ void broLogHandler(
 }
 
 void gfxLogHandler(
-	const QString &cat, const QString &msg, GfxLog::LogLevel lvl)
+	const QString &cat, const QString &msg, GfxLogLevel lvl)
 {
 	Log::LogLevel level = Log::Critical;
 	switch(lvl) {
-	case GfxLog::Notice:
+	case GfxNotice:
 		level = Log::Notice;
 		break;
-	case GfxLog::Warning:
+	case GfxWarning:
 		level = Log::Warning;
 		break;
-	case GfxLog::Critical:
+	case GfxCritical:
 	default:
 		level = Log::Critical;
 		break;
@@ -320,7 +318,7 @@ bool Application::initialize()
 
 	// Install log callbacks for Mishira libraries
 	BroLog::setCallback(&broLogHandler);
-	GfxLog::setCallback(&gfxLogHandler);
+	vidgfx_set_log_callback(&gfxLogHandler);
 	CapLog::setCallback(&capLogHandler);
 
 #if 0
@@ -626,8 +624,8 @@ void Application::processOurEvents(bool fromQtExecTimer)
 			// Flush the graphics context after every frame so that shared
 			// textures in graphics hooks can be reused without causing
 			// synchronisation issues.
-			if(m_gfxContext != NULL && m_gfxContext->isValid())
-				m_gfxContext->flush();
+			if(vidgfx_context_is_valid(m_gfxContext))
+				vidgfx_context_flush(m_gfxContext);
 
 			// Is it time for the next tick? If so stop processing frames
 			lateBy = 0;
@@ -709,7 +707,7 @@ void Application::miscRealTimeTickEvent(int numDropped, int lateByUsec)
 	// to make it repaint nicer. Once the graphics context is created and is
 	// ready to be rendered on we know that the profile is now fully loaded.
 	if(m_mainWindow != NULL && !m_mainWindow->updatesEnabled() &&
-		m_gfxContext != NULL && m_gfxContext->isValid())
+		vidgfx_context_is_valid(m_gfxContext))
 	{
 		// HACK: Ensure it's done after the widget has been rendered
 		QTimer::singleShot(10, this, SLOT(enableUpdatesTimeout()));
@@ -719,7 +717,7 @@ void Application::miscRealTimeTickEvent(int numDropped, int lateByUsec)
 void Application::enableUpdatesTimeout()
 {
 	if(m_mainWindow != NULL && !m_mainWindow->updatesEnabled() &&
-		m_gfxContext != NULL && m_gfxContext->isValid())
+		vidgfx_context_is_valid(m_gfxContext))
 	{
 		m_mainWindow->setUpdatesEnabled(true);
 	}
@@ -1350,7 +1348,7 @@ void Application::setGraphicsContext(VidgfxContext *context)
 	// Make sure that the objects that create hardware resources know when the
 	// context has been initialized or destroyed
 	if(m_profile != NULL) {
-		if(context->isValid())
+		if(vidgfx_context_is_valid(context))
 			m_profile->graphicsContextInitialized(context);
 		else {
 			vidgfx_context_add_initialized_callback(
