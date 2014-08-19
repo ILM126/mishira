@@ -18,9 +18,9 @@
 #ifndef D3DWIDGET_H
 #define D3DWIDGET_H
 
+#include <Libvidgfx/libvidgfx.h>
 #include <QtWidgets/QWidget>
 
-class D3DContext;
 class GraphicsWidget;
 
 //=============================================================================
@@ -32,7 +32,7 @@ protected: // Members ---------------------------------------------------------
 	GraphicsWidget *	m_parent;
 	int					m_timesToPaint;
 	bool				m_initialized;
-	D3DContext *		m_context;
+	VidgfxD3DContext *	m_context;
 	QSize				m_curSize;
 
 public: // Constructor/destructor ---------------------------------------------

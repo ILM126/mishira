@@ -23,7 +23,6 @@
 #include <mmsystem.h>
 #include <Shlobj.h>
 #include <Libdeskcap/capturemanager.h>
-#include <Libvidgfx/d3dcontext.h>
 #include <Libvidgfx/graphicscontext.h>
 #include <Libvidgfx/versionhelpers.h>
 #include <QtCore/QSettings>
@@ -449,7 +448,7 @@ void WinApplication::logSystemInfo()
 	}
 
 	// Log all available display adapters
-	D3DContext::logDisplayAdapters();
+	vidgfx_d3d_log_display_adapters();
 }
 
 /// <summary>

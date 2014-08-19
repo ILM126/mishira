@@ -19,7 +19,6 @@
 #define GRAPHICSWIDGET_H
 
 #include "d3dwidget.h"
-#include <Libvidgfx/libvidgfx.h>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>

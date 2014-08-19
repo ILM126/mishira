@@ -671,7 +671,7 @@ BYTE *CMediaType::ReallocFormatBuffer(ULONG length)
 	// delete the old format and replace with the new one
 	if(cbFormat != 0) {
 		Q_ASSERT(pbFormat);
-		memcpy(pNewFormat, pbFormat, min(length, cbFormat));
+		memcpy(pNewFormat, pbFormat, qMin(length, cbFormat));
 		CoTaskMemFree((PVOID)pbFormat);
 	}
 

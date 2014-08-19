@@ -19,10 +19,21 @@
 #include "application.h"
 #include "graphicswidget.h"
 #include "stylehelper.h"
-#include <Libvidgfx/d3dcontext.h>
 #include <QtGui/QPainter>
 #include <QtGui/QResizeEvent>
 #include <QtGui/5.0.2/QtGui/qpa/qplatformnativeinterface.h>
+
+static void gfxInitializedHandler(void *opaque, VidgfxContext *context)
+{
+	GraphicsWidget *widget = static_cast<GraphicsWidget *>(opaque);
+	widget->graphicsContextInitialized(context);
+}
+
+static void gfxDestroyingHandler(void *opaque, VidgfxContext *context)
+{
+	GraphicsWidget *widget = static_cast<GraphicsWidget *>(opaque);
+	widget->graphicsContextDestroyed(context);
+}
 
 D3DWidget::D3DWidget(GraphicsWidget *parent)
 	: QWidget(parent)
@@ -54,7 +65,7 @@ D3DWidget::~D3DWidget()
 {
 	if(m_context != NULL) {
 		App->setGraphicsContext(NULL);
-		delete m_context;
+		vidgfx_d3dcontext_destroy(m_context); // Removes callbacks
 		m_context = NULL;
 	}
 }
@@ -89,17 +100,20 @@ void D3DWidget::showEvent(QShowEvent *ev)
 	}
 
 	// Create graphics context
-	m_context = new D3DContext();
-	App->setGraphicsContext(m_context);
+	m_context = vidgfx_d3dcontext_new();
+	VidgfxContext *gfx = vidgfx_d3dcontext_get_context(m_context);
+	App->setGraphicsContext(gfx);
 
 	// Make sure our parent is watching for the context signals
-	connect(m_context, &D3DContext::initialized,
-		m_parent, &GraphicsWidget::graphicsContextInitialized);
-	connect(m_context, &D3DContext::destroying,
-		m_parent, &GraphicsWidget::graphicsContextDestroyed);
+	vidgfx_context_add_initialized_callback(
+		gfx, gfxInitializedHandler, m_parent);
+	vidgfx_context_add_destroying_callback(
+		gfx, gfxDestroyingHandler, m_parent);
 
 	// Finish initializing the graphics context
-	if(!m_context->initialize(hwnd, size(), StyleHelper::DarkBg1Color)) {
+	if(!vidgfx_d3dcontext_init(m_context, hwnd, size(),
+		StyleHelper::DarkBg1Color))
+	{
 		// The context has already logged the error, no need to do it again
 		App->exit(1);
 		return;
@@ -108,7 +122,7 @@ void D3DWidget::showEvent(QShowEvent *ev)
 
 void D3DWidget::resizeEvent(QResizeEvent *ev)
 {
-	if(m_context == NULL || !m_context->isValid())
+	if(!vidgfx_d3dcontext_is_valid(m_context))
 		return; // Nothing to do
 
 	// Prevent this event from being called multiple times in a row for the
@@ -118,7 +132,8 @@ void D3DWidget::resizeEvent(QResizeEvent *ev)
 	m_curSize = size();
 
 	// Forward to the generic graphics widget
-	m_parent->screenResized(m_context, ev->oldSize(), size());
+	VidgfxContext *gfx = vidgfx_d3dcontext_get_context(m_context);
+	m_parent->screenResized(gfx, ev->oldSize(), size());
 }
 
 void D3DWidget::paintEvent(QPaintEvent *ev)

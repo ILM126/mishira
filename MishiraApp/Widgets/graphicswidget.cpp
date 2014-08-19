@@ -15,10 +15,6 @@
 // more details.
 //*****************************************************************************
 
-// Prevent a compiler error in QDateTime by preventing "windows.h" from
-// creating a `min()` macro
-#define NOMINMAX
-
 #include "graphicswidget.h"
 #include "application.h"
 #include "layer.h"
