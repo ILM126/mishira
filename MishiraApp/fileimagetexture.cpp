@@ -19,7 +19,6 @@
 #include "application.h"
 #include "asyncio.h"
 #include "profile.h"
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 

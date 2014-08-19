@@ -20,7 +20,6 @@
 #include "layergroup.h"
 #include "profile.h"
 #include "sceneitem.h"
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 

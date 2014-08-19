@@ -19,7 +19,6 @@
 #include "application.h"
 #include "scene.h"
 #include "profile.h"
-#include <Libvidgfx/graphicscontext.h>
 
 //=============================================================================
 // Helpers
@@ -293,8 +292,8 @@ void Scaler::frameRendered(VidgfxTex *tex, uint frameNum, int numDropped)
 	// be found at:
 	// http://msdn.microsoft.com/en-us/library/windows/desktop/dd206750%28v=vs.85%29.aspx
 
-	const QSize nv16Size = m_yuvScratchTex[0]->getSize();
-	const QSize nv12Size = m_yuvScratchTex[2]->getSize();
+	const QSize nv16Size = vidgfx_tex_get_size(m_yuvScratchTex[0]);
+	const QSize nv12Size = vidgfx_tex_get_size(m_yuvScratchTex[2]);
 
 	// Setup render targets
 	vidgfx_context_set_user_render_target(
@@ -439,18 +438,19 @@ void Scaler::initializeResources(VidgfxContext *gfx)
 
 	// RGB->NV16 vertex buffer
 	m_quarterWidthBuf = vidgfx_context_new_vertbuf(
-		gfx, GraphicsContext::TexDecalRectBufSize);
+		gfx, VIDGFX_TEX_DECAL_RECT_BUF_SIZE);
 	m_quarterWidthBufBrUv = QPointF(0.0f, 0.0f);
 	// Assume that the bottom-right UV is at (1, 1) for now
 	updateVertBuf(gfx, QPointF(1.0f, 1.0f));
 
 	// NV16->NV12 vertex buffer
 	m_nv12Buf = vidgfx_context_new_vertbuf(
-		gfx, GraphicsContext::TexDecalRectBufSize);
+		gfx, VIDGFX_TEX_DECAL_RECT_BUF_SIZE);
 	if(m_nv12Buf != NULL) {
 		vidgfx_create_tex_decal_rect(
 			m_nv12Buf,
-			QRectF(QPoint(0.0f, 0.0f), m_yuvScratchTex[2]->getSize()));
+			QRectF(QPoint(0.0f, 0.0f),
+			vidgfx_tex_get_size(m_yuvScratchTex[2])));
 	}
 }
 

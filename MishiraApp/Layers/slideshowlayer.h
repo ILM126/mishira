@@ -20,7 +20,6 @@
 
 #include "animatedfloat.h"
 #include "layer.h"
-#include <Libvidgfx/graphicscontext.h>
 
 class FileImageTexture;
 class LayerDialog;

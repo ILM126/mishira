@@ -21,7 +21,6 @@
 #include "slideshowlayerdialog.h"
 #include "layergroup.h"
 #include "profile.h"
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
@@ -54,7 +53,7 @@ SlideshowLayer::~SlideshowLayer()
 	if(!m_vertBufs.isEmpty()) {
 		// Should never happen
 		for(int i = 0; i < m_vertBufs.size(); i++)
-			delete m_vertBufs.at(i);
+			vidgfx_texdecalbuf_destroy(m_vertBufs.at(i));
 		m_vertBufs.clear();
 	}
 	if(!m_imgTexs.isEmpty()) {
@@ -162,7 +161,7 @@ void SlideshowLayer::initializeResources(VidgfxContext *gfx)
 	if(!m_vertBufs.isEmpty()) {
 		// Should never happen
 		for(int i = 0; i < m_vertBufs.size(); i++)
-			delete m_vertBufs.at(i);
+			vidgfx_texdecalbuf_destroy(m_vertBufs.at(i));
 		m_vertBufs.clear();
 	}
 	if(!m_imgTexs.isEmpty()) {
@@ -182,7 +181,7 @@ void SlideshowLayer::updateResources(VidgfxContext *gfx)
 
 		// Destroy existing buffers and textures
 		for(int i = 0; i < m_vertBufs.size(); i++)
-			delete m_vertBufs.at(i);
+			vidgfx_texdecalbuf_destroy(m_vertBufs.at(i));
 		m_vertBufs.clear();
 		for(int i = 0; i < m_imgTexs.size(); i++)
 			delete m_imgTexs.at(i);
@@ -199,7 +198,7 @@ void SlideshowLayer::updateResources(VidgfxContext *gfx)
 
 		// Create new buffers and textures
 		for(int i = 0; i < m_filenames.size(); i++) {
-			m_vertBufs.append(new TexDecalVertBuf(gfx));
+			m_vertBufs.append(vidgfx_texdecalbuf_new(gfx));
 			FileImageTexture *imgTex = new FileImageTexture(m_filenames.at(i));
 			imgTex->setAnimationPaused(true);
 			m_imgTexs.append(imgTex);
@@ -387,7 +386,7 @@ void SlideshowLayer::destroyResources(VidgfxContext *gfx)
 		<< "Destroying hardware resources for layer " << getIdString();
 
 	for(int i = 0; i < m_vertBufs.size(); i++)
-		delete m_vertBufs.at(i);
+		vidgfx_texdecalbuf_destroy(m_vertBufs.at(i));
 	m_vertBufs.clear();
 	for(int i = 0; i < m_imgTexs.size(); i++)
 		delete m_imgTexs.at(i);

@@ -19,7 +19,6 @@
 #define IMAGELAYER_H
 
 #include "layer.h"
-#include <Libvidgfx/libvidgfx.h>
 
 class FileImageTexture;
 class LayerDialog;

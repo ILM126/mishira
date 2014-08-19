@@ -22,7 +22,6 @@
 #include "profile.h"
 #include "videosource.h"
 #include "videosourcemanager.h"
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
@@ -82,7 +81,7 @@ void WebcamLayer::initializeResources(VidgfxContext *gfx)
 
 	// Allocate resources
 	m_vertBuf = vidgfx_context_new_vertbuf(
-		gfx, GraphicsContext::TexDecalRectBufSize);
+		gfx, VIDGFX_TEX_DECAL_RECT_BUF_SIZE);
 
 	// Reset state and update all resources
 	m_vertBufRect = QRectF();

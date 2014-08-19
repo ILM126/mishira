@@ -21,7 +21,6 @@
 #include "windowlayerdialog.h"
 #include <Libdeskcap/capturemanager.h>
 #include <Libdeskcap/captureobject.h>
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
@@ -217,9 +216,9 @@ void WindowLayer::initializeResources(VidgfxContext *gfx)
 
 	// Allocate resources
 	m_vertBuf = vidgfx_context_new_vertbuf(
-		gfx, GraphicsContext::TexDecalRectBufSize);
+		gfx, VIDGFX_TEX_DECAL_RECT_BUF_SIZE);
 	m_cursorVertBuf = vidgfx_context_new_vertbuf(
-		gfx, GraphicsContext::TexDecalRectBufSize);
+		gfx, VIDGFX_TEX_DECAL_RECT_BUF_SIZE);
 
 	// Reset caching and update all resources
 	m_windowListChanged = true;

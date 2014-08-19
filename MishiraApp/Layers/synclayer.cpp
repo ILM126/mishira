@@ -24,7 +24,6 @@
 #include "layergroup.h"
 #include "profile.h"
 #include "stylehelper.h"
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
@@ -62,11 +61,11 @@ void SyncLayer::initializeResources(VidgfxContext *gfx)
 		<< "Creating hardware resources for layer " << getIdString();
 
 	m_vertBufA = vidgfx_context_new_vertbuf(
-		gfx, GraphicsContext::SolidRectBufSize);
+		gfx, VIDGFX_SOLID_RECT_BUF_SIZE);
 	m_vertBufB = vidgfx_context_new_vertbuf(
-		gfx, GraphicsContext::SolidRectBufSize);
+		gfx, VIDGFX_SOLID_RECT_BUF_SIZE);
 	m_vertBufC = vidgfx_context_new_vertbuf(
-		gfx, GraphicsContext::SolidRectBufSize);
+		gfx, VIDGFX_SOLID_RECT_BUF_SIZE);
 	updateResources(gfx);
 }
 

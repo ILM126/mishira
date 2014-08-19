@@ -21,7 +21,6 @@
 #include "imagelayerdialog.h"
 #include "layergroup.h"
 #include "profile.h"
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 

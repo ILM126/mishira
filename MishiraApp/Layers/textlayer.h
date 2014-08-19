@@ -19,7 +19,6 @@
 #define TEXTLAYER_H
 
 #include "layer.h"
-#include <Libvidgfx/libvidgfx.h>
 #include <QtGui/QColor>
 #include <QtGui/QTextDocument>
 

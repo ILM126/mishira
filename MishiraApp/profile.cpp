@@ -32,7 +32,6 @@
 #include "ustreamtarget.h"
 #include "x264encoder.h"
 #include <Libdeskcap/capturemanager.h>
-#include <Libvidgfx/graphicscontext.h>
 #include <QtCore/QBuffer>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -1355,7 +1354,7 @@ void Profile::setupContext(VidgfxContext *gfx)
 		m_fadeVertBuf = NULL;
 	}
 	m_fadeVertBuf = vidgfx_context_new_vertbuf(
-		gfx, GraphicsContext::TexDecalRectBufSize);
+		gfx, VIDGFX_TEX_DECAL_RECT_BUF_SIZE);
 	if(m_fadeVertBuf != NULL) {
 		vidgfx_create_tex_decal_rect(
 			m_fadeVertBuf, QRectF(QPointF(0.0f, 0.0f), m_canvasSize));

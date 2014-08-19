@@ -24,7 +24,6 @@
 #include "videosourcemanager.h"
 #include <dshow.h>
 #include <dvdmedia.h>
-#include <Libvidgfx/graphicscontext.h>
 #include <QtGui/5.0.2/QtGui/qpa/qplatformnativeinterface.h>
 
 const QString LOG_CAT = QStringLiteral("DirectShow");

@@ -20,7 +20,6 @@
 #include "colorlayerdialog.h"
 #include "layergroup.h"
 #include "stylehelper.h"
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
@@ -73,7 +72,7 @@ void ColorLayer::initializeResources(VidgfxContext *gfx)
 		<< "Creating hardware resources for layer " << getIdString();
 
 	m_vertBuf = vidgfx_context_new_vertbuf(
-		gfx, GraphicsContext::SolidRectBufSize);
+		gfx, VIDGFX_SOLID_RECT_BUF_SIZE);
 	updateResources(gfx);
 }
 

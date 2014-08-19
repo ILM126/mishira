@@ -20,7 +20,6 @@
 #include "layergroup.h"
 #include "profile.h"
 #include "textlayerdialog.h"
-#include <Libvidgfx/graphicscontext.h>
 #include <QtGui/QPainter>
 #include <QtGui/QTextBlock>
 #include <QtGui/QTextLayout>

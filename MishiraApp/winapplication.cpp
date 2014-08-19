@@ -23,7 +23,6 @@
 #include <mmsystem.h>
 #include <Shlobj.h>
 #include <Libdeskcap/capturemanager.h>
-#include <Libvidgfx/graphicscontext.h>
 #include <Libvidgfx/versionhelpers.h>
 #include <QtCore/QSettings>
 #include <QtGui/QImage>

@@ -23,7 +23,6 @@
 #include "scene.h"
 #include "sceneitem.h"
 #include "stylehelper.h"
-#include <Libvidgfx/graphicscontext.h>
 #include <QtCore/QTime>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QWheelEvent>
@@ -167,14 +166,14 @@ void GraphicsWidget::initializeScreen(
 
 	// Canvas preview rectangle
 	m_canvasBuf = vidgfx_context_new_vertbuf(
-		gfx, GraphicsContext::TexDecalRectBufSize);
+		gfx, VIDGFX_TEX_DECAL_RECT_BUF_SIZE);
 	m_canvasBufRect = QRectF();
 	m_canvasBufBrUv = QPointF(0.0f, 0.0f);
 	updateCanvasBuffer(QPointF(1.0f, 1.0f)); // Assume BR is (1, 1) for now
 
 	// Canvas outline
 	m_outlineBuf = vidgfx_context_new_vertbuf(
-		gfx, GraphicsContext::SolidRectOutlineBufSize);
+		gfx, VIDGFX_SOLID_RECT_OUTLINE_BUF_SIZE);
 	if(m_outlineBuf != NULL) {
 		vidgfx_create_solid_rect_outline(
 			m_outlineBuf,
@@ -185,7 +184,7 @@ void GraphicsWidget::initializeScreen(
 
 	// Resize layer graphic
 	m_resizeRectBuf = vidgfx_context_new_vertbuf(
-		gfx, GraphicsContext::ResizeRectBufSize);
+		gfx, VIDGFX_RESIZE_RECT_BUF_SIZE);
 	if(m_resizeRectBuf != NULL) {
 		vidgfx_create_resize_rect(
 			m_resizeRectBuf,
