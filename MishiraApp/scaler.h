@@ -19,7 +19,6 @@
 #define SCALER_H
 
 #include "common.h"
-#include <Libvidgfx/graphicscontext.h>
 #include <QtCore/QObject>
 
 class Profile;

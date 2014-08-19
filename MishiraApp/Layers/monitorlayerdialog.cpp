@@ -19,8 +19,8 @@
 #include "application.h"
 #include "monitorlayer.h"
 #include "validators.h"
+#include "versionhelpers.h"
 #include <Libdeskcap/capturemanager.h>
-#include <Libvidgfx/versionhelpers.h>
 
 MonitorLayerDialog::MonitorLayerDialog(MonitorLayer *layer, QWidget *parent)
 	: LayerDialog(layer, parent)

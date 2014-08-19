@@ -18,12 +18,12 @@
 #include "winapplication.h"
 #include "appsettings.h"
 #include "profile.h"
+#include "versionhelpers.h"
 #include "wincpuusage.h"
 #include <Dwmapi.h>
 #include <mmsystem.h>
 #include <Shlobj.h>
 #include <Libdeskcap/capturemanager.h>
-#include <Libvidgfx/versionhelpers.h>
 #include <QtCore/QSettings>
 #include <QtGui/QImage>
 
