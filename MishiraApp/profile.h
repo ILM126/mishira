@@ -107,7 +107,7 @@ public: // Methods ------------------------------------------------------------
 	AudioMixer *	getAudioMixer();
 
 	VideoEncoder *		getOrCreateX264VideoEncoder(
-		QSize size, SclrScalingMode scaling, GfxFilter scaleFilter,
+		QSize size, SclrScalingMode scaling, VidgfxFilter scaleFilter,
 		const X264Options &opt);
 	void				destroyVideoEncoder(VideoEncoder *encoder);
 	void				pruneVideoEncoders();

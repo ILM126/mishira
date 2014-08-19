@@ -556,7 +556,7 @@ void Profile::setActiveTransition(int transitionId)
 }
 
 VideoEncoder *Profile::getOrCreateX264VideoEncoder(
-	QSize size, SclrScalingMode scaling, GfxFilter scaleFilter,
+	QSize size, SclrScalingMode scaling, VidgfxFilter scaleFilter,
 	const X264Options &opt)
 {
 	// Find encoder to see if it already exists
@@ -1393,7 +1393,7 @@ void Profile::render(VidgfxContext *gfx, uint frameNum, int numDropped)
 	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be usuable
 
-	GfxRenderTarget target = GfxCanvas1Target;
+	VidgfxRendTarget target = GfxCanvas1Target;
 	if(m_transitionAni.atEnd()) {
 		// No transition animation is currently active, just render a single
 		// scene as efficiently as possible

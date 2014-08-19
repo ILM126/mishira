@@ -380,10 +380,10 @@ static const GUID CLSID_DShowRenderer = {
 };
 
 /// <summary>
-/// Returns the matching `GfxPixelFormat` for the specified video subtype GUID
+/// Returns the matching `VidgfxPixFormat` for the specified video subtype GUID
 /// if it is supported by our format conversion system.
 /// </summary>
-GfxPixelFormat DShowRenderer::formatFromSubtype(const GUID &subtype)
+VidgfxPixFormat DShowRenderer::formatFromSubtype(const GUID &subtype)
 {
 	// Uncompressed RGB with a single packed plane
 	if(subtype == MEDIASUBTYPE_RGB24)
@@ -421,11 +421,11 @@ GfxPixelFormat DShowRenderer::formatFromSubtype(const GUID &subtype)
 /// <returns>
 /// -1 is `a` is better, 0 if they are the same, 1 if `b` is better
 /// </returns>
-int DShowRenderer::compareFormats(GfxPixelFormat a, GfxPixelFormat b)
+int DShowRenderer::compareFormats(VidgfxPixFormat a, VidgfxPixFormat b)
 {
 	// Give each pixel format an order of preference. Higher numbers means a
 	// higher preference. Negative preference items are effectively never used.
-	// The array has the same order as the `GfxPixelFormat` enum.
+	// The array has the same order as the `VidgfxPixFormat` enum.
 	int order[NUM_PIXEL_FORMAT_TYPES];
 	int i = 0;
 	order[i++] = 0; // GfxNoFormat
@@ -509,7 +509,7 @@ void DShowRenderer::parseMediaType(
 	}
 }
 
-DShowRenderer::DShowRenderer(GfxPixelFormat pixelFormat, HRESULT *phr)
+DShowRenderer::DShowRenderer(VidgfxPixFormat pixelFormat, HRESULT *phr)
 	: CBaseRenderer(CLSID_DShowRenderer, TEXT("DShowRenderer"), NULL, phr)
 	, m_mutex()
 	, m_pixelFormat(pixelFormat)
@@ -1199,7 +1199,7 @@ void DShowVideoSource::findBestOutputPin()
 			}
 
 			// Does this pin output one of our supported pixel formats?
-			GfxPixelFormat format =
+			VidgfxPixFormat format =
 				DShowRenderer::formatFromSubtype(type->subtype);
 			if(format != GfxNoFormat) {
 				// This pin outputs one of our supported formats! Use this pin
@@ -1273,7 +1273,7 @@ void DShowVideoSource::fetchAllOutputModes()
 			DeleteMediaType(type);
 			continue;
 		}
-		GfxPixelFormat format =
+		VidgfxPixFormat format =
 			DShowRenderer::formatFromSubtype(type->subtype);
 		if(format != m_bestOutPinFormat) {
 			DeleteMediaType(type);
@@ -1520,7 +1520,7 @@ QString DShowVideoSource::getDebugString() const
 	}
 	return QStringLiteral("%1 (%2) [%3]")
 		.arg(m_friendlyName)
-		.arg(GfxPixelFormatStrings[m_bestOutPinFormat])
+		.arg(VidgfxPixFormatStrings[m_bestOutPinFormat])
 		.arg(numberToHexString(m_id));
 }
 

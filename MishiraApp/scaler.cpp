@@ -71,7 +71,7 @@ QVector<Scaler *> Scaler::s_instances;
 
 Scaler *Scaler::getOrCreate(
 	Profile *profile, QSize size, SclrScalingMode scaling,
-	GfxFilter scaleFilter, GfxPixelFormat pixelFormat)
+	VidgfxFilter scaleFilter, VidgfxPixFormat pixelFormat)
 {
 	// If an instance already exists then return it
 	for(int i = 0; i < s_instances.count(); i++) {
@@ -113,7 +113,7 @@ void Scaler::graphicsContextInitialized(VidgfxContext *gfx)
 
 Scaler::Scaler(
 	Profile *profile, QSize size, SclrScalingMode scaling,
-	GfxFilter scaleFilter, GfxPixelFormat pixelFormat)
+	VidgfxFilter scaleFilter, VidgfxPixFormat pixelFormat)
 	: QObject()
 	, m_profile(profile)
 	, m_size(size)

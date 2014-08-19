@@ -38,13 +38,13 @@ protected: // Members ---------------------------------------------------------
 	bool			m_isRunning;
 	QSize			m_size;
 	SclrScalingMode	m_scaling;
-	GfxFilter		m_scaleFilter;
+	VidgfxFilter	m_scaleFilter;
 	Fraction		m_framerate; // Must not change after construction
 
 public: // Constructor/destructor ---------------------------------------------
 	VideoEncoder(
 		Profile *profile, VencType type, QSize size, SclrScalingMode scaling,
-		GfxFilter scaleFilter, Fraction framerate);
+		VidgfxFilter scaleFilter, Fraction framerate);
 	virtual ~VideoEncoder();
 
 public: // Methods ------------------------------------------------------------
@@ -56,7 +56,7 @@ public: // Methods ------------------------------------------------------------
 	bool			isRunning() const;
 	QSize			getSize() const;
 	SclrScalingMode	getScaling() const;
-	GfxFilter		getScaleFilter() const;
+	VidgfxFilter	getScaleFilter() const;
 	Fraction		getFramerate() const;
 	Fraction		getTimeBase() const;
 
@@ -142,7 +142,7 @@ inline SclrScalingMode VideoEncoder::getScaling() const
 	return m_scaling;
 }
 
-inline GfxFilter VideoEncoder::getScaleFilter() const
+inline VidgfxFilter VideoEncoder::getScaleFilter() const
 {
 	return m_scaleFilter;
 }

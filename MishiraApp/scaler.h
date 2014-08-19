@@ -70,8 +70,8 @@ private: // Members -----------------------------------------------------------
 	Profile *		m_profile;
 	QSize			m_size;
 	SclrScalingMode	m_scaling;
-	GfxFilter		m_scaleFilter;
-	GfxPixelFormat	m_pixelFormat;
+	VidgfxFilter	m_scaleFilter;
+	VidgfxPixFormat	m_pixelFormat;
 	int				m_ref;
 
 	VidgfxVertBuf *	m_quarterWidthBuf;
@@ -88,21 +88,21 @@ private: // Members -----------------------------------------------------------
 public: // Static methods -----------------------------------------------------
 	static Scaler *	getOrCreate(
 		Profile *profile, QSize size, SclrScalingMode scaling,
-		GfxFilter scaleFilter, GfxPixelFormat pixelFormat);
+		VidgfxFilter scaleFilter, VidgfxPixFormat pixelFormat);
 	static void		graphicsContextInitialized(VidgfxContext *gfx);
 
 private: // Constructor/destructor ---------------------------------------------
 	Scaler(
 		Profile *profile, QSize size, SclrScalingMode scaling,
-		GfxFilter scaleFilter, GfxPixelFormat pixelFormat);
+		VidgfxFilter scaleFilter, VidgfxPixFormat pixelFormat);
 	~Scaler();
 
 public: // Methods ------------------------------------------------------------
 	Profile *		getProfile() const;
 	QSize			getSize() const;
 	SclrScalingMode	getScaling() const;
-	GfxFilter		getScaleFilter() const;
-	GfxPixelFormat	getPixelFormat() const;
+	VidgfxFilter	getScaleFilter() const;
+	VidgfxPixFormat	getPixelFormat() const;
 
 	void			release();
 
@@ -137,12 +137,12 @@ inline SclrScalingMode Scaler::getScaling() const
 	return m_scaling;
 }
 
-inline GfxFilter Scaler::getScaleFilter() const
+inline VidgfxFilter Scaler::getScaleFilter() const
 {
 	return m_scaleFilter;
 }
 
-inline GfxPixelFormat Scaler::getPixelFormat() const
+inline VidgfxPixFormat Scaler::getPixelFormat() const
 {
 	return m_pixelFormat;
 }
