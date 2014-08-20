@@ -189,8 +189,8 @@ void WebcamLayerDialog::applySettings()
 
 	quint64 deviceId = m_ui.deviceCombo->itemData(
 		m_ui.deviceCombo->currentIndex(), Qt::UserRole).toULongLong();
-	GfxOrientation orientation =
-		(GfxOrientation)m_ui.orientationCombo->currentIndex();
+	VidgfxOrientation orientation =
+		(VidgfxOrientation)m_ui.orientationCombo->currentIndex();
 	layer->setDeviceId(deviceId);
 	layer->setOrientation(orientation);
 

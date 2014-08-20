@@ -177,7 +177,7 @@ int exec(int argc, char *argv[])
 	// Initialize Mishira libraries
 	INIT_LIBBROADCAST();
 	INIT_LIBDESKCAP();
-	INIT_LIBVIDGFX();
+	vidgfx_init();
 
 	//-------------------------------------------------------------------------
 	// Initialize our logging system and install logging hooks into our

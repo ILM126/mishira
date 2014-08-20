@@ -74,7 +74,7 @@ void broLogHandler(
 }
 
 void gfxLogHandler(
-	const QString &cat, const QString &msg, GfxLogLevel lvl)
+	const QString &cat, const QString &msg, VidgfxLogLvl lvl)
 {
 	Log::LogLevel level = Log::Critical;
 	switch(lvl) {

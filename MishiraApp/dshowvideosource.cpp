@@ -1520,7 +1520,7 @@ QString DShowVideoSource::getDebugString() const
 	}
 	return QStringLiteral("%1 (%2) [%3]")
 		.arg(m_friendlyName)
-		.arg(VidgfxPixFormatStrings[m_bestOutPinFormat])
+		.arg(VidgfxPixFormatStrs[m_bestOutPinFormat])
 		.arg(numberToHexString(m_id));
 }
 

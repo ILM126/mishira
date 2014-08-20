@@ -64,7 +64,7 @@ void WebcamLayer::setDeviceId(quint64 id)
 	m_parent->layerChanged(this); // Remote emit
 }
 
-void WebcamLayer::setOrientation(GfxOrientation orientation)
+void WebcamLayer::setOrientation(VidgfxOrientation orientation)
 {
 	if(m_orientation == orientation)
 		return; // Nothing to do
@@ -278,7 +278,7 @@ bool WebcamLayer::unserialize(QDataStream *stream)
 		setDeviceId(uint64Data);
 		if(version >= 1) {
 			*stream >> uint32Data;
-			setOrientation((GfxOrientation)uint32Data);
+			setOrientation((VidgfxOrientation)uint32Data);
 		}
 	} else {
 		appLog(LOG_CAT, Log::Warning)

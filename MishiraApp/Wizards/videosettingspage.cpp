@@ -51,7 +51,7 @@ VideoSettingsPage::VideoSettingsPage(QWidget *parent)
 	// Populate scaling quality combobox
 	m_ui.scalingQualityCombo->clear();
 	for(int i = 0; i < NUM_STANDARD_TEXTURE_FILTERS; i++)
-		m_ui.scalingQualityCombo->addItem(tr(VidgfxFilterQualityStrings[i]));
+		m_ui.scalingQualityCombo->addItem(tr(VidgfxFilterQualStrs[i]));
 	//m_ui.scalingQualityCombo->setEnabled(false); // Always bilinear for now
 
 	// Populate encoder combobox

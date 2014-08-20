@@ -29,26 +29,26 @@ class WebcamLayer : public Layer
 	friend class LayerGroup;
 
 private: // Members -----------------------------------------------------------
-	quint64			m_deviceId;
-	GfxOrientation	m_orientation;
+	quint64				m_deviceId;
+	VidgfxOrientation	m_orientation;
 
-	bool			m_deviceIdChanged;
-	VideoSource *	m_vidSource;
-	VidgfxVertBuf *	m_vertBuf;
-	QRectF			m_vertBufRect;
-	QPointF			m_vertBufBrUv;
-	GfxOrientation	m_vertOrient;
-	QSize			m_lastTexSize;
+	bool				m_deviceIdChanged;
+	VideoSource *		m_vidSource;
+	VidgfxVertBuf *		m_vertBuf;
+	QRectF				m_vertBufRect;
+	QPointF				m_vertBufBrUv;
+	VidgfxOrientation	m_vertOrient;
+	QSize				m_lastTexSize;
 
 private: // Constructor/destructor --------------------------------------------
 	WebcamLayer(LayerGroup *parent);
 	~WebcamLayer();
 
 public: // Methods ------------------------------------------------------------
-	void			setDeviceId(quint64 id);
-	quint64			getDeviceId() const;
-	void			setOrientation(GfxOrientation orientation);
-	GfxOrientation	getOrientation() const;
+	void				setDeviceId(quint64 id);
+	quint64				getDeviceId() const;
+	void				setOrientation(VidgfxOrientation orientation);
+	VidgfxOrientation	getOrientation() const;
 
 private:
 	void	updateVertBuf(
@@ -81,7 +81,7 @@ inline quint64 WebcamLayer::getDeviceId() const
 	return m_deviceId;
 }
 
-inline GfxOrientation WebcamLayer::getOrientation() const
+inline VidgfxOrientation WebcamLayer::getOrientation() const
 {
 	return m_orientation;
 }
