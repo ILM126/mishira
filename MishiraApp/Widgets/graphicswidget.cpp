@@ -15,10 +15,6 @@
 // more details.
 //*****************************************************************************
 
-// Prevent a compiler error in QDateTime by preventing "windows.h" from
-// creating a `min()` macro
-#define NOMINMAX
-
 #include "graphicswidget.h"
 #include "application.h"
 #include "layer.h"
@@ -27,7 +23,6 @@
 #include "scene.h"
 #include "sceneitem.h"
 #include "stylehelper.h"
-#include <Libvidgfx/graphicscontext.h>
 #include <QtCore/QTime>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QWheelEvent>
@@ -139,11 +134,11 @@ GraphicsWidget::~GraphicsWidget()
 }
 
 void GraphicsWidget::initializeScreen(
-	GraphicsContext *gfx, const QSize &screenSize)
+	VidgfxContext *gfx, const QSize &screenSize)
 {
-	if(gfx == NULL || !gfx->isValid())
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be usuable
-	gfx->setRenderTarget(GfxScreenTarget);
+	vidgfx_context_set_render_target(gfx, GfxScreenTarget);
 
 	// Watch profile for canvas changes
 	Profile *profile = App->getProfile();
@@ -170,17 +165,17 @@ void GraphicsWidget::initializeScreen(
 	QSize canvasSize = App->getCanvasSize();
 
 	// Canvas preview rectangle
-	m_canvasBuf = gfx->createVertexBuffer(
-		GraphicsContext::TexDecalRectBufSize);
+	m_canvasBuf = vidgfx_context_new_vertbuf(
+		gfx, VIDGFX_TEX_DECAL_RECT_BUF_SIZE);
 	m_canvasBufRect = QRectF();
 	m_canvasBufBrUv = QPointF(0.0f, 0.0f);
 	updateCanvasBuffer(QPointF(1.0f, 1.0f)); // Assume BR is (1, 1) for now
 
 	// Canvas outline
-	m_outlineBuf = gfx->createVertexBuffer(
-		GraphicsContext::SolidRectOutlineBufSize);
+	m_outlineBuf = vidgfx_context_new_vertbuf(
+		gfx, VIDGFX_SOLID_RECT_OUTLINE_BUF_SIZE);
 	if(m_outlineBuf != NULL) {
-		gfx->createSolidRectOutline(
+		vidgfx_create_solid_rect_outline(
 			m_outlineBuf,
 			QRectF(-0.5f, -0.5f,
 			canvasSize.width() + 1, canvasSize.height() + 1),
@@ -188,10 +183,10 @@ void GraphicsWidget::initializeScreen(
 	}
 
 	// Resize layer graphic
-	m_resizeRectBuf = gfx->createVertexBuffer(
-		GraphicsContext::ResizeRectBufSize);
+	m_resizeRectBuf = vidgfx_context_new_vertbuf(
+		gfx, VIDGFX_RESIZE_RECT_BUF_SIZE);
 	if(m_resizeRectBuf != NULL) {
-		gfx->createResizeRect(
+		vidgfx_create_resize_rect(
 			m_resizeRectBuf,
 			QRectF(-10.5f, -10.5f, 101.0f, 101.0f), // Temporary size
 			RESIZE_HANDLE_SIZE, QPointF(0.5f, 0.5f));
@@ -220,35 +215,35 @@ void GraphicsWidget::watchScene(Scene *scene)
 		this, &GraphicsWidget::canvasChanged);
 }
 
-void GraphicsWidget::destroyScreen(GraphicsContext *gfx)
+void GraphicsWidget::destroyScreen(VidgfxContext *gfx)
 {
-	if(gfx == NULL || !gfx->isValid())
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be usuable
-	gfx->setRenderTarget(GfxScreenTarget);
+	vidgfx_context_set_render_target(gfx, GfxScreenTarget);
 
 	// Destroy scene resources
-	gfx->deleteVertexBuffer(m_canvasBuf);
-	gfx->deleteVertexBuffer(m_outlineBuf);
-	gfx->deleteVertexBuffer(m_resizeRectBuf);
+	vidgfx_context_destroy_vertbuf(gfx, m_canvasBuf);
+	vidgfx_context_destroy_vertbuf(gfx, m_outlineBuf);
+	vidgfx_context_destroy_vertbuf(gfx, m_resizeRectBuf);
 	m_canvasBuf = NULL;
 	m_outlineBuf = NULL;
 	m_resizeRectBuf = NULL;
 }
 
 void GraphicsWidget::screenResized(
-	GraphicsContext *gfx, const QSize &oldSize, const QSize &newSize)
+	VidgfxContext *gfx, const QSize &oldSize, const QSize &newSize)
 {
-	if(gfx == NULL || !gfx->isValid())
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be usuable
-	gfx->setRenderTarget(GfxScreenTarget);
+	vidgfx_context_set_render_target(gfx, GfxScreenTarget);
 
 	// Resize render target to match the widget
-	gfx->resizeScreenTarget(newSize);
+	vidgfx_context_resize_screen_target(gfx, newSize);
 
 	// Update projection matrix
 	QMatrix4x4 mat;
 	mat.ortho(0.0f, newSize.width(), newSize.height(), 0.0f, -1.0f, 1.0f);
-	gfx->setProjectionMatrix(mat);
+	vidgfx_context_set_proj_mat(gfx, mat);
 
 	if(m_isAutoZoomEnabled)
 		doAutoZoom();
@@ -261,11 +256,11 @@ void GraphicsWidget::screenResized(
 	}
 }
 
-void GraphicsWidget::renderScreen(GraphicsContext *gfx)
+void GraphicsWidget::renderScreen(VidgfxContext *gfx)
 {
-	if(gfx == NULL || !gfx->isValid())
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be usuable
-	gfx->setRenderTarget(GfxScreenTarget);
+	vidgfx_context_set_render_target(gfx, GfxScreenTarget);
 
 	// Don't waste resources by repainting when nothing has changed
 	// TODO: We need to know when the canvas itself is dirty
@@ -279,45 +274,47 @@ void GraphicsWidget::renderScreen(GraphicsContext *gfx)
 	// Render the preview scene
 
 	// Clear screen
-	gfx->clear(StyleHelper::DarkBg1Color);
+	vidgfx_context_clear(gfx, StyleHelper::DarkBg1Color);
 
 	// Prepare canvas preview texture for render
 #define HIGH_QUALITY_PREVIEW 0
 #if HIGH_QUALITY_PREVIEW
 	// TODO: Filter mode selection
 	QPointF pxSize, botRight;
-	Texture *tex = gfx->prepareTexture(
-		gfx->getTargetTexture(GfxCanvas1Target),
+	VidgfxTex *tex = vidgfx_context_prepare_tex(
+		gfx, vidgfx_context_get_target_tex(gfx, GfxCanvas1Target),
 		m_canvasBufRect.toAlignedRect().size(), GfxBilinearFilter, true,
 		pxSize, botRight);
 	if(m_canvasBufBrUv != botRight)
 		updateCanvasBuffer(botRight);
-	gfx->setTexture(tex);
+	vidgfx_context_set_tex(gfx, tex);
 #else
 	// It makes more sense that the preview is rendered the same way that video
 	// decoders typically scale (It's also faster)
-	gfx->setTextureFilter(GfxBilinearFilter);
-	gfx->setTexture(gfx->getTargetTexture(GfxCanvas1Target));
+	vidgfx_context_set_tex_filter(gfx, GfxBilinearFilter);
+	vidgfx_context_set_tex(
+		gfx, vidgfx_context_get_target_tex(gfx, GfxCanvas1Target));
 #endif // HIGH_QUALITY_PREVIEW
 
 	// Canvas preview rectangle
-	gfx->setShader(GfxTexDecalShader);
-	gfx->setTopology(GfxTriangleStripTopology);
-	gfx->setBlending(GfxNoBlending);
-	gfx->drawBuffer(m_canvasBuf);
+	vidgfx_context_set_shader(gfx, GfxTexDecalShader);
+	vidgfx_context_set_topology(gfx, GfxTriangleStripTopology);
+	vidgfx_context_set_blending(gfx, GfxNoBlending);
+	vidgfx_context_draw_buf(gfx, m_canvasBuf);
 
 	// Canvas outline
-	gfx->setShader(GfxSolidShader);
-	gfx->setTopology(GfxTriangleListTopology);
-	gfx->drawBuffer(m_outlineBuf);
+	vidgfx_context_set_shader(gfx, GfxSolidShader);
+	vidgfx_context_set_topology(gfx, GfxTriangleListTopology);
+	vidgfx_context_draw_buf(gfx, m_outlineBuf);
 
 	// Resize layer graphic if an editable layer is selected
 	if(m_displayResizeRect) {
-		gfx->setShader(GfxResizeLayerShader);
-		gfx->setTopology(GfxTriangleListTopology);
-		gfx->setTextureFilter(GfxResizeLayerFilter);
-		gfx->setTexture(gfx->getTargetTexture(GfxCanvas1Target));
-		gfx->drawBuffer(m_resizeRectBuf);
+		vidgfx_context_set_shader(gfx, GfxResizeLayerShader);
+		vidgfx_context_set_topology(gfx, GfxTriangleListTopology);
+		vidgfx_context_set_tex_filter(gfx, GfxResizeLayerFilter);
+		vidgfx_context_set_tex(
+			gfx, vidgfx_context_get_target_tex(gfx, GfxCanvas1Target));
+		vidgfx_context_draw_buf(gfx, m_resizeRectBuf);
 	}
 
 	//-------------------------------------------------------------------------
@@ -345,7 +342,7 @@ void GraphicsWidget::renderScreen(GraphicsContext *gfx)
 	prevSwap = now;
 #endif // 0
 	if(doSwap)
-		gfx->swapScreenBuffers();
+		vidgfx_context_swap_screen_bufs(gfx);
 }
 
 QPointF GraphicsWidget::mapWidgetToCanvasPos(const QPointF &pos) const
@@ -885,8 +882,8 @@ void GraphicsWidget::doAutoZoom()
 
 void GraphicsWidget::updateCanvasBuffer(const QPointF &brUv)
 {
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx == NULL || !gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(!vidgfx_context_is_valid(gfx))
 		return;
 	if(m_canvasBuf == NULL)
 		return;
@@ -899,7 +896,7 @@ void GraphicsWidget::updateCanvasBuffer(const QPointF &brUv)
 
 	m_canvasBufRect = rect;
 	m_canvasBufBrUv = brUv;
-	gfx->createTexDecalRect(m_canvasBuf, QRectF(0.0f, 0.0f,
+	vidgfx_create_tex_decal_rect(m_canvasBuf, QRectF(0.0f, 0.0f,
 		(float)canvasSize.width(), (float)canvasSize.height()),
 		m_canvasBufBrUv);
 }
@@ -911,8 +908,8 @@ void GraphicsWidget::updateCanvasBuffer(const QPointF &brUv)
 /// </summary>
 void GraphicsWidget::updateCanvasOutlineBuffer()
 {
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx == NULL || !gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(!vidgfx_context_is_valid(gfx))
 		return;
 	if(m_outlineBuf == NULL)
 		return; // Buffer doesn't exist
@@ -921,7 +918,7 @@ void GraphicsWidget::updateCanvasOutlineBuffer()
 	QSize canvasSize = App->getCanvasSize();
 	float invPxSize = 1.0f / m_canvasZoom;
 	float halfInvPxSize = invPxSize * 0.5f;
-	gfx->createSolidRectOutline(
+	vidgfx_create_solid_rect_outline(
 		m_outlineBuf,
 		QRectF(-halfInvPxSize, -halfInvPxSize,
 		(float)canvasSize.width() + invPxSize,
@@ -935,15 +932,15 @@ void GraphicsWidget::updateCanvasOutlineBuffer()
 /// </summary>
 void GraphicsWidget::updateResizeRectBuffer()
 {
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx == NULL || !gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(!vidgfx_context_is_valid(gfx))
 		return;
 	if(m_resizeRectBuf == NULL)
 		return; // Buffer doesn't exist
 
 	// Update canvas size
 	QSize canvasSize = App->getCanvasSize();
-	gfx->setResizeLayerRect(QRectF(0.0f, 0.0f,
+	vidgfx_context_set_resize_layer_rect(gfx, QRectF(0.0f, 0.0f,
 		(float)canvasSize.width(), (float)canvasSize.height()));
 
 	// Get layer rectangle
@@ -959,7 +956,7 @@ void GraphicsWidget::updateResizeRectBuffer()
 	// Recreate resize layer graphic
 	float invPxSize = 1.0f / m_canvasZoom;
 	float halfInvPxSize = invPxSize * 0.5f;
-	gfx->createResizeRect(
+	vidgfx_create_resize_rect(
 		m_resizeRectBuf,
 		QRectF(rect).adjusted(
 		-halfInvPxSize, -halfInvPxSize, halfInvPxSize, halfInvPxSize),
@@ -972,14 +969,14 @@ void GraphicsWidget::updateResizeRectBuffer()
 /// </summary>
 void GraphicsWidget::updateScreenViewMatrix()
 {
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx == NULL || !gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(!vidgfx_context_is_valid(gfx))
 		return;
 
 	QMatrix4x4 mat;
 	mat.translate(m_canvasTopLeft.x(), m_canvasTopLeft.y());
 	mat.scale(m_canvasZoom);
-	gfx->setScreenViewMatrix(mat);
+	vidgfx_context_set_screen_view_mat(gfx, mat);
 	setDirty(true);
 }
 
@@ -1337,8 +1334,8 @@ void GraphicsWidget::setAutoZoomEnabled(bool enabled)
 
 void GraphicsWidget::realTimeTickEvent(int numDropped, int lateByUsec)
 {
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx == NULL || !gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(!vidgfx_context_is_valid(gfx))
 		return;
 
 	// Repaint the screen
@@ -1353,13 +1350,13 @@ void GraphicsWidget::canvasChanged()
 
 void GraphicsWidget::canvasSizeChanged(const QSize &oldSize)
 {
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx == NULL || !gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(!vidgfx_context_is_valid(gfx))
 		return;
 
 	QSize canvasSize = App->getCanvasSize();
 	if(m_canvasBuf != NULL) {
-		gfx->createTexDecalRect(
+		vidgfx_create_tex_decal_rect(
 			m_canvasBuf,
 			QRectF(0.0f, 0.0f, canvasSize.width(), canvasSize.height()));
 	}
@@ -1386,18 +1383,18 @@ void GraphicsWidget::canvasSizeChanged(const QSize &oldSize)
 	}
 }
 
-void GraphicsWidget::graphicsContextInitialized(GraphicsContext *gfx)
+void GraphicsWidget::graphicsContextInitialized(VidgfxContext *gfx)
 {
-	if(gfx == NULL || !gfx->isValid())
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be usable
 
 	// Forward to our actual initialize method
 	initializeScreen(gfx, m_widget.size());
 }
 
-void GraphicsWidget::graphicsContextDestroyed(GraphicsContext *gfx)
+void GraphicsWidget::graphicsContextDestroyed(VidgfxContext *gfx)
 {
-	if(gfx == NULL || !gfx->isValid())
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be usable
 
 	// Forward to our actual destroy method

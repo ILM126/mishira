@@ -621,7 +621,7 @@ void NewEditTargetController::nextVideoPage()
 	m_settings.vidScaling =
 		(SclrScalingMode)(ui->scalingCombo->currentIndex());
 	m_settings.vidScaleQuality =
-		(GfxFilter)(ui->scalingQualityCombo->currentIndex());
+		(VidgfxFilter)(ui->scalingQualityCombo->currentIndex());
 	m_settings.vidEncoder = (VencType)(ui->encoderCombo->currentIndex());
 	m_settings.vidBitrate = ui->bitrateEdit->text().toInt();
 	m_settings.vidPreset = (X264Preset)(ui->cpuUsageCombo->currentIndex());

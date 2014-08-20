@@ -20,7 +20,6 @@
 #include "layergroup.h"
 #include "profile.h"
 #include "textlayerdialog.h"
-#include <Libvidgfx/graphicscontext.h>
 #include <QtGui/QPainter>
 #include <QtGui/QTextBlock>
 #include <QtGui/QTextLayout>
@@ -78,7 +77,7 @@ float getDistance(const QImage &img, int x, int y, int maxDist)
 
 TextLayer::TextLayer(LayerGroup *parent)
 	: Layer(parent)
-	, m_vertBuf()
+	, m_vertBuf(vidgfx_texdecalbuf_new())
 	, m_texture(NULL)
 	, m_isTexDirty(true)
 	, m_document(this)
@@ -120,6 +119,7 @@ TextLayer::TextLayer(LayerGroup *parent)
 
 TextLayer::~TextLayer()
 {
+	vidgfx_texdecalbuf_destroy(m_vertBuf);
 }
 
 void TextLayer::setDocumentHtml(const QString &html)
@@ -184,7 +184,7 @@ void TextLayer::setScrollSpeed(const QPoint &speed)
 	if(m_scrollSpeed.x() == 0 || m_scrollSpeed.y() == 0) {
 		// Make changing the speed nicer visually by only resetting it when
 		// required.
-		m_vertBuf.resetScrolling();
+		vidgfx_texdecalbuf_reset_scrolling(m_vertBuf);
 	}
 
 	updateResourcesIfLoaded();
@@ -207,19 +207,19 @@ void TextLayer::setDefaultFontSettings(QTextDocument *document)
 	document->setDefaultFont(getDefaultFont());
 }
 
-void TextLayer::initializeResources(GraphicsContext *gfx)
+void TextLayer::initializeResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Creating hardware resources for layer " << getIdString();
 
-	m_vertBuf.setContext(gfx);
-	m_vertBuf.setRect(QRectF());
-	m_vertBuf.setTextureUv(QRectF());
+	vidgfx_texdecalbuf_set_context(m_vertBuf, gfx);
+	vidgfx_texdecalbuf_set_rect(m_vertBuf, QRectF());
+	vidgfx_texdecalbuf_set_tex_uv(m_vertBuf, QRectF());
 	m_isTexDirty = true;
 	updateResources(gfx);
 }
 
-void TextLayer::recreateTexture(GraphicsContext *gfx)
+void TextLayer::recreateTexture(VidgfxContext *gfx)
 {
 	if(!m_isTexDirty)
 		return; // Don't waste any time if it hasn't changed
@@ -227,7 +227,7 @@ void TextLayer::recreateTexture(GraphicsContext *gfx)
 
 	// Delete existing texture if one exists
 	if(m_texture != NULL)
-		gfx->deleteTexture(m_texture);
+		vidgfx_context_destroy_tex(gfx, m_texture);
 	m_texture = NULL;
 
 	// Determine texture size. We need to keep in mind that the text in the
@@ -468,13 +468,13 @@ void TextLayer::recreateTexture(GraphicsContext *gfx)
 	m_document.drawContents(&p);
 
 	// Convert the image to a GPU texture
-	m_texture = gfx->createTexture(img);
+	m_texture = vidgfx_context_new_tex(gfx, img);
 
 	// Preview texture for debugging
 	//img.save(App->getDataDirectory().filePath("Preview.png"));
 }
 
-void TextLayer::updateResources(GraphicsContext *gfx)
+void TextLayer::updateResources(VidgfxContext *gfx)
 {
 	// Completely recreate texture if needed
 	recreateTexture(gfx);
@@ -507,31 +507,32 @@ void TextLayer::updateResources(GraphicsContext *gfx)
 		alignment = LyrBottomLeftAlign;
 		break;
 	}
-	QSize exStrokeSize = m_texture->getSize();
+	QSize exStrokeSize = vidgfx_tex_get_size(m_texture);
 	exStrokeSize.rwidth() -= m_strokeSize * 2;
 	exStrokeSize.rheight() -= m_strokeSize * 2;
 	QRectF rect = createScaledRectInBounds(
 		exStrokeSize, m_rect, LyrActualScale, alignment);
 	rect.adjust(-m_strokeSize, -m_strokeSize, m_strokeSize, m_strokeSize);
 
-	m_vertBuf.setRect(rect);
-	m_vertBuf.setTextureUv(QRectF(0.0, 0.0, 1.0, 1.0), GfxUnchangedOrient);
+	vidgfx_texdecalbuf_set_rect(m_vertBuf, rect);
+	vidgfx_texdecalbuf_set_tex_uv(
+		m_vertBuf, QRectF(0.0, 0.0, 1.0, 1.0), GfxUnchangedOrient);
 	setVisibleRect(rect.toAlignedRect());
 }
 
-void TextLayer::destroyResources(GraphicsContext *gfx)
+void TextLayer::destroyResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Destroying hardware resources for layer " << getIdString();
 
-	m_vertBuf.deleteVertBuf();
-	m_vertBuf.setContext(NULL);
-	gfx->deleteTexture(m_texture);
+	vidgfx_texdecalbuf_destroy_vert_buf(m_vertBuf);
+	vidgfx_texdecalbuf_set_context(m_vertBuf, NULL);
+	vidgfx_context_destroy_tex(gfx, m_texture);
 	m_texture = NULL;
 }
 
 void TextLayer::render(
-	GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped)
+	VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped)
 {
 	// Has the layer width changed since we rendered the document texture?
 	if(m_rect.width() != m_document.textWidth()) {
@@ -540,20 +541,21 @@ void TextLayer::render(
 		updateResources(gfx);
 	}
 
-	VertexBuffer *vertBuf = m_vertBuf.getVertBuf();
+	VidgfxVertBuf *vertBuf = vidgfx_texdecalbuf_get_vert_buf(m_vertBuf);
 	if(m_texture == NULL || vertBuf == NULL)
 		return; // Nothing to render
 
-	gfx->setShader(GfxTexDecalShader);
-	gfx->setTopology(m_vertBuf.getTopology());
-	gfx->setBlending(GfxAlphaBlending);
-	QColor prevCol = gfx->getTexDecalModColor();
-	gfx->setTexDecalModColor(
-		QColor(255, 255, 255, (int)(getOpacity() * 255.0f)));
-	gfx->setTexture(m_texture);
-	gfx->setTextureFilter(GfxBilinearFilter);
-	gfx->drawBuffer(vertBuf);
-	gfx->setTexDecalModColor(prevCol);
+	vidgfx_context_set_shader(gfx, GfxTexDecalShader);
+	vidgfx_context_set_topology(
+		gfx, vidgfx_texdecalbuf_get_topology(m_vertBuf));
+	vidgfx_context_set_blending(gfx, GfxAlphaBlending);
+	QColor prevCol = vidgfx_context_get_tex_decal_mod_color(gfx);
+	vidgfx_context_set_tex_decal_mod_color(
+		gfx, QColor(255, 255, 255, (int)(getOpacity() * 255.0f)));
+	vidgfx_context_set_tex(gfx, m_texture);
+	vidgfx_context_set_tex_filter(gfx, GfxBilinearFilter);
+	vidgfx_context_draw_buf(gfx, vertBuf);
+	vidgfx_context_set_tex_decal_mod_color(gfx, prevCol);
 }
 
 LyrType TextLayer::getType() const
@@ -657,5 +659,5 @@ void TextLayer::queuedFrameEvent(uint frameNum, int numDropped)
 
 	// Apply scroll
 	QPointF scroll = scrollPerFrame * (qreal)(numDropped + 1);
-	m_vertBuf.scrollBy(scroll);
+	vidgfx_texdecalbuf_scroll_by(m_vertBuf, scroll);
 }

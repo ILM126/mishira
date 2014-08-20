@@ -475,7 +475,7 @@ struct WizTargetSettings {
 	int				vidWidth;
 	int				vidHeight;
 	SclrScalingMode	vidScaling;
-	GfxFilter		vidScaleQuality;
+	VidgfxFilter	vidScaleQuality;
 	VencType		vidEncoder;
 	int				vidBitrate;
 	X264Preset		vidPreset;
@@ -508,7 +508,7 @@ struct WizTargetSettings {
 		, vidWidth(0)
 		, vidHeight(0)
 		, vidScaling((SclrScalingMode)0)
-		, vidScaleQuality((GfxFilter)0)
+		, vidScaleQuality((VidgfxFilter)0)
 		, vidEncoder((VencType)0)
 		, vidBitrate(0)
 		, vidPreset((X264Preset)0)

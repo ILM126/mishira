@@ -85,19 +85,20 @@ class DShowRenderer : public CBaseRenderer
 {
 private: // Members -----------------------------------------------------------
 	QMutex			m_mutex;
-	GfxPixelFormat	m_pixelFormat;
+	VidgfxPixFormat	m_pixelFormat;
 	IMediaSample *	m_curSample;
 	uint			m_curSampleNum;
 
 public: // Static methods -----------------------------------------------------
-	static GfxPixelFormat	formatFromSubtype(const GUID &subtype);
-	static int				compareFormats(GfxPixelFormat a, GfxPixelFormat b);
+	static VidgfxPixFormat	formatFromSubtype(const GUID &subtype);
+	static int				compareFormats(
+		VidgfxPixFormat a, VidgfxPixFormat b);
 	static void				parseMediaType(
 		const AM_MEDIA_TYPE &type, QSize *size, float *framerate,
 		bool *negHeight);
 
 public: // Constructor/destructor ---------------------------------------------
-	DShowRenderer(GfxPixelFormat pixelFormat, HRESULT *phr);
+	DShowRenderer(VidgfxPixFormat pixelFormat, HRESULT *phr);
 	virtual ~DShowRenderer();
 
 public: // Methods ------------------------------------------------------------
@@ -129,7 +130,7 @@ private: // Members -----------------------------------------------------------
 	IBaseFilter *		m_filter;
 	DShowRenderer *		m_renderFilter;
 	IPin *				m_bestOutPin;
-	GfxPixelFormat		m_bestOutPinFormat;
+	VidgfxPixFormat		m_bestOutPinFormat;
 	DShowModeList		m_availModes;
 	IMediaControl *		m_control;
 	IAMStreamConfig *	m_config;
@@ -144,11 +145,11 @@ private: // Members -----------------------------------------------------------
 	IMediaSample *	m_curSample;
 	uint			m_curSampleNum;
 	bool			m_curSampleProcessed;
-	GfxPixelFormat	m_curFormat;
-	Texture *		m_curPlaneA;
-	Texture *		m_curPlaneB;
-	Texture *		m_curPlaneC;
-	Texture *		m_curTexture;
+	VidgfxPixFormat	m_curFormat;
+	VidgfxTex *		m_curPlaneA;
+	VidgfxTex *		m_curPlaneB;
+	VidgfxTex *		m_curPlaneC;
+	VidgfxTex *		m_curTexture;
 
 public: // Static methods -----------------------------------------------------
 	static void			populateSources(
@@ -184,7 +185,7 @@ public: // Interface ----------------------------------------------------------
 	virtual void		dereference();
 	virtual int			getRefCount();
 	virtual void		prepareFrame(uint frameNum, int numDropped);
-	virtual Texture *	getCurrentFrame();
+	virtual VidgfxTex *	getCurrentFrame();
 	virtual bool		isFrameFlipped() const;
 	virtual QVector<float>	getFramerates() const;
 	virtual QVector<QSize>	getSizesForFramerate(float framerate) const;

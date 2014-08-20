@@ -27,12 +27,9 @@
 
 class AudioEncoder;
 class AudioMixer;
-class GraphicsContext;
 class LayerGroup;
 class Scene;
 class Target;
-class Texture;
-class VertexBuffer;
 class VideoEncoder;
 
 typedef QVector<Scene *> SceneList;
@@ -68,7 +65,7 @@ private: // Members -----------------------------------------------------------
 	// Transitions
 	PrflTransition		m_transition; // Current transition
 	AnimatedFloat		m_transitionAni; // Current transition
-	VertexBuffer *		m_fadeVertBuf;
+	VidgfxVertBuf *		m_fadeVertBuf;
 	int					m_activeTransition;
 	PrflTransition		m_transitions[NumTransitionSettings];
 	uint				m_transitionDursMsec[NumTransitionSettings];
@@ -110,7 +107,7 @@ public: // Methods ------------------------------------------------------------
 	AudioMixer *	getAudioMixer();
 
 	VideoEncoder *		getOrCreateX264VideoEncoder(
-		QSize size, SclrScalingMode scaling, GfxFilter scaleFilter,
+		QSize size, SclrScalingMode scaling, VidgfxFilter scaleFilter,
 		const X264Options &opt);
 	void				destroyVideoEncoder(VideoEncoder *encoder);
 	void				pruneVideoEncoders();
@@ -173,9 +170,9 @@ private:
 
 	void			ensureActiveScene();
 
-	void			setupContext(GraphicsContext *gfx);
+	void			setupContext(VidgfxContext *gfx);
 	void			render(
-		GraphicsContext *gfx, uint frameNum, int numDropped);
+		VidgfxContext *gfx, uint frameNum, int numDropped);
 
 	void			serialize(QDataStream *stream) const;
 	bool			unserialize(QDataStream *stream);
@@ -195,13 +192,13 @@ Q_SIGNALS: // Signals ---------------------------------------------------------
 	void			canvasSizeChanged(const QSize &oldSize);
 	void			audioModeChanged(PrflAudioMode mode);
 	void			frameRendered(
-		Texture *tex, uint frameNum, int numDropped);
+		VidgfxTex *tex, uint frameNum, int numDropped);
 	void			transitionsChanged();
 
 	public
 Q_SLOTS: // Slots -------------------------------------------------------------
-	void			graphicsContextInitialized(GraphicsContext *gfx);
-	void			graphicsContextDestroyed(GraphicsContext *gfx);
+	void			graphicsContextInitialized(VidgfxContext *gfx);
+	void			graphicsContextDestroyed(VidgfxContext *gfx);
 	void			queuedFrameEvent(uint frameNum, int numDropped);
 	void			targetActiveChanged(Target *target, bool active);
 	void			unserializeErrorTimeout();

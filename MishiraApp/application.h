@@ -33,7 +33,6 @@ class BitrateCalcWindow;
 class CaptureManager;
 class CPUUsage;
 class DarkStyle;
-class GraphicsContext;
 class Layer;
 class LayerDialog;
 class LayerDialogWindow;
@@ -41,7 +40,6 @@ class MainWindow;
 class Profile;
 class Scene;
 class SceneItem;
-class Texture;
 class VideoSourceManager;
 class WizardWindow;
 class QAbstractButton;
@@ -76,7 +74,7 @@ protected: // Members ---------------------------------------------------------
 	LayerDialogWindow *		m_layerDialogWindow;
 	BitrateCalcWindow *		m_bitrateCalcWindow;
 	AboutWindow *			m_aboutWindow;
-	GraphicsContext *		m_gfxContext;
+	VidgfxContext *			m_gfxContext;
 	AudioSourceManager *	m_audioManager;
 	VideoSourceManager *	m_videoManager;
 	AsyncIO *				m_asyncIo;
@@ -145,8 +143,8 @@ public: // Methods ------------------------------------------------------------
 	void				showBasicWarningDialog(
 		const QString &message, const QString &title = QString());
 
-	void					setGraphicsContext(GraphicsContext *context);
-	GraphicsContext *		getGraphicsContext() const;
+	void					setGraphicsContext(VidgfxContext *context);
+	VidgfxContext *			getGraphicsContext() const;
 	CaptureManager *		getCaptureManager() const;
 	AudioSourceManager *	getAudioSourceManager() const;
 	VideoSourceManager *	getVideoSourceManager() const;
@@ -209,7 +207,7 @@ protected:
 public: // Interface ----------------------------------------------------------
 	virtual void		logSystemInfo() = 0;
 	virtual void		hideLauncherSplash() = 0;
-	virtual Texture *	getSystemCursorInfo(
+	virtual VidgfxTex *	getSystemCursorInfo(
 		QPoint *globalPos, QPoint *offset, bool *isVisible) = 0;
 private:
 	virtual void		resetSystemCursorInfo() = 0;
@@ -282,7 +280,7 @@ inline Application *Application::getSingleton()
 	return s_instance;
 }
 
-inline GraphicsContext *Application::getGraphicsContext() const
+inline VidgfxContext *Application::getGraphicsContext() const
 {
 	return m_gfxContext;
 }

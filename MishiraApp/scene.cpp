@@ -20,7 +20,6 @@
 #include "layergroup.h"
 #include "profile.h"
 #include "sceneitem.h"
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
@@ -474,9 +473,9 @@ bool Scene::unserialize(QDataStream *stream)
 	return true;
 }
 
-void Scene::render(GraphicsContext *gfx, uint frameNum, int numDropped)
+void Scene::render(VidgfxContext *gfx, uint frameNum, int numDropped)
 {
-	if(gfx == NULL || !gfx->isValid())
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be usuable
 
 	// Forward to visible layers only in reverse order

@@ -23,10 +23,8 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
-class GraphicsContext;
 class Layer;
 class Scene;
-class VertexBuffer;
 
 //=============================================================================
 /// <summary>
@@ -77,11 +75,11 @@ protected: // Members ---------------------------------------------------------
 #endif
 
 	// Scene buffers
-	VertexBuffer *	m_canvasBuf;
+	VidgfxVertBuf *	m_canvasBuf;
 	QRectF			m_canvasBufRect;
 	QPointF			m_canvasBufBrUv;
-	VertexBuffer *	m_outlineBuf;
-	VertexBuffer *	m_resizeRectBuf;
+	VidgfxVertBuf *	m_outlineBuf;
+	VidgfxVertBuf *	m_resizeRectBuf;
 
 	// Right-click layer context menu
 	QMenu			m_contextLayerMenu;
@@ -109,11 +107,11 @@ public: // Methods ------------------------------------------------------------
 	bool		isAutoZoomEnabled() const;
 
 	void		initializeScreen(
-		GraphicsContext *gfx, const QSize &screenSize);
-	void		destroyScreen(GraphicsContext *gfx);
+		VidgfxContext *gfx, const QSize &screenSize);
+	void		destroyScreen(VidgfxContext *gfx);
 	void		screenResized(
-		GraphicsContext *gfx, const QSize &oldSize, const QSize &newSize);
-	void		renderScreen(GraphicsContext *gfx);
+		VidgfxContext *gfx, const QSize &oldSize, const QSize &newSize);
+	void		renderScreen(VidgfxContext *gfx);
 
 	QPointF			mapWidgetToCanvasPos(const QPointF &pos) const;
 	QPointF			mapCanvasToWidgetPos(const QPointF &pos) const;
@@ -169,8 +167,8 @@ Q_SLOTS: // Slots -------------------------------------------------------------
 	void	realTimeTickEvent(int numDropped, int lateByUsec);
 	void	canvasChanged();
 	void	canvasSizeChanged(const QSize &oldSize);
-	void	graphicsContextInitialized(GraphicsContext *gfx);
-	void	graphicsContextDestroyed(GraphicsContext *gfx);
+	void	graphicsContextInitialized(VidgfxContext *gfx);
+	void	graphicsContextDestroyed(VidgfxContext *gfx);
 	void	layerContextTriggered(QAction *action);
 	void	generalContextTriggered(QAction *action);
 };

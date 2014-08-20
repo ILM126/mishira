@@ -21,8 +21,6 @@
 #include "layer.h"
 
 class LayerDialog;
-class Texture;
-class VertexBuffer;
 class VideoSource;
 
 //=============================================================================
@@ -31,37 +29,37 @@ class WebcamLayer : public Layer
 	friend class LayerGroup;
 
 private: // Members -----------------------------------------------------------
-	quint64			m_deviceId;
-	GfxOrientation	m_orientation;
+	quint64				m_deviceId;
+	VidgfxOrientation	m_orientation;
 
-	bool			m_deviceIdChanged;
-	VideoSource *	m_vidSource;
-	VertexBuffer *	m_vertBuf;
-	QRectF			m_vertBufRect;
-	QPointF			m_vertBufBrUv;
-	GfxOrientation	m_vertOrient;
-	QSize			m_lastTexSize;
+	bool				m_deviceIdChanged;
+	VideoSource *		m_vidSource;
+	VidgfxVertBuf *		m_vertBuf;
+	QRectF				m_vertBufRect;
+	QPointF				m_vertBufBrUv;
+	VidgfxOrientation	m_vertOrient;
+	QSize				m_lastTexSize;
 
 private: // Constructor/destructor --------------------------------------------
 	WebcamLayer(LayerGroup *parent);
 	~WebcamLayer();
 
 public: // Methods ------------------------------------------------------------
-	void			setDeviceId(quint64 id);
-	quint64			getDeviceId() const;
-	void			setOrientation(GfxOrientation orientation);
-	GfxOrientation	getOrientation() const;
+	void				setDeviceId(quint64 id);
+	quint64				getDeviceId() const;
+	void				setOrientation(VidgfxOrientation orientation);
+	VidgfxOrientation	getOrientation() const;
 
 private:
 	void	updateVertBuf(
-		GraphicsContext *gfx, const QSize &texSize, const QPointF &brUv);
+		VidgfxContext *gfx, const QSize &texSize, const QPointF &brUv);
 
 public: // Interface ----------------------------------------------------------
-	virtual void	initializeResources(GraphicsContext *gfx);
-	virtual void	updateResources(GraphicsContext *gfx);
-	virtual void	destroyResources(GraphicsContext *gfx);
+	virtual void	initializeResources(VidgfxContext *gfx);
+	virtual void	updateResources(VidgfxContext *gfx);
+	virtual void	destroyResources(VidgfxContext *gfx);
 	virtual void	render(
-		GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped);
+		VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped);
 
 	virtual LyrType	getType() const;
 
@@ -83,7 +81,7 @@ inline quint64 WebcamLayer::getDeviceId() const
 	return m_deviceId;
 }
 
-inline GfxOrientation WebcamLayer::getOrientation() const
+inline VidgfxOrientation WebcamLayer::getOrientation() const
 {
 	return m_orientation;
 }

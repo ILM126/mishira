@@ -20,7 +20,6 @@
 
 #include "animatedfloat.h"
 #include "layer.h"
-#include <Libvidgfx/graphicscontext.h>
 
 class FileImageTexture;
 class LayerDialog;
@@ -41,7 +40,7 @@ class SlideshowLayer : public Layer
 	friend class LayerGroup;
 
 private: // Datatypes ---------------------------------------------------------
-	typedef QVector<TexDecalVertBuf *> TexDecalVertBufList;
+	typedef QVector<VidgfxTexDecalBuf *> TexDecalVertBufList;
 	typedef QVector<FileImageTexture *> FileImgTexList;
 
 private: // Members -----------------------------------------------------------
@@ -81,14 +80,14 @@ private:
 	void			switchToNextImage(bool immediately = false);
 	bool			switchToImage(int id, bool immediately);
 	void			textureMaybeChanged(int id);
-	void			renderImage(GraphicsContext *gfx, int id, float opacity);
+	void			renderImage(VidgfxContext *gfx, int id, float opacity);
 
 public: // Interface ----------------------------------------------------------
-	virtual void	initializeResources(GraphicsContext *gfx);
-	virtual void	updateResources(GraphicsContext *gfx);
-	virtual void	destroyResources(GraphicsContext *gfx);
+	virtual void	initializeResources(VidgfxContext *gfx);
+	virtual void	updateResources(VidgfxContext *gfx);
+	virtual void	destroyResources(VidgfxContext *gfx);
 	virtual void	render(
-		GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped);
+		VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped);
 
 	virtual LyrType	getType() const;
 

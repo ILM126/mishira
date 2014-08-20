@@ -22,7 +22,6 @@
 #include "profile.h"
 #include "videosource.h"
 #include "videosourcemanager.h"
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
@@ -65,7 +64,7 @@ void WebcamLayer::setDeviceId(quint64 id)
 	m_parent->layerChanged(this); // Remote emit
 }
 
-void WebcamLayer::setOrientation(GfxOrientation orientation)
+void WebcamLayer::setOrientation(VidgfxOrientation orientation)
 {
 	if(m_orientation == orientation)
 		return; // Nothing to do
@@ -75,13 +74,14 @@ void WebcamLayer::setOrientation(GfxOrientation orientation)
 	m_parent->layerChanged(this); // Remote emit
 }
 
-void WebcamLayer::initializeResources(GraphicsContext *gfx)
+void WebcamLayer::initializeResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Creating hardware resources for layer " << getIdString();
 
 	// Allocate resources
-	m_vertBuf = gfx->createVertexBuffer(GraphicsContext::TexDecalRectBufSize);
+	m_vertBuf = vidgfx_context_new_vertbuf(
+		gfx, VIDGFX_TEX_DECAL_RECT_BUF_SIZE);
 
 	// Reset state and update all resources
 	m_vertBufRect = QRectF();
@@ -91,7 +91,7 @@ void WebcamLayer::initializeResources(GraphicsContext *gfx)
 }
 
 void WebcamLayer::updateVertBuf(
-	GraphicsContext *gfx, const QSize &texSize, const QPointF &brUv)
+	VidgfxContext *gfx, const QSize &texSize, const QPointF &brUv)
 {
 	setVisibleRect(QRect()); // Invisible by default
 	if(m_vertBuf == NULL)
@@ -156,22 +156,22 @@ void WebcamLayer::updateVertBuf(
 	}
 
 	// Actually update the vertex data
-	gfx->createTexDecalRect(m_vertBuf, m_vertBufRect, tl, tr, bl, br);
+	vidgfx_create_tex_decal_rect(m_vertBuf, m_vertBufRect, tl, tr, bl, br);
 }
 
-void WebcamLayer::updateResources(GraphicsContext *gfx)
+void WebcamLayer::updateResources(VidgfxContext *gfx)
 {
 	// Update the visible rectangle and vertex buffer assuming that the size of
 	// the next frame will be identical to the previous frame
 	updateVertBuf(gfx, m_lastTexSize, m_vertBufBrUv);
 }
 
-void WebcamLayer::destroyResources(GraphicsContext *gfx)
+void WebcamLayer::destroyResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Destroying hardware resources for layer " << getIdString();
 
-	gfx->deleteVertexBuffer(m_vertBuf);
+	vidgfx_context_destroy_vertbuf(gfx, m_vertBuf);
 	m_vertBuf = NULL;
 
 	// Dereference the video source as we no longer need it
@@ -181,7 +181,7 @@ void WebcamLayer::destroyResources(GraphicsContext *gfx)
 }
 
 void WebcamLayer::render(
-	GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped)
+	VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped)
 {
 	// Fetch the video source if it's changed and make sure it's valid
 	if(m_deviceIdChanged) {
@@ -200,36 +200,36 @@ void WebcamLayer::render(
 
 	// Get the latest video frame from the video source. The returned texture
 	// is valid only for the duration of this render method.
-	Texture *tex = m_vidSource->getCurrentFrame();
-	if(tex == NULL || tex->getSize().isEmpty())
+	VidgfxTex *tex = m_vidSource->getCurrentFrame();
+	if(tex == NULL || vidgfx_tex_get_size(tex).isEmpty())
 		return; // Nothing to render
 	bool texSizeChanged = false;
-	if(m_lastTexSize != tex->getSize()) {
+	if(m_lastTexSize != vidgfx_tex_get_size(tex)) {
 		texSizeChanged = true;
-		m_lastTexSize = tex->getSize();
+		m_lastTexSize = vidgfx_tex_get_size(tex);
 	}
 
 	// Prepare texture for render. TODO: Filter mode selection?
 	QPointF pxSize, botRight;
-	QSize visSize = scaledRectFromActualSize(tex->getSize()).size();
-	tex = gfx->prepareTexture(
-		tex, visSize, GfxBilinearFilter, true, pxSize, botRight);
+	QSize visSize = scaledRectFromActualSize(vidgfx_tex_get_size(tex)).size();
+	tex = vidgfx_context_prepare_tex(
+		gfx, tex, visSize, GfxBilinearFilter, true, pxSize, botRight);
 	if(m_vertBufBrUv != botRight || texSizeChanged)
 		updateVertBuf(gfx, m_lastTexSize, botRight);
-	gfx->setTexture(tex);
+	vidgfx_context_set_tex(gfx, tex);
 
 	// Do the actual render
-	gfx->setShader(GfxTexDecalRgbShader);
-	gfx->setTopology(GfxTriangleStripTopology);
-	QColor prevCol = gfx->getTexDecalModColor();
-	gfx->setTexDecalModColor(
-		QColor(255, 255, 255, (int)(getOpacity() * 255.0f)));
+	vidgfx_context_set_shader(gfx, GfxTexDecalRgbShader);
+	vidgfx_context_set_topology(gfx, GfxTriangleStripTopology);
+	QColor prevCol = vidgfx_context_get_tex_decal_mod_color(gfx);
+	vidgfx_context_set_tex_decal_mod_color(
+		gfx, QColor(255, 255, 255, (int)(getOpacity() * 255.0f)));
 	if(getOpacity() != 1.0f)
-		gfx->setBlending(GfxAlphaBlending);
+		vidgfx_context_set_blending(gfx, GfxAlphaBlending);
 	else
-		gfx->setBlending(GfxNoBlending);
-	gfx->drawBuffer(m_vertBuf);
-	gfx->setTexDecalModColor(prevCol);
+		vidgfx_context_set_blending(gfx, GfxNoBlending);
+	vidgfx_context_draw_buf(gfx, m_vertBuf);
+	vidgfx_context_set_tex_decal_mod_color(gfx, prevCol);
 }
 
 LyrType WebcamLayer::getType() const
@@ -278,7 +278,7 @@ bool WebcamLayer::unserialize(QDataStream *stream)
 		setDeviceId(uint64Data);
 		if(version >= 1) {
 			*stream >> uint32Data;
-			setOrientation((GfxOrientation)uint32Data);
+			setOrientation((VidgfxOrientation)uint32Data);
 		}
 	} else {
 		appLog(LOG_CAT, Log::Warning)

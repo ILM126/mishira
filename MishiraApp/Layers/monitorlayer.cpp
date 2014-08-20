@@ -24,7 +24,6 @@
 #endif
 #include <Libdeskcap/capturemanager.h>
 #include <Libdeskcap/captureobject.h>
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
@@ -157,7 +156,7 @@ void MonitorLayer::setSaturation(int saturation)
 }
 
 void MonitorLayer::updateVertBuf(
-	GraphicsContext *gfx, const QPointF &tlUv, const QPointF &brUv)
+	VidgfxContext *gfx, const QPointF &tlUv, const QPointF &brUv)
 {
 	if(m_vertBuf == NULL)
 		return;
@@ -181,18 +180,18 @@ void MonitorLayer::updateVertBuf(
 	m_vertBufFlipped = m_curFlipped;
 	if(m_vertBufFlipped) {
 		// Texture is flipped vertically
-		gfx->createTexDecalRect(m_vertBuf, m_vertBufRect,
+		vidgfx_create_tex_decal_rect(m_vertBuf, m_vertBufRect,
 			QPointF(tlUv.x(), brUv.y()), brUv,
 			tlUv, QPointF(brUv.x(), tlUv.y()));
 	} else {
-		gfx->createTexDecalRect(m_vertBuf, m_vertBufRect,
+		vidgfx_create_tex_decal_rect(m_vertBuf, m_vertBufRect,
 			tlUv, QPointF(brUv.x(), tlUv.y()),
 			QPointF(tlUv.x(), brUv.y()), brUv);
 	}
 }
 
 void MonitorLayer::updateCursorVertBuf(
-	GraphicsContext *gfx, const QPointF &brUv, const QRect &relRect)
+	VidgfxContext *gfx, const QPointF &brUv, const QRect &relRect)
 {
 	if(m_cursorVertBuf == NULL)
 		return;
@@ -213,7 +212,7 @@ void MonitorLayer::updateCursorVertBuf(
 
 	m_cursorVertBufRect = rect;
 	m_cursorVertBufBrUv = brUv;
-	gfx->createTexDecalRect(
+	vidgfx_create_tex_decal_rect(
 		m_cursorVertBuf, m_cursorVertBufRect, m_cursorVertBufBrUv);
 }
 
@@ -231,15 +230,16 @@ void MonitorLayer::updateDisableAero()
 #endif
 }
 
-void MonitorLayer::initializeResources(GraphicsContext *gfx)
+void MonitorLayer::initializeResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Creating hardware resources for layer " << getIdString();
 
 	// Allocate resources
-	m_vertBuf = gfx->createVertexBuffer(GraphicsContext::TexDecalRectBufSize);
-	m_cursorVertBuf =
-		gfx->createVertexBuffer(GraphicsContext::TexDecalRectBufSize);
+	m_vertBuf = vidgfx_context_new_vertbuf(
+		gfx, VIDGFX_TEX_DECAL_RECT_BUF_SIZE);
+	m_cursorVertBuf = vidgfx_context_new_vertbuf(
+		gfx, VIDGFX_TEX_DECAL_RECT_BUF_SIZE);
 
 	// Reset caching and update all resources
 	m_monitorChanged = true;
@@ -251,7 +251,7 @@ void MonitorLayer::initializeResources(GraphicsContext *gfx)
 	updateResources(gfx);
 }
 
-void MonitorLayer::updateResources(GraphicsContext *gfx)
+void MonitorLayer::updateResources(VidgfxContext *gfx)
 {
 	// Layer is invisible by default
 	setVisibleRect(QRect());
@@ -290,13 +290,13 @@ void MonitorLayer::updateResources(GraphicsContext *gfx)
 	updateVertBuf(gfx, QPointF(0.0f, 0.0f), QPointF(1.0f, 1.0f));
 }
 
-void MonitorLayer::destroyResources(GraphicsContext *gfx)
+void MonitorLayer::destroyResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Destroying hardware resources for layer " << getIdString();
 
-	gfx->deleteVertexBuffer(m_vertBuf);
-	gfx->deleteVertexBuffer(m_cursorVertBuf);
+	vidgfx_context_destroy_vertbuf(gfx, m_vertBuf);
+	vidgfx_context_destroy_vertbuf(gfx, m_cursorVertBuf);
 	m_vertBuf = NULL;
 	m_cursorVertBuf = NULL;
 
@@ -309,7 +309,7 @@ void MonitorLayer::destroyResources(GraphicsContext *gfx)
 }
 
 void MonitorLayer::render(
-	GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped)
+	VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped)
 {
 	if(m_captureObj == NULL || !m_captureObj->isTextureValid())
 		return; // Nothing to render
@@ -325,38 +325,38 @@ void MonitorLayer::render(
 	// TODO: Filter mode selection
 	QPointF pxSize, topLeft, botRight;
 	QRect cropRect = m_cropInfo.calcCroppedRectForSize(m_curSize);
-	Texture *tex = gfx->prepareTexture(
-		m_captureObj->getTexture(), cropRect,
+	VidgfxTex *tex = vidgfx_context_prepare_tex(
+		gfx, m_captureObj->getTexture(), cropRect,
 		m_vertBufRect.toAlignedRect().size(), GfxBilinearFilter, true, pxSize,
 		topLeft, botRight);
 	if(m_vertBufTlUv != topLeft || m_vertBufBrUv != botRight)
 		updateVertBuf(gfx, topLeft, botRight);
-	gfx->setTexture(tex);
+	vidgfx_context_set_tex(gfx, tex);
 
 	// sRGB back buffer correction HACK
 	// TODO: 2.233333 gamma isn't really accurate, see:
 	// http://chilliant.blogspot.com.au/2012/08/srgb-approximations-for-hlsl.html
 	float gamma = m_gamma;
-	if(tex->isSrgbHack())
+	if(vidgfx_tex_is_srgb_hack(tex))
 		gamma *= 2.233333f;
 
 	// Do the actual render
-	if(gfx->setTexDecalEffectsHelper(
-		gamma, m_brightness, m_contrast, m_saturation))
+	if(vidgfx_context_set_tex_decal_effects_helper(
+		gfx, gamma, m_brightness, m_contrast, m_saturation))
 	{
-		gfx->setShader(GfxTexDecalGbcsShader);
+		vidgfx_context_set_shader(gfx, GfxTexDecalGbcsShader);
 	} else
-		gfx->setShader(GfxTexDecalRgbShader);
-	gfx->setTopology(GfxTriangleStripTopology);
-	QColor prevCol = gfx->getTexDecalModColor();
-	gfx->setTexDecalModColor(
-		QColor(255, 255, 255, (int)(getOpacity() * 255.0f)));
+		vidgfx_context_set_shader(gfx, GfxTexDecalRgbShader);
+	vidgfx_context_set_topology(gfx, GfxTriangleStripTopology);
+	QColor prevCol = vidgfx_context_get_tex_decal_mod_color(gfx);
+	vidgfx_context_set_tex_decal_mod_color(
+		gfx, QColor(255, 255, 255, (int)(getOpacity() * 255.0f)));
 	if(getOpacity() != 1.0f)
-		gfx->setBlending(GfxAlphaBlending);
+		vidgfx_context_set_blending(gfx, GfxAlphaBlending);
 	else
-		gfx->setBlending(GfxNoBlending);
-	gfx->drawBuffer(m_vertBuf);
-	gfx->setTexDecalModColor(prevCol);
+		vidgfx_context_set_blending(gfx, GfxNoBlending);
+	vidgfx_context_draw_buf(gfx, m_vertBuf);
+	vidgfx_context_set_tex_decal_mod_color(gfx, prevCol);
 
 	//-------------------------------------------------------------------------
 	// Render the mouse cursor if it's enabled
@@ -367,7 +367,7 @@ void MonitorLayer::render(
 	QPoint globalPos;
 	QPoint offset;
 	bool isVisible;
-	Texture *cursorTex =
+	VidgfxTex *cursorTex =
 		App->getSystemCursorInfo(&globalPos, &offset, &isVisible);
 	if(cursorTex == NULL || !isVisible)
 		return;
@@ -383,26 +383,27 @@ void MonitorLayer::render(
 
 	// Prepare texture for render
 	// TODO: Filter mode selection?
-	tex = gfx->prepareTexture(
-		cursorTex, m_cursorVertBufRect.toAlignedRect().size(),
+	tex = vidgfx_context_prepare_tex(
+		gfx, cursorTex, m_cursorVertBufRect.toAlignedRect().size(),
 		GfxBilinearFilter, true, pxSize, botRight);
 	updateCursorVertBuf( // Always update
-		gfx, botRight, QRect(localPos + offset, cursorTex->getSize()));
-	gfx->setTexture(tex);
+		gfx, botRight, QRect(localPos + offset,
+		vidgfx_tex_get_size(cursorTex)));
+	vidgfx_context_set_tex(gfx, tex);
 
 	// Do the actual render
-	if(gfx->setTexDecalEffectsHelper(
-		m_gamma, m_brightness, m_contrast, m_saturation))
+	if(vidgfx_context_set_tex_decal_effects_helper(
+		gfx, m_gamma, m_brightness, m_contrast, m_saturation))
 	{
-		gfx->setShader(GfxTexDecalGbcsShader);
+		vidgfx_context_set_shader(gfx, GfxTexDecalGbcsShader);
 	} else
-		gfx->setShader(GfxTexDecalShader);
-	gfx->setTopology(GfxTriangleStripTopology);
-	gfx->setTexDecalModColor( // Incorrect blending but we don't care
-		QColor(255, 255, 255, (int)(getOpacity() * 255.0f)));
-	gfx->setBlending(GfxAlphaBlending);
-	gfx->drawBuffer(m_cursorVertBuf);
-	gfx->setTexDecalModColor(prevCol);
+		vidgfx_context_set_shader(gfx, GfxTexDecalShader);
+	vidgfx_context_set_topology(gfx, GfxTriangleStripTopology);
+	vidgfx_context_set_tex_decal_mod_color( // Incorrect blending but we don't care
+		gfx, QColor(255, 255, 255, (int)(getOpacity() * 255.0f)));
+	vidgfx_context_set_blending(gfx, GfxAlphaBlending);
+	vidgfx_context_draw_buf(gfx, m_cursorVertBuf);
+	vidgfx_context_set_tex_decal_mod_color(gfx, prevCol);
 }
 
 LyrType MonitorLayer::getType() const

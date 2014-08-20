@@ -19,7 +19,6 @@
 #include "application.h"
 #include "asyncio.h"
 #include "profile.h"
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
@@ -58,9 +57,9 @@ FileImageTexture::FileImageTexture(const QString &filename)
 FileImageTexture::~FileImageTexture()
 {
 	if(m_tex != NULL) {
-		GraphicsContext *gfx = App->getGraphicsContext();
-		if(gfx != NULL && gfx->isValid()) {
-			gfx->deleteTexture(m_tex);
+		VidgfxContext *gfx = App->getGraphicsContext();
+		if(vidgfx_context_is_valid(gfx)) {
+			vidgfx_context_destroy_tex(gfx, m_tex);
 			m_tex = NULL;
 		}
 	}
@@ -97,7 +96,7 @@ bool FileImageTexture::resetAnimation(bool fullReset, bool updateTexture)
 	// Upload the first frame to the texture if requested
 	if(updateTexture) {
 		QImage img = m_imgReader.read();
-		m_tex->updateData(img);
+		vidgfx_tex_update_data(m_tex, img);
 		m_usecToNextFrame = m_imgReader.nextImageDelay() * 1000;
 		return true;
 	}
@@ -146,7 +145,7 @@ bool FileImageTexture::processFrameEvent(uint frameNum, int numDropped)
 				m_loopCount++;
 			}
 		}
-		m_tex->updateData(img);
+		vidgfx_tex_update_data(m_tex, img);
 		return true;
 	}
 
@@ -170,8 +169,8 @@ void FileImageTexture::imgLoadComplete(
 	// No point continuing processing if we can't create the texture. This
 	// should never happen as this object should only exist while a context
 	// already exists.
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx == NULL || !gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(!vidgfx_context_is_valid(gfx))
 		return;
 
 	// Keep the raw file data in memory until we don't need it anymore
@@ -217,8 +216,8 @@ void FileImageTexture::imgLoadComplete(
 	if(m_hasAlpha && !m_hasAnimation) {
 		// Prevent colour fringing around fully transparent pixels due to
 		// bilinear filtering by diluting the colour information
-		gfx->diluteImage(img);
+		vidgfx_context_dilute_img(gfx, img);
 	}
-	m_tex = gfx->createTexture(img, m_hasAnimation);
+	m_tex = vidgfx_context_new_tex(gfx, img, m_hasAnimation);
 	m_isFirstFrameAfterLoad = true;
 }

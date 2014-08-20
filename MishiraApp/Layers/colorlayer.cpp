@@ -20,7 +20,6 @@
 #include "colorlayerdialog.h"
 #include "layergroup.h"
 #include "stylehelper.h"
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
@@ -67,16 +66,17 @@ void ColorLayer::setBColor(const QColor &color)
 	m_parent->layerChanged(this); // Remote emit
 }
 
-void ColorLayer::initializeResources(GraphicsContext *gfx)
+void ColorLayer::initializeResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Creating hardware resources for layer " << getIdString();
 
-	m_vertBuf = gfx->createVertexBuffer(GraphicsContext::SolidRectBufSize);
+	m_vertBuf = vidgfx_context_new_vertbuf(
+		gfx, VIDGFX_SOLID_RECT_BUF_SIZE);
 	updateResources(gfx);
 }
 
-void ColorLayer::updateResources(GraphicsContext *gfx)
+void ColorLayer::updateResources(VidgfxContext *gfx)
 {
 	if(m_vertBuf != NULL) {
 		QColor aColor = m_aColor;
@@ -87,42 +87,42 @@ void ColorLayer::updateResources(GraphicsContext *gfx)
 		switch(m_pattern) {
 		default:
 		case SolidPattern:
-			gfx->createSolidRect(
+			vidgfx_create_solid_rect(
 				m_vertBuf, m_rect, aColor, aColor, aColor, aColor);
 			break;
 		case VerticalPattern:
-			gfx->createSolidRect(
+			vidgfx_create_solid_rect(
 				m_vertBuf, m_rect, aColor, aColor, bColor, bColor);
 			break;
 		case HorizontalPattern:
-			gfx->createSolidRect(
+			vidgfx_create_solid_rect(
 				m_vertBuf, m_rect, aColor, bColor, aColor, bColor);
 			break;
 		}
 	}
 }
 
-void ColorLayer::destroyResources(GraphicsContext *gfx)
+void ColorLayer::destroyResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Destroying hardware resources for layer " << getIdString();
 
-	gfx->deleteVertexBuffer(m_vertBuf);
+	vidgfx_context_destroy_vertbuf(gfx, m_vertBuf);
 	m_vertBuf = NULL;
 }
 
 void ColorLayer::render(
-	GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped)
+	VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped)
 {
-	gfx->setShader(GfxSolidShader);
-	gfx->setTopology(GfxTriangleStripTopology);
+	vidgfx_context_set_shader(gfx, GfxSolidShader);
+	vidgfx_context_set_topology(gfx, GfxTriangleStripTopology);
 	if(m_aColor.alpha() != 255 || m_bColor.alpha() != 255 ||
 		getOpacity() != 1.0f)
 	{
-		gfx->setBlending(GfxAlphaBlending);
+		vidgfx_context_set_blending(gfx, GfxAlphaBlending);
 	} else
-		gfx->setBlending(GfxNoBlending);
-	gfx->drawBuffer(m_vertBuf);
+		vidgfx_context_set_blending(gfx, GfxNoBlending);
+	vidgfx_context_draw_buf(gfx, m_vertBuf);
 }
 
 LyrType ColorLayer::getType() const

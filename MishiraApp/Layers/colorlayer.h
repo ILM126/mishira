@@ -22,7 +22,6 @@
 #include <QtGui/QColor>
 
 class LayerDialog;
-class VertexBuffer;
 
 enum GradientPattern {
 	SolidPattern = 0,
@@ -36,7 +35,7 @@ class ColorLayer : public Layer
 	friend class LayerGroup;
 
 private: // Members -----------------------------------------------------------
-	VertexBuffer *	m_vertBuf;
+	VidgfxVertBuf *	m_vertBuf;
 	GradientPattern	m_pattern;
 	QColor			m_aColor; // Base/top/left
 	QColor			m_bColor; // Bottom/right
@@ -54,11 +53,11 @@ public: // Methods ------------------------------------------------------------
 	QColor			getBColor() const;
 
 public: // Interface ----------------------------------------------------------
-	virtual void	initializeResources(GraphicsContext *gfx);
-	virtual void	updateResources(GraphicsContext *gfx);
-	virtual void	destroyResources(GraphicsContext *gfx);
+	virtual void	initializeResources(VidgfxContext *gfx);
+	virtual void	updateResources(VidgfxContext *gfx);
+	virtual void	destroyResources(VidgfxContext *gfx);
 	virtual void	render(
-		GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped);
+		VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped);
 
 	virtual LyrType	getType() const;
 

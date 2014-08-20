@@ -19,7 +19,6 @@
 #define SCALER_H
 
 #include "common.h"
-#include <Libvidgfx/graphicscontext.h>
 #include <QtCore/QObject>
 
 class Profile;
@@ -71,16 +70,16 @@ private: // Members -----------------------------------------------------------
 	Profile *		m_profile;
 	QSize			m_size;
 	SclrScalingMode	m_scaling;
-	GfxFilter		m_scaleFilter;
-	GfxPixelFormat	m_pixelFormat;
+	VidgfxFilter	m_scaleFilter;
+	VidgfxPixFormat	m_pixelFormat;
 	int				m_ref;
 
-	VertexBuffer *	m_quarterWidthBuf;
+	VidgfxVertBuf *	m_quarterWidthBuf;
 	QPointF			m_quarterWidthBufBrUv;
-	VertexBuffer *	m_nv12Buf;
-	Texture *		m_yuvScratchTex[3];
-	Texture *		m_stagingYTex[2];
-	Texture *		m_stagingUVTex[2];
+	VidgfxVertBuf *	m_nv12Buf;
+	VidgfxTex *		m_yuvScratchTex[3];
+	VidgfxTex *		m_stagingYTex[2];
+	VidgfxTex *		m_stagingUVTex[2];
 	uint			m_delayedFrameNum[2];
 	int				m_delayedNumDropped[2];
 	int				m_prevStagingTex;
@@ -89,26 +88,26 @@ private: // Members -----------------------------------------------------------
 public: // Static methods -----------------------------------------------------
 	static Scaler *	getOrCreate(
 		Profile *profile, QSize size, SclrScalingMode scaling,
-		GfxFilter scaleFilter, GfxPixelFormat pixelFormat);
-	static void		graphicsContextInitialized(GraphicsContext *gfx);
+		VidgfxFilter scaleFilter, VidgfxPixFormat pixelFormat);
+	static void		graphicsContextInitialized(VidgfxContext *gfx);
 
 private: // Constructor/destructor ---------------------------------------------
 	Scaler(
 		Profile *profile, QSize size, SclrScalingMode scaling,
-		GfxFilter scaleFilter, GfxPixelFormat pixelFormat);
+		VidgfxFilter scaleFilter, VidgfxPixFormat pixelFormat);
 	~Scaler();
 
 public: // Methods ------------------------------------------------------------
 	Profile *		getProfile() const;
 	QSize			getSize() const;
 	SclrScalingMode	getScaling() const;
-	GfxFilter		getScaleFilter() const;
-	GfxPixelFormat	getPixelFormat() const;
+	VidgfxFilter	getScaleFilter() const;
+	VidgfxPixFormat	getPixelFormat() const;
 
 	void			release();
 
 private:
-	void			updateVertBuf(GraphicsContext *gfx, const QPointF &brUv);
+	void			updateVertBuf(VidgfxContext *gfx, const QPointF &brUv);
 	LyrScalingMode	convertScaling(SclrScalingMode scaling) const;
 
 Q_SIGNALS: // Signals ---------------------------------------------------------
@@ -117,9 +116,9 @@ Q_SIGNALS: // Signals ---------------------------------------------------------
 
 	public
 Q_SLOTS: // Slots -------------------------------------------------------------
-	void	frameRendered(Texture *tex, uint frameNum, int numDropped);
-	void	initializeResources(GraphicsContext *gfx);
-	void	destroyResources(GraphicsContext *gfx);
+	void	frameRendered(VidgfxTex *tex, uint frameNum, int numDropped);
+	void	initializeResources(VidgfxContext *gfx);
+	void	destroyResources(VidgfxContext *gfx);
 };
 //=============================================================================
 
@@ -138,12 +137,12 @@ inline SclrScalingMode Scaler::getScaling() const
 	return m_scaling;
 }
 
-inline GfxFilter Scaler::getScaleFilter() const
+inline VidgfxFilter Scaler::getScaleFilter() const
 {
 	return m_scaleFilter;
 }
 
-inline GfxPixelFormat Scaler::getPixelFormat() const
+inline VidgfxPixFormat Scaler::getPixelFormat() const
 {
 	return m_pixelFormat;
 }

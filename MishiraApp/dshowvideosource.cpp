@@ -24,7 +24,6 @@
 #include "videosourcemanager.h"
 #include <dshow.h>
 #include <dvdmedia.h>
-#include <Libvidgfx/graphicscontext.h>
 #include <QtGui/5.0.2/QtGui/qpa/qplatformnativeinterface.h>
 
 const QString LOG_CAT = QStringLiteral("DirectShow");
@@ -362,12 +361,12 @@ QString getDShowErrorCode(HRESULT res)
 /// Copies a single frame's plane to the specified texture.
 /// </summary>
 /// <returns>The first byte after the plane</returns>
-uchar *copyPlaneToTex(Texture *tex, uchar *src, const QSize &planeSizeBytes)
+uchar *copyPlaneToTex(VidgfxTex *tex, uchar *src, const QSize &planeSizeBytes)
 {
-	uchar *texData = reinterpret_cast<uchar *>(tex->map());
-	imgDataCopy(texData, src, tex->getStride(), planeSizeBytes.width(),
-		planeSizeBytes);
-	tex->unmap();
+	uchar *texData = reinterpret_cast<uchar *>(vidgfx_tex_map(tex));
+	imgDataCopy(texData, src, vidgfx_tex_get_stride(tex),
+		planeSizeBytes.width(), planeSizeBytes);
+	vidgfx_tex_unmap(tex);
 	src += planeSizeBytes.width() * planeSizeBytes.height();
 	return src;
 }
@@ -381,10 +380,10 @@ static const GUID CLSID_DShowRenderer = {
 };
 
 /// <summary>
-/// Returns the matching `GfxPixelFormat` for the specified video subtype GUID
+/// Returns the matching `VidgfxPixFormat` for the specified video subtype GUID
 /// if it is supported by our format conversion system.
 /// </summary>
-GfxPixelFormat DShowRenderer::formatFromSubtype(const GUID &subtype)
+VidgfxPixFormat DShowRenderer::formatFromSubtype(const GUID &subtype)
 {
 	// Uncompressed RGB with a single packed plane
 	if(subtype == MEDIASUBTYPE_RGB24)
@@ -422,11 +421,11 @@ GfxPixelFormat DShowRenderer::formatFromSubtype(const GUID &subtype)
 /// <returns>
 /// -1 is `a` is better, 0 if they are the same, 1 if `b` is better
 /// </returns>
-int DShowRenderer::compareFormats(GfxPixelFormat a, GfxPixelFormat b)
+int DShowRenderer::compareFormats(VidgfxPixFormat a, VidgfxPixFormat b)
 {
 	// Give each pixel format an order of preference. Higher numbers means a
 	// higher preference. Negative preference items are effectively never used.
-	// The array has the same order as the `GfxPixelFormat` enum.
+	// The array has the same order as the `VidgfxPixFormat` enum.
 	int order[NUM_PIXEL_FORMAT_TYPES];
 	int i = 0;
 	order[i++] = 0; // GfxNoFormat
@@ -510,7 +509,7 @@ void DShowRenderer::parseMediaType(
 	}
 }
 
-DShowRenderer::DShowRenderer(GfxPixelFormat pixelFormat, HRESULT *phr)
+DShowRenderer::DShowRenderer(VidgfxPixFormat pixelFormat, HRESULT *phr)
 	: CBaseRenderer(CLSID_DShowRenderer, TEXT("DShowRenderer"), NULL, phr)
 	, m_mutex()
 	, m_pixelFormat(pixelFormat)
@@ -1015,16 +1014,16 @@ exitInitialize1:
 void DShowVideoSource::shutdown()
 {
 	// Reset current frame data if we have one
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx != NULL && gfx->isValid()) {
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(vidgfx_context_is_valid(gfx)) {
 		if(m_curPlaneA != NULL)
-			gfx->deleteTexture(m_curPlaneA);
+			vidgfx_context_destroy_tex(gfx, m_curPlaneA);
 		if(m_curPlaneB != NULL)
-			gfx->deleteTexture(m_curPlaneB);
+			vidgfx_context_destroy_tex(gfx, m_curPlaneB);
 		if(m_curPlaneC != NULL)
-			gfx->deleteTexture(m_curPlaneC);
+			vidgfx_context_destroy_tex(gfx, m_curPlaneC);
 		if(m_curTexture != NULL)
-			gfx->deleteTexture(m_curTexture);
+			vidgfx_context_destroy_tex(gfx, m_curTexture);
 		m_curPlaneA = NULL;
 		m_curPlaneB = NULL;
 		m_curPlaneC = NULL;
@@ -1200,7 +1199,7 @@ void DShowVideoSource::findBestOutputPin()
 			}
 
 			// Does this pin output one of our supported pixel formats?
-			GfxPixelFormat format =
+			VidgfxPixFormat format =
 				DShowRenderer::formatFromSubtype(type->subtype);
 			if(format != GfxNoFormat) {
 				// This pin outputs one of our supported formats! Use this pin
@@ -1274,7 +1273,7 @@ void DShowVideoSource::fetchAllOutputModes()
 			DeleteMediaType(type);
 			continue;
 		}
-		GfxPixelFormat format =
+		VidgfxPixFormat format =
 			DShowRenderer::formatFromSubtype(type->subtype);
 		if(format != m_bestOutPinFormat) {
 			DeleteMediaType(type);
@@ -1308,8 +1307,8 @@ void DShowVideoSource::fetchAllOutputModes()
 /// </summary>
 void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 {
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx == NULL || !gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(!vidgfx_context_is_valid(gfx))
 		return; // We don't have a valid graphics context yet
 
 	// We delay determining the final sample pixel format and size until now
@@ -1369,38 +1368,48 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 		case GfxARGB32Format: // DXGI_FORMAT_B8G8R8A8_UNORM
 			// We don't use any intermediate textures for these formats, we
 			// write directly to the texture from the CPU.
-			m_curTexture = gfx->createTexture(texSize, true, false, true);
+			m_curTexture = vidgfx_context_new_tex(
+				gfx, texSize, true, false, true);
 			break;
 		case GfxYV12Format: // NxM Y, (N/2)x(M/2) V, (N/2)x(M/2) U
 		case GfxIYUVFormat: { // NxM Y, (N/2)x(M/2) U, (N/2)x(M/2) V
 			// We require 3 separate planes for these formats
 			QSize sizeA(texSize.width() / 4, texSize.height());
 			QSize sizeBC(sizeA.width() / 2, sizeA.height() / 2);
-			m_curPlaneA = gfx->createTexture(sizeA, true, false, false);
-			m_curPlaneB = gfx->createTexture(sizeBC, true, false, false);
-			m_curPlaneC = gfx->createTexture(sizeBC, true, false, false);
-			m_curTexture = gfx->createTexture(texSize, false, false, false);
+			m_curPlaneA = vidgfx_context_new_tex(
+				gfx, sizeA, true, false, false);
+			m_curPlaneB = vidgfx_context_new_tex(
+				gfx, sizeBC, true, false, false);
+			m_curPlaneC = vidgfx_context_new_tex(
+				gfx, sizeBC, true, false, false);
+			m_curTexture = vidgfx_context_new_tex(
+				gfx, texSize, false, false, false);
 			break; }
 		case GfxNV12Format: { // NxM Y, Nx(M/2) interleaved UV
 			// We require 2 separate planes for this formats
 			QSize sizeA(texSize.width() / 4, texSize.height());
 			QSize sizeB(sizeA.width(), sizeA.height() / 2);
-			m_curPlaneA = gfx->createTexture(sizeA, true, false, false);
-			m_curPlaneB = gfx->createTexture(sizeB, true, false, false);
-			m_curTexture = gfx->createTexture(texSize, false, false, false);
+			m_curPlaneA = vidgfx_context_new_tex(
+				gfx, sizeA, true, false, false);
+			m_curPlaneB = vidgfx_context_new_tex(
+				gfx, sizeB, true, false, false);
+			m_curTexture = vidgfx_context_new_tex(
+				gfx, texSize, false, false, false);
 			break; }
 		case GfxUYVYFormat: // UYVY
 		case GfxHDYCFormat: // UYVY with BT.709
 		case GfxYUY2Format: { // YUYV
 			// We only require a single plane for these formats
 			QSize sizeA(texSize.width() / 2, texSize.height());
-			m_curPlaneA = gfx->createTexture(sizeA, true, false, false);
-			m_curTexture = gfx->createTexture(texSize, false, false, false);
+			m_curPlaneA = vidgfx_context_new_tex(
+				gfx, sizeA, true, false, false);
+			m_curTexture = vidgfx_context_new_tex(
+				gfx, texSize, false, false, false);
 			break; }
 		}
 	} else {
 		// Make sure the size variable is defined
-		texSize = m_curTexture->getSize();
+		texSize = vidgfx_tex_get_size(m_curTexture);
 	}
 
 	// Do the actual conversion
@@ -1412,8 +1421,9 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 	default:
 	case GfxRGB24Format: {
 		// We must convert from 24-bit RGB to 32-bit RGB
-		uchar *texData = reinterpret_cast<uchar *>(m_curTexture->map());
-		int texStride = m_curTexture->getStride();
+		uchar *texData =
+			reinterpret_cast<uchar *>(vidgfx_tex_map(m_curTexture));
+		int texStride = vidgfx_tex_get_stride(m_curTexture);
 		uchar *in = sampleData;
 		for(int y = 0; y < texSize.height(); y++) {
 			uchar *out = &texData[y*texStride];
@@ -1424,7 +1434,7 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 				*(out++) = 0xFF;
 			}
 		}
-		m_curTexture->unmap();
+		vidgfx_tex_unmap(m_curTexture);
 		break; }
 	case GfxRGB32Format: // DXGI_FORMAT_B8G8R8X8_UNORM
 	case GfxARGB32Format: { // DXGI_FORMAT_B8G8R8A8_UNORM
@@ -1441,11 +1451,11 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 		in = copyPlaneToTex(m_curPlaneC, in, halfSize);
 
 		// Convert to BGRX
-		Texture *tmpTex = gfx->convertToBgrx(
-			m_curFormat, m_curPlaneA, m_curPlaneB, m_curPlaneC);
+		VidgfxTex *tmpTex = vidgfx_context_convert_to_bgrx(
+			gfx, m_curFormat, m_curPlaneA, m_curPlaneB, m_curPlaneC);
 		if(tmpTex != NULL) {
-			gfx->copyTextureData(m_curTexture, tmpTex, QPoint(0, 0),
-				QRect(QPoint(0, 0), texSize));
+			vidgfx_context_copy_tex_data(gfx, m_curTexture, tmpTex,
+				QPoint(0, 0), QRect(QPoint(0, 0), texSize));
 		}
 		break; }
 	case GfxNV12Format: { // NxM Y, Nx(M/2) interleaved UV
@@ -1456,11 +1466,11 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 		in = copyPlaneToTex(m_curPlaneB, in, halfHeight);
 
 		// Convert to BGRX
-		Texture *tmpTex = gfx->convertToBgrx(
-			m_curFormat, m_curPlaneA, m_curPlaneB, NULL);
+		VidgfxTex *tmpTex = vidgfx_context_convert_to_bgrx(
+			gfx, m_curFormat, m_curPlaneA, m_curPlaneB, NULL);
 		if(tmpTex != NULL) {
-			gfx->copyTextureData(m_curTexture, tmpTex, QPoint(0, 0),
-				QRect(QPoint(0, 0), texSize));
+			vidgfx_context_copy_tex_data(gfx, m_curTexture, tmpTex,
+				QPoint(0, 0), QRect(QPoint(0, 0), texSize));
 		}
 		break; }
 	case GfxUYVYFormat: // UYVY
@@ -1471,11 +1481,11 @@ void DShowVideoSource::convertSampleToTexture(IMediaSample *sample)
 		copyPlaneToTex(m_curPlaneA, sampleData, packedWidth);
 
 		// Convert to BGRX
-		Texture *tmpTex = gfx->convertToBgrx(
-			m_curFormat, m_curPlaneA, NULL, NULL);
+		VidgfxTex *tmpTex = vidgfx_context_convert_to_bgrx(
+			gfx, m_curFormat, m_curPlaneA, NULL, NULL);
 		if(tmpTex != NULL) {
-			gfx->copyTextureData(m_curTexture, tmpTex, QPoint(0, 0),
-				QRect(QPoint(0, 0), texSize));
+			vidgfx_context_copy_tex_data(gfx, m_curTexture, tmpTex,
+				QPoint(0, 0), QRect(QPoint(0, 0), texSize));
 		}
 		break; }
 	}
@@ -1510,7 +1520,7 @@ QString DShowVideoSource::getDebugString() const
 	}
 	return QStringLiteral("%1 (%2) [%3]")
 		.arg(m_friendlyName)
-		.arg(GfxPixelFormatStrings[m_bestOutPinFormat])
+		.arg(VidgfxPixFormatStrs[m_bestOutPinFormat])
 		.arg(numberToHexString(m_id));
 }
 
@@ -1584,7 +1594,7 @@ void DShowVideoSource::prepareFrame(uint frameNum, int numDropped)
 	m_curSampleProcessed = false;
 }
 
-Texture *DShowVideoSource::getCurrentFrame()
+VidgfxTex *DShowVideoSource::getCurrentFrame()
 {
 	if(m_ref <= 0)
 		return NULL; // Not enabled

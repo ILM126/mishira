@@ -286,7 +286,7 @@ void X264Encoder::debugBestBitrates()
 
 X264Encoder::X264Encoder(
 	Profile *profile, QSize size, SclrScalingMode scaling,
-	GfxFilter scaleFilter, Fraction framerate, const X264Options &opt)
+	VidgfxFilter scaleFilter, Fraction framerate, const X264Options &opt)
 	: VideoEncoder(
 	profile, VencX264Type, size, scaling, scaleFilter, framerate)
 	, m_scaler(NULL)

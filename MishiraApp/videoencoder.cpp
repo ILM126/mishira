@@ -22,7 +22,7 @@ const QString LOG_CAT = QStringLiteral("Video");
 
 VideoEncoder::VideoEncoder(
 	Profile *profile, VencType type, QSize size, SclrScalingMode scaling,
-	GfxFilter scaleFilter, Fraction framerate)
+	VidgfxFilter scaleFilter, Fraction framerate)
 	: m_profile(profile)
 	, m_type(type)
 	, m_ref(0)
@@ -109,7 +109,7 @@ bool VideoEncoder::unserialize(QDataStream *stream)
 		*stream >> uint32Data;
 		m_scaling = (SclrScalingMode)uint32Data;
 		*stream >> uint32Data;
-		m_scaleFilter = (GfxFilter)uint32Data;
+		m_scaleFilter = (VidgfxFilter)uint32Data;
 		// We assume that `m_framerate` is already properly set
 	} else {
 		appLog(LOG_CAT, Log::Warning)

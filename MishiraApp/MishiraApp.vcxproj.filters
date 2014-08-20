@@ -1733,6 +1733,9 @@
     <ClInclude Include="GeneratedFiles\ui_hitboxtargetsettingspage.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="versionhelpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MishiraApp.rc" />

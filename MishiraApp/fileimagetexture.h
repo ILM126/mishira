@@ -18,12 +18,11 @@
 #ifndef FILEIMAGETEXTURE_H
 #define FILEIMAGETEXTURE_H
 
+#include <Libvidgfx/libvidgfx.h>
 #include <QtCore/QByteArray>
 #include <QtCore/QBuffer>
 #include <QtCore/QString>
 #include <QtGui/QImageReader>
-
-class Texture;
 
 //=============================================================================
 /// <summary>
@@ -45,7 +44,7 @@ private: // Members -----------------------------------------------------------
 	int				m_imgLoadOperation;
 	QBuffer			m_imgBuffer;
 	QImageReader	m_imgReader;
-	Texture *		m_tex;
+	VidgfxTex *		m_tex;
 
 	// Image state
 	bool			m_hasAlpha;
@@ -67,7 +66,7 @@ public: // Methods ------------------------------------------------------------
 	bool		isLoaded() const;
 	bool		hasTransparency() const;
 	bool		hasAnimation() const;
-	Texture *	getTexture() const;
+	VidgfxTex *	getTexture() const;
 
 	bool	processFrameEvent(uint frameNum, int numDropped);
 
@@ -103,7 +102,7 @@ inline bool FileImageTexture::hasAnimation() const
 	return m_hasAnimation;
 }
 
-inline Texture *FileImageTexture::getTexture() const
+inline VidgfxTex *FileImageTexture::getTexture() const
 {
 	return m_tex;
 }

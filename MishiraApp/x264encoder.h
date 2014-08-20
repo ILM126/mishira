@@ -73,7 +73,7 @@ public: // Static methods -----------------------------------------------------
 public: // Constructor/destructor ---------------------------------------------
 	X264Encoder(
 		Profile *profile, QSize size, SclrScalingMode scaling,
-		GfxFilter scaleFilter, Fraction framerate, const X264Options &opt);
+		VidgfxFilter scaleFilter, Fraction framerate, const X264Options &opt);
 	virtual ~X264Encoder();
 
 public: // Methods ------------------------------------------------------------

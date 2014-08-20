@@ -32,7 +32,6 @@
 #include "ustreamtarget.h"
 #include "x264encoder.h"
 #include <Libdeskcap/capturemanager.h>
-#include <Libvidgfx/graphicscontext.h>
 #include <QtCore/QBuffer>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -43,6 +42,18 @@ const QString LOG_CAT_VID = QStringLiteral("Video");
 const QString LOG_CAT_AUD = QStringLiteral("Audio");
 const QString LOG_CAT_TRGT = QStringLiteral("Target");
 const QString LOG_CAT_SCNE = QStringLiteral("Scene");
+
+static void gfxInitializedHandler(void *opaque, VidgfxContext *context)
+{
+	Profile *profile = static_cast<Profile *>(opaque);
+	profile->graphicsContextInitialized(context);
+}
+
+static void gfxDestroyingHandler(void *opaque, VidgfxContext *context)
+{
+	Profile *profile = static_cast<Profile *>(opaque);
+	profile->graphicsContextDestroyed(context);
+}
 
 /// <summary>
 /// Returns a list of profile names that are available to be loaded from the
@@ -129,16 +140,16 @@ Profile::Profile(const QString &filename, QObject *parent)
 
 	// Make sure that the profile knows when it can initialize or destroy
 	// hardware resources
-	GraphicsContext *gfx = App->getGraphicsContext();
+	VidgfxContext *gfx = App->getGraphicsContext();
 	if(gfx != NULL) {
-		if(gfx->isValid())
+		if(vidgfx_context_is_valid(gfx))
 			graphicsContextInitialized(gfx);
 		else {
-			connect(gfx, &GraphicsContext::initialized,
-				this, &Profile::graphicsContextInitialized);
+			vidgfx_context_add_initialized_callback(
+				gfx, gfxInitializedHandler, this);
 		}
-		connect(gfx, &GraphicsContext::destroying,
-			this, &Profile::graphicsContextDestroyed);
+		vidgfx_context_add_destroying_callback(
+			gfx, gfxDestroyingHandler, this);
 	}
 
 	// Test our bitrate suggestions
@@ -151,9 +162,17 @@ Profile::~Profile()
 		<< LOG_SINGLE_LINE << "\n Profile destroy begin\n" << LOG_SINGLE_LINE;
 
 	// Destroy any hardware resources that we have created
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx != NULL && gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(vidgfx_context_is_valid(gfx))
 		graphicsContextDestroyed(gfx);
+
+	// Remove callbacks
+	if(vidgfx_context_is_valid(gfx)) {
+		vidgfx_context_remove_initialized_callback(
+			gfx, gfxInitializedHandler, this);
+		vidgfx_context_remove_destroying_callback(
+			gfx, gfxDestroyingHandler, this);
+	}
 
 	// Make sure all targets are not broadcasting
 	for(int i = 0; i < m_targets.count(); i++)
@@ -537,7 +556,7 @@ void Profile::setActiveTransition(int transitionId)
 }
 
 VideoEncoder *Profile::getOrCreateX264VideoEncoder(
-	QSize size, SclrScalingMode scaling, GfxFilter scaleFilter,
+	QSize size, SclrScalingMode scaling, VidgfxFilter scaleFilter,
 	const X264Options &opt)
 {
 	// Find encoder to see if it already exists
@@ -1313,31 +1332,31 @@ void Profile::moveTargetTo(Target *target, int before)
 	emit targetMoved(target, before);
 }
 
-void Profile::setupContext(GraphicsContext *gfx)
+void Profile::setupContext(VidgfxContext *gfx)
 {
-	if(gfx == NULL || !gfx->isValid())
+	if(!vidgfx_context_is_valid(gfx))
 		return;
 
 	// Notify the context of our canvas size
-	gfx->resizeCanvasTarget(m_canvasSize);
+	vidgfx_context_resize_canvas_target(gfx, m_canvasSize);
 
 	// Update projection matrix
-	gfx->setRenderTarget(GfxCanvas1Target);// Updates all canvas targets
+	vidgfx_context_set_render_target(gfx, GfxCanvas1Target); // Updates all canvas targets
 	QMatrix4x4 mat;
 	mat.ortho(
 		0.0f, m_canvasSize.width(), m_canvasSize.height(), 0.0f,
 		-1.0f, 1.0f);
-	gfx->setProjectionMatrix(mat);
+	vidgfx_context_set_proj_mat(gfx, mat);
 
 	// Create transition objects
 	if(m_fadeVertBuf != NULL) {
-		gfx->deleteVertexBuffer(m_fadeVertBuf);
+		vidgfx_context_destroy_vertbuf(gfx, m_fadeVertBuf);
 		m_fadeVertBuf = NULL;
 	}
-	m_fadeVertBuf = gfx->createVertexBuffer(
-		GraphicsContext::TexDecalRectBufSize);
+	m_fadeVertBuf = vidgfx_context_new_vertbuf(
+		gfx, VIDGFX_TEX_DECAL_RECT_BUF_SIZE);
 	if(m_fadeVertBuf != NULL) {
-		gfx->createTexDecalRect(
+		vidgfx_create_tex_decal_rect(
 			m_fadeVertBuf, QRectF(QPointF(0.0f, 0.0f), m_canvasSize));
 	}
 }
@@ -1349,8 +1368,8 @@ void Profile::setCanvasSize(const QSize &size)
 	QSize oldSize = m_canvasSize;
 	m_canvasSize = size;
 
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx != NULL && gfx->isValid()) {
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(vidgfx_context_is_valid(gfx)) {
 		setupContext(gfx);
 		// TODO: Automatically scale layers? Forward layer resize events
 	}
@@ -1369,17 +1388,17 @@ void Profile::setAudioMode(PrflAudioMode mode)
 	emit audioModeChanged(m_audioMode);
 }
 
-void Profile::render(GraphicsContext *gfx, uint frameNum, int numDropped)
+void Profile::render(VidgfxContext *gfx, uint frameNum, int numDropped)
 {
-	if(gfx == NULL || !gfx->isValid())
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be usuable
 
-	GfxRenderTarget target = GfxCanvas1Target;
+	VidgfxRendTarget target = GfxCanvas1Target;
 	if(m_transitionAni.atEnd()) {
 		// No transition animation is currently active, just render a single
 		// scene as efficiently as possible
-		gfx->setRenderTarget(target);
-		gfx->clear(QColor(0, 0, 0));
+		vidgfx_context_set_render_target(gfx, target);
+		vidgfx_context_clear(gfx, QColor(0, 0, 0));
 		if(m_activeScene != NULL)
 			m_activeScene->render(gfx, frameNum, numDropped);
 	} else {
@@ -1389,28 +1408,29 @@ void Profile::render(GraphicsContext *gfx, uint frameNum, int numDropped)
 		case PrflInstantTransition: // Should never need to transition
 		case PrflFadeTransition: {
 			// Render the previous scene first
-			gfx->setRenderTarget(target);
-			gfx->clear(QColor(0, 0, 0));
+			vidgfx_context_set_render_target(gfx, target);
+			vidgfx_context_clear(gfx, QColor(0, 0, 0));
 			if(m_prevScene != NULL)
 				m_prevScene->render(gfx, frameNum, numDropped);
 
 			// Render the current scene to another target
-			gfx->setRenderTarget(GfxCanvas2Target);
-			gfx->clear(QColor(0, 0, 0));
+			vidgfx_context_set_render_target(gfx, GfxCanvas2Target);
+			vidgfx_context_clear(gfx, QColor(0, 0, 0));
 			if(m_activeScene != NULL)
 				m_activeScene->render(gfx, frameNum, numDropped);
 
 			// Render the current scene's texture on top of the old scene
-			gfx->setRenderTarget(target);
-			gfx->setTexture(gfx->getTargetTexture(GfxCanvas2Target));
-			gfx->setShader(GfxTexDecalRgbShader);
-			gfx->setTopology(GfxTriangleStripTopology);
-			gfx->setBlending(GfxAlphaBlending);
-			QColor oldCol = gfx->getTexDecalModColor();
-			gfx->setTexDecalModColor(QColor(255, 255, 255,
+			vidgfx_context_set_render_target(gfx, target);
+			vidgfx_context_set_tex(
+				gfx, vidgfx_context_get_target_tex(gfx, GfxCanvas2Target));
+			vidgfx_context_set_shader(gfx, GfxTexDecalRgbShader);
+			vidgfx_context_set_topology(gfx, GfxTriangleStripTopology);
+			vidgfx_context_set_blending(gfx, GfxAlphaBlending);
+			QColor oldCol = vidgfx_context_get_tex_decal_mod_color(gfx);
+			vidgfx_context_set_tex_decal_mod_color(gfx, QColor(255, 255, 255,
 				(int)(m_transitionAni.currentValue() * 255.0f)));
-			gfx->drawBuffer(m_fadeVertBuf);
-			gfx->setTexDecalModColor(oldCol);
+			vidgfx_context_draw_buf(gfx, m_fadeVertBuf);
+			vidgfx_context_set_tex_decal_mod_color(gfx, oldCol);
 
 			break; }
 		case PrflFadeBlackTransition:
@@ -1429,33 +1449,34 @@ void Profile::render(GraphicsContext *gfx, uint frameNum, int numDropped)
 			}
 
 			// Render the scene to another target
-			gfx->setRenderTarget(GfxCanvas2Target);
-			gfx->clear(QColor(0, 0, 0));
+			vidgfx_context_set_render_target(gfx, GfxCanvas2Target);
+			vidgfx_context_clear(gfx, QColor(0, 0, 0));
 			if(scene != NULL)
 				scene->render(gfx, frameNum, numDropped);
 
 			// Clear with the appropriate background colour
-			gfx->setRenderTarget(target);
+			vidgfx_context_set_render_target(gfx, target);
 			if(m_transition == PrflFadeBlackTransition)
-				gfx->clear(QColor(0, 0, 0));
+				vidgfx_context_clear(gfx, QColor(0, 0, 0));
 			else
-				gfx->clear(QColor(255, 255, 255));
+				vidgfx_context_clear(gfx, QColor(255, 255, 255));
 
 			// Render the scene's texture
-			gfx->setTexture(gfx->getTargetTexture(GfxCanvas2Target));
-			gfx->setShader(GfxTexDecalRgbShader);
-			gfx->setTopology(GfxTriangleStripTopology);
-			gfx->setBlending(GfxAlphaBlending);
-			QColor oldCol = gfx->getTexDecalModColor();
-			gfx->setTexDecalModColor(QColor(255, 255, 255,
+			vidgfx_context_set_tex(
+				gfx, vidgfx_context_get_target_tex(gfx, GfxCanvas2Target));
+			vidgfx_context_set_shader(gfx, GfxTexDecalRgbShader);
+			vidgfx_context_set_topology(gfx, GfxTriangleStripTopology);
+			vidgfx_context_set_blending(gfx, GfxAlphaBlending);
+			QColor oldCol = vidgfx_context_get_tex_decal_mod_color(gfx);
+			vidgfx_context_set_tex_decal_mod_color(gfx, QColor(255, 255, 255,
 				(int)(opacity * 255.0f)));
-			gfx->drawBuffer(m_fadeVertBuf);
-			gfx->setTexDecalModColor(oldCol);
+			vidgfx_context_draw_buf(gfx, m_fadeVertBuf);
+			vidgfx_context_set_tex_decal_mod_color(gfx, oldCol);
 
 			break; }
 		}
 	}
-	Texture *targetTex = gfx->getTargetTexture(target);
+	VidgfxTex *targetTex = vidgfx_context_get_target_tex(gfx, target);
 	emit frameRendered(targetTex, frameNum, numDropped);
 }
 
@@ -1691,9 +1712,9 @@ bool Profile::unserialize(QDataStream *stream)
 	return true;
 }
 
-void Profile::graphicsContextInitialized(GraphicsContext *gfx)
+void Profile::graphicsContextInitialized(VidgfxContext *gfx)
 {
-	if(gfx == NULL || !gfx->isValid())
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be useable
 
 	setupContext(gfx);
@@ -1712,15 +1733,15 @@ void Profile::graphicsContextInitialized(GraphicsContext *gfx)
 	}
 }
 
-void Profile::graphicsContextDestroyed(GraphicsContext *gfx)
+void Profile::graphicsContextDestroyed(VidgfxContext *gfx)
 {
-	if(gfx == NULL || !gfx->isValid())
+	if(!vidgfx_context_is_valid(gfx))
 		return; // Context must exist and be useable
 
-	gfx->setRenderTarget(GfxCanvas1Target);
+	vidgfx_context_set_render_target(gfx, GfxCanvas1Target);
 
 	// Destroy transition objects
-	gfx->deleteVertexBuffer(m_fadeVertBuf);
+	vidgfx_context_destroy_vertbuf(gfx, m_fadeVertBuf);
 	m_fadeVertBuf = NULL;
 
 	// Forward to loaded layers only
@@ -1739,8 +1760,8 @@ void Profile::graphicsContextDestroyed(GraphicsContext *gfx)
 
 void Profile::queuedFrameEvent(uint frameNum, int numDropped)
 {
-	GraphicsContext *gfx = App->getGraphicsContext();
-	if(gfx == NULL || !gfx->isValid())
+	VidgfxContext *gfx = App->getGraphicsContext();
+	if(!vidgfx_context_is_valid(gfx))
 		return;
 
 	//appLog(LOG_CAT)

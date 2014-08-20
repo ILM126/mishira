@@ -21,7 +21,6 @@
 #include "slideshowlayerdialog.h"
 #include "layergroup.h"
 #include "profile.h"
-#include <Libvidgfx/graphicscontext.h>
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
@@ -54,7 +53,7 @@ SlideshowLayer::~SlideshowLayer()
 	if(!m_vertBufs.isEmpty()) {
 		// Should never happen
 		for(int i = 0; i < m_vertBufs.size(); i++)
-			delete m_vertBufs.at(i);
+			vidgfx_texdecalbuf_destroy(m_vertBufs.at(i));
 		m_vertBufs.clear();
 	}
 	if(!m_imgTexs.isEmpty()) {
@@ -149,7 +148,7 @@ void SlideshowLayer::parentHideEvent()
 	hideEvent();
 }
 
-void SlideshowLayer::initializeResources(GraphicsContext *gfx)
+void SlideshowLayer::initializeResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Creating hardware resources for layer " << getIdString();
@@ -162,7 +161,7 @@ void SlideshowLayer::initializeResources(GraphicsContext *gfx)
 	if(!m_vertBufs.isEmpty()) {
 		// Should never happen
 		for(int i = 0; i < m_vertBufs.size(); i++)
-			delete m_vertBufs.at(i);
+			vidgfx_texdecalbuf_destroy(m_vertBufs.at(i));
 		m_vertBufs.clear();
 	}
 	if(!m_imgTexs.isEmpty()) {
@@ -174,7 +173,7 @@ void SlideshowLayer::initializeResources(GraphicsContext *gfx)
 	updateResources(gfx);
 }
 
-void SlideshowLayer::updateResources(GraphicsContext *gfx)
+void SlideshowLayer::updateResources(VidgfxContext *gfx)
 {
 	// Recreate textures only if they have changed
 	if(m_filenamesChanged) {
@@ -182,7 +181,7 @@ void SlideshowLayer::updateResources(GraphicsContext *gfx)
 
 		// Destroy existing buffers and textures
 		for(int i = 0; i < m_vertBufs.size(); i++)
-			delete m_vertBufs.at(i);
+			vidgfx_texdecalbuf_destroy(m_vertBufs.at(i));
 		m_vertBufs.clear();
 		for(int i = 0; i < m_imgTexs.size(); i++)
 			delete m_imgTexs.at(i);
@@ -199,7 +198,7 @@ void SlideshowLayer::updateResources(GraphicsContext *gfx)
 
 		// Create new buffers and textures
 		for(int i = 0; i < m_filenames.size(); i++) {
-			m_vertBufs.append(new TexDecalVertBuf(gfx));
+			m_vertBufs.append(vidgfx_texdecalbuf_new(gfx));
 			FileImageTexture *imgTex = new FileImageTexture(m_filenames.at(i));
 			imgTex->setAnimationPaused(true);
 			m_imgTexs.append(imgTex);
@@ -361,7 +360,7 @@ void SlideshowLayer::textureMaybeChanged(int id)
 	if(id < 0 || id >= m_imgTexs.size())
 		return; // Invalid image
 	FileImageTexture *imgTex = m_imgTexs.at(id);
-	TexDecalVertBuf *vertBuf = m_vertBufs.at(id);
+	VidgfxTexDecalBuf *vertBuf = m_vertBufs.at(id);
 
 	// Update vertex buffer and visible rectangle
 	if(imgTex == NULL) {
@@ -369,40 +368,40 @@ void SlideshowLayer::textureMaybeChanged(int id)
 			setVisibleRect(QRect()); // Layer is invisible
 		return;
 	}
-	Texture *tex = imgTex->getTexture();
+	VidgfxTex *tex = imgTex->getTexture();
 	if(tex == NULL) {
 		if(id == m_curId)
 			setVisibleRect(QRect()); // Layer is invisible
 		return;
 	}
-	const QRectF rect = scaledRectFromActualSize(tex->getSize());
-	vertBuf->setRect(rect);
+	const QRectF rect = scaledRectFromActualSize(vidgfx_tex_get_size(tex));
+	vidgfx_texdecalbuf_set_rect(vertBuf, rect);
 	if(id == m_curId)
 		setVisibleRect(rect.toAlignedRect());
 }
 
-void SlideshowLayer::destroyResources(GraphicsContext *gfx)
+void SlideshowLayer::destroyResources(VidgfxContext *gfx)
 {
 	appLog(LOG_CAT)
 		<< "Destroying hardware resources for layer " << getIdString();
 
 	for(int i = 0; i < m_vertBufs.size(); i++)
-		delete m_vertBufs.at(i);
+		vidgfx_texdecalbuf_destroy(m_vertBufs.at(i));
 	m_vertBufs.clear();
 	for(int i = 0; i < m_imgTexs.size(); i++)
 		delete m_imgTexs.at(i);
 	m_imgTexs.clear();
 }
 
-void SlideshowLayer::renderImage(GraphicsContext *gfx, int id, float opacity)
+void SlideshowLayer::renderImage(VidgfxContext *gfx, int id, float opacity)
 {
 	if(opacity <= 0.0f)
 		return; // Invisible image
 	if(id < 0 || id >= m_imgTexs.size())
 		return; // Invalid image
-	TexDecalVertBuf *texVertBuf = m_vertBufs.at(id);
+	VidgfxTexDecalBuf *texVertBuf = m_vertBufs.at(id);
 	FileImageTexture *imgTex = m_imgTexs.at(id);
-	Texture *tex = imgTex->getTexture();
+	VidgfxTex *tex = imgTex->getTexture();
 	if(tex == NULL)
 		return; // Image not loaded yet or an error occurred during load
 
@@ -412,31 +411,33 @@ void SlideshowLayer::renderImage(GraphicsContext *gfx, int id, float opacity)
 	// layer.
 	// TODO: Filter mode selection
 	QPointF pxSize, botRight;
-	tex = gfx->prepareTexture(
-		tex, getVisibleRect().size(), GfxBilinearFilter, true,
+	tex = vidgfx_context_prepare_tex(
+		gfx, tex, getVisibleRect().size(), GfxBilinearFilter, true,
 		pxSize, botRight);
-	texVertBuf->setTextureUv(QPointF(), botRight, GfxUnchangedOrient);
-	gfx->setTexture(tex);
+	vidgfx_texdecalbuf_set_tex_uv(
+		texVertBuf, QPointF(), botRight, GfxUnchangedOrient);
+	vidgfx_context_set_tex(gfx, tex);
 
 	// Do the actual render
-	VertexBuffer *vertBuf = texVertBuf->getVertBuf();
+	VidgfxVertBuf *vertBuf = vidgfx_texdecalbuf_get_vert_buf(texVertBuf);
 	if(vertBuf != NULL) {
-		gfx->setShader(GfxTexDecalShader);
-		gfx->setTopology(texVertBuf->getTopology());
+		vidgfx_context_set_shader(gfx, GfxTexDecalShader);
+		vidgfx_context_set_topology(
+			gfx, vidgfx_texdecalbuf_get_topology(texVertBuf));
 		if(imgTex->hasTransparency() || opacity < 1.0f)
-			gfx->setBlending(GfxAlphaBlending);
+			vidgfx_context_set_blending(gfx, GfxAlphaBlending);
 		else
-			gfx->setBlending(GfxNoBlending);
-		QColor oldCol = gfx->getTexDecalModColor();
-		gfx->setTexDecalModColor(
+			vidgfx_context_set_blending(gfx, GfxNoBlending);
+		QColor oldCol = vidgfx_context_get_tex_decal_mod_color(gfx);
+		vidgfx_context_set_tex_decal_mod_color(gfx,
 			QColor(255, 255, 255, (int)(opacity * getOpacity() * 255.0f)));
-		gfx->drawBuffer(vertBuf);
-		gfx->setTexDecalModColor(oldCol);
+		vidgfx_context_draw_buf(gfx, vertBuf);
+		vidgfx_context_set_tex_decal_mod_color(gfx, oldCol);
 	}
 }
 
 void SlideshowLayer::render(
-	GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped)
+	VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped)
 {
 	// Switch to the first image the moment that it loads
 	if(m_curId < 0) {

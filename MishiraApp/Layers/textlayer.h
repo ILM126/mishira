@@ -19,13 +19,10 @@
 #define TEXTLAYER_H
 
 #include "layer.h"
-#include <Libvidgfx/graphicscontext.h>
 #include <QtGui/QColor>
 #include <QtGui/QTextDocument>
 
 class LayerDialog;
-class Texture;
-class VertexBuffer;
 
 //=============================================================================
 class TextLayer : public Layer
@@ -34,15 +31,15 @@ class TextLayer : public Layer
 	friend class ScriptTextLayer;
 
 private: // Members -----------------------------------------------------------
-	TexDecalVertBuf	m_vertBuf;
-	Texture *		m_texture;
-	bool			m_isTexDirty;
-	QTextDocument	m_document;
-	int				m_strokeSize;
-	QColor			m_strokeColor;
-	bool			m_wordWrap;
-	QColor			m_dialogBgColor;
-	QPoint			m_scrollSpeed; // Pixels per second
+	VidgfxTexDecalBuf *	m_vertBuf;
+	VidgfxTex *			m_texture;
+	bool				m_isTexDirty;
+	QTextDocument		m_document;
+	int					m_strokeSize;
+	QColor				m_strokeColor;
+	bool				m_wordWrap;
+	QColor				m_dialogBgColor;
+	QPoint				m_scrollSpeed; // Pixels per second
 
 private: // Constructor/destructor --------------------------------------------
 	TextLayer(LayerGroup *parent);
@@ -66,14 +63,14 @@ public: // Methods ------------------------------------------------------------
 	void			setDefaultFontSettings(QTextDocument *document);
 
 private:
-	void			recreateTexture(GraphicsContext *gfx);
+	void			recreateTexture(VidgfxContext *gfx);
 
 public: // Interface ----------------------------------------------------------
-	virtual void	initializeResources(GraphicsContext *gfx);
-	virtual void	updateResources(GraphicsContext *gfx);
-	virtual void	destroyResources(GraphicsContext *gfx);
+	virtual void	initializeResources(VidgfxContext *gfx);
+	virtual void	updateResources(VidgfxContext *gfx);
+	virtual void	destroyResources(VidgfxContext *gfx);
 	virtual void	render(
-		GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped);
+		VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped);
 
 	virtual LyrType	getType() const;
 

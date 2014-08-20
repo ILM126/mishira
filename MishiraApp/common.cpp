@@ -34,8 +34,8 @@ extern "C" {
 // Validate library versions
 
 #if LIBDESKCAP_VER_MAJOR != 0 || \
-	LIBDESKCAP_VER_MINOR != 5 || \
-	LIBDESKCAP_VER_BUILD != 1
+	LIBDESKCAP_VER_MINOR != 6 || \
+	LIBDESKCAP_VER_BUILD != 0
 #error Mismatched Libdeskcap version!
 #endif
 
@@ -45,9 +45,9 @@ extern "C" {
 #error Mismatched Libbroadcast version!
 #endif
 
-#if LIBVIDGFX_VER_MAJOR != 0 || \
-	LIBVIDGFX_VER_MINOR != 5 || \
-	LIBVIDGFX_VER_BUILD != 0
+#if VIDGFX_VER_MAJOR != 0 || \
+	VIDGFX_VER_MINOR != 6 || \
+	VIDGFX_VER_PATCH != 0
 #error Mismatched Libvidgfx version!
 #endif
 

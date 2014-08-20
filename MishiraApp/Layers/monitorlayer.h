@@ -21,7 +21,6 @@
 #include "common.h"
 #include "cropinfo.h"
 #include "layer.h"
-#include <Libvidgfx/graphicscontext.h>
 #include <QtCore/QStringList>
 #include <QtCore/QMargins>
 
@@ -37,12 +36,12 @@ private: // Members -----------------------------------------------------------
 	CaptureObject *	m_captureObj;
 	QSize			m_curSize;
 	bool			m_curFlipped;
-	VertexBuffer *	m_vertBuf;
+	VidgfxVertBuf *	m_vertBuf;
 	QRectF			m_vertBufRect;
 	QPointF			m_vertBufTlUv;
 	QPointF			m_vertBufBrUv;
 	bool			m_vertBufFlipped;
-	VertexBuffer *	m_cursorVertBuf;
+	VidgfxVertBuf *	m_cursorVertBuf;
 	QRectF			m_cursorVertBufRect;
 	QPointF			m_cursorVertBufBrUv;
 	bool			m_monitorChanged;
@@ -85,17 +84,17 @@ public: // Methods ------------------------------------------------------------
 
 private:
 	void		updateVertBuf(
-		GraphicsContext *gfx, const QPointF &tlUv, const QPointF &brUv);
+		VidgfxContext *gfx, const QPointF &tlUv, const QPointF &brUv);
 	void		updateCursorVertBuf(
-		GraphicsContext *gfx, const QPointF &brUv, const QRect &relRect);
+		VidgfxContext *gfx, const QPointF &brUv, const QRect &relRect);
 	void		updateDisableAero();
 
 public: // Interface ----------------------------------------------------------
-	virtual void	initializeResources(GraphicsContext *gfx);
-	virtual void	updateResources(GraphicsContext *gfx);
-	virtual void	destroyResources(GraphicsContext *gfx);
+	virtual void	initializeResources(VidgfxContext *gfx);
+	virtual void	updateResources(VidgfxContext *gfx);
+	virtual void	destroyResources(VidgfxContext *gfx);
 	virtual void	render(
-		GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped);
+		VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped);
 
 	virtual LyrType	getType() const;
 

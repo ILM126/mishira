@@ -18,11 +18,11 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include <Libvidgfx/libvidgfx.h>
 #include <QtCore/QObject>
 #include <QtCore/QHash>
 #include <QtCore/QVector>
 
-class GraphicsContext;
 class Layer;
 class LayerGroup;
 class Profile;
@@ -99,7 +99,7 @@ public: // Methods ------------------------------------------------------------
 	bool			unserialize(QDataStream *stream);
 
 	void			render(
-		GraphicsContext *gfx, uint frameNum, int numDropped);
+		VidgfxContext *gfx, uint frameNum, int numDropped);
 
 Q_SIGNALS: // Signals ---------------------------------------------------------
 	void			activeItemChanged(SceneItem *item, SceneItem *prev);

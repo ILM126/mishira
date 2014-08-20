@@ -18,9 +18,8 @@
 #ifndef VIDEOSOURCE_H
 #define VIDEOSOURCE_H
 
+#include <Libvidgfx/libvidgfx.h>
 #include <QtCore/QObject>
-
-class Texture;
 
 //=============================================================================
 /// <summary>
@@ -45,7 +44,7 @@ public: // Interface ----------------------------------------------------------
 	virtual void		dereference() = 0;
 	virtual int			getRefCount() = 0;
 	virtual void		prepareFrame(uint frameNum, int numDropped) = 0;
-	virtual Texture *	getCurrentFrame() = 0;
+	virtual VidgfxTex *	getCurrentFrame() = 0;
 	virtual bool		isFrameFlipped() const = 0;
 	virtual QVector<float>	getFramerates() const = 0;
 	virtual QVector<QSize>	getSizesForFramerate(float framerate) const = 0;

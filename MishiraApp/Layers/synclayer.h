@@ -22,7 +22,6 @@
 #include <QtGui/QColor>
 
 class LayerDialog;
-class VertexBuffer;
 
 //=============================================================================
 class SyncLayer : public Layer
@@ -30,9 +29,9 @@ class SyncLayer : public Layer
 	friend class LayerGroup;
 
 private: // Members -----------------------------------------------------------
-	VertexBuffer *	m_vertBufA; // Moving metronome
-	VertexBuffer *	m_vertBufB; // Static center
-	VertexBuffer *	m_vertBufC; // Static center
+	VidgfxVertBuf *	m_vertBufA; // Moving metronome
+	VidgfxVertBuf *	m_vertBufB; // Static center
+	VidgfxVertBuf *	m_vertBufC; // Static center
 	QColor			m_color;
 	bool			m_refMetronomeDelayed;
 	bool			m_metronomeReffed;
@@ -46,14 +45,14 @@ public: // Methods ------------------------------------------------------------
 	QColor			getColor() const;
 
 private:
-	void			updateMetronome(GraphicsContext *gfx, uint frameNum);
+	void			updateMetronome(VidgfxContext *gfx, uint frameNum);
 
 public: // Interface ----------------------------------------------------------
-	virtual void	initializeResources(GraphicsContext *gfx);
-	virtual void	updateResources(GraphicsContext *gfx);
-	virtual void	destroyResources(GraphicsContext *gfx);
+	virtual void	initializeResources(VidgfxContext *gfx);
+	virtual void	updateResources(VidgfxContext *gfx);
+	virtual void	destroyResources(VidgfxContext *gfx);
 	virtual void	render(
-		GraphicsContext *gfx, Scene *scene, uint frameNum, int numDropped);
+		VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped);
 
 	virtual LyrType	getType() const;
 
