@@ -90,7 +90,7 @@ Mishira was originally developed solely by [Lucas Murray](https://www.github.com
 
 Mishira could not be what it is today without the help of these people:
 
-- [Lucas Murray](https://www.github.com/lmurray) (Lead developer and project maintainer),
+- [Lucas Murray](https://www.github.com/lmurray) (Project maintainer and developer),
 - [Tim Oliver](http://www.timoliver.com.au/) (Website design),
 - Everybody else that helps contribute in some small way,
 - The developers of all third-party libraries that Mishira uses, and
