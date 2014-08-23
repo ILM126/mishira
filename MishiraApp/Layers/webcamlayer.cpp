@@ -25,6 +25,42 @@
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
+//=============================================================================
+// Serialization helpers
+
+// These helpers exist so that we do not depend on the order of enums in our
+// serialization and deserialization methods. This is important as if the order
+// changes in a future release then we will be unable to deserialize older
+// versions.
+// WARNING: ALL CHANGES MADE TO THESE METHODS MUST BE BACKWARDS-COMPATIBLE!
+
+static quint32 orientationToInt32(VidgfxOrientation orient)
+{
+	switch(orient) {
+	default:
+	case GfxUnchangedOrient: return 0;
+	case GfxFlippedOrient: return 1;
+	case GfxMirroredOrient: return 2;
+	case GfxFlippedMirroredOrient: return 3;
+	}
+	return 0; // Should never be reached
+}
+
+static VidgfxOrientation int32ToOrientation(quint32 orient)
+{
+	switch(orient) {
+	default:
+	case 0: return GfxUnchangedOrient;
+	case 1: return GfxFlippedOrient;
+	case 2: return GfxMirroredOrient;
+	case 3: return GfxFlippedMirroredOrient;
+	}
+	return GfxUnchangedOrient; // Should never be reached
+}
+
+//=============================================================================
+// WebcamLayer class
+
 WebcamLayer::WebcamLayer(LayerGroup *parent)
 	: Layer(parent)
 	, m_deviceId(0)
@@ -256,7 +292,7 @@ void WebcamLayer::serialize(QDataStream *stream) const
 
 	// Save our data
 	*stream << m_deviceId;
-	*stream << (quint32)m_orientation;
+	*stream << orientationToInt32(m_orientation);
 }
 
 bool WebcamLayer::unserialize(QDataStream *stream)
@@ -278,7 +314,7 @@ bool WebcamLayer::unserialize(QDataStream *stream)
 		setDeviceId(uint64Data);
 		if(version >= 1) {
 			*stream >> uint32Data;
-			setOrientation((VidgfxOrientation)uint32Data);
+			setOrientation(int32ToOrientation(uint32Data));
 		}
 	} else {
 		appLog(LOG_CAT, Log::Warning)

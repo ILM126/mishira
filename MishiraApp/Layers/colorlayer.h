@@ -23,10 +23,11 @@
 
 class LayerDialog;
 
+// WARNING: This is used in user profiles. Treat this as a public API.
 enum GradientPattern {
 	SolidPattern = 0,
-	VerticalPattern,
-	HorizontalPattern
+	VerticalPattern = 1,
+	HorizontalPattern = 2
 };
 
 //=============================================================================

@@ -28,9 +28,10 @@
 class CropInfo
 {
 public: // Datatypes ----------------------------------------------------------
+	// WARNING: ALL CHANGES MUST BE BACKWARDS-COMPATIBLE!
 	enum Anchor {
 		TopLeft = 0,
-		BottomRight
+		BottomRight = 1
 	};
 
 protected: // Members ---------------------------------------------------------

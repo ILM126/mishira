@@ -24,6 +24,44 @@
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
+//=============================================================================
+// Serialization helpers
+
+// These helpers exist so that we do not depend on the order of enums in our
+// serialization and deserialization methods. This is important as if the order
+// changes in a future release then we will be unable to deserialize older
+// versions.
+// WARNING: ALL CHANGES MADE TO THESE METHODS MUST BE BACKWARDS-COMPATIBLE!
+
+static quint32 capMethodToInt32(CptrMethod method)
+{
+	switch(method) {
+	default:
+	case CptrAutoMethod: return 0;
+	case CptrStandardMethod: return 1;
+	case CptrCompositorMethod: return 2;
+	case CptrHookMethod: return 3;
+	case CptrDuplicatorMethod: return 4;
+	}
+	return 0; // Should never be reached
+}
+
+static CptrMethod int32ToCapMethod(quint32 method)
+{
+	switch(method) {
+	default:
+	case 0: return CptrAutoMethod;
+	case 1: return CptrStandardMethod;
+	case 2: return CptrCompositorMethod;
+	case 3: return CptrHookMethod;
+	case 4: return CptrDuplicatorMethod;
+	}
+	return CptrAutoMethod; // Should never be reached
+}
+
+//=============================================================================
+// WindowLayer class
+
 WindowLayer::WindowLayer(LayerGroup *parent)
 	: Layer(parent)
 	, m_captureObj(NULL)
@@ -415,14 +453,8 @@ void WindowLayer::serialize(QDataStream *stream) const
 		*stream << m_windowTitleList.at(i);
 	}
 	*stream << m_captureMouse;
-	*stream << (quint32)m_captureMethod;
-	*stream << m_cropInfo.getMargins();
-	CropInfo::Anchor leftAnchor, rightAnchor, topAnchor, botAnchor;
-	m_cropInfo.getAnchors(&leftAnchor, &rightAnchor, &topAnchor, &botAnchor);
-	*stream << (quint32)leftAnchor;
-	*stream << (quint32)rightAnchor;
-	*stream << (quint32)topAnchor;
-	*stream << (quint32)botAnchor;
+	*stream << capMethodToInt32(m_captureMethod);
+	*stream << m_cropInfo;
 	*stream << m_gamma;
 	*stream << (qint32)m_brightness;
 	*stream << (qint32)m_contrast;
@@ -456,7 +488,7 @@ bool WindowLayer::unserialize(QDataStream *stream)
 
 		*stream >> m_captureMouse;
 		*stream >> uint32Data;
-		m_captureMethod = (CptrMethod)uint32Data;
+		m_captureMethod = int32ToCapMethod(uint32Data);
 
 		if(version >= 1) {
 			*stream >> m_cropInfo;

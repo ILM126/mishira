@@ -94,6 +94,8 @@ QRect CropInfo::calcCroppedRectForSize(const QSize &size) const
 
 QDataStream &operator<<(QDataStream &s, const CropInfo &info)
 {
+	// WARNING: ALL CHANGES MUST BE BACKWARDS-COMPATIBLE!
+
 	CropInfo::Anchor leftAnchor, rightAnchor, topAnchor, botAnchor;
 	info.getAnchors(&leftAnchor, &rightAnchor, &topAnchor, &botAnchor);
 
@@ -108,6 +110,8 @@ QDataStream &operator<<(QDataStream &s, const CropInfo &info)
 
 QDataStream &operator>>(QDataStream &s, CropInfo &info)
 {
+	// WARNING: ALL CHANGES MUST BE BACKWARDS-COMPATIBLE!
+
 	quint32 uint32Data;
 	QMargins cropMargins;
 	CropInfo::Anchor leftAnchor, rightAnchor, topAnchor, botAnchor;

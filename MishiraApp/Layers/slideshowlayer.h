@@ -24,14 +24,16 @@
 class FileImageTexture;
 class LayerDialog;
 
+// WARNING: This is used in user profiles. Treat this as a public API.
 enum SlideTransStyle {
 	InThenOutStyle = 0,
-	InAndOutStyle
+	InAndOutStyle = 1
 };
 
+// WARNING: This is used in user profiles. Treat this as a public API.
 enum SlideshowOrder {
 	SequentialOrder = 0,
-	RandomOrder
+	RandomOrder = 1
 };
 
 //=============================================================================

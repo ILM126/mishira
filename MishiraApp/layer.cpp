@@ -26,6 +26,76 @@
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
+//=============================================================================
+// Serialization helpers
+
+// These helpers exist so that we do not depend on the order of enums in our
+// serialization and deserialization methods. This is important as if the order
+// changes in a future release then we will be unable to deserialize older
+// versions.
+// WARNING: ALL CHANGES MADE TO THESE METHODS MUST BE BACKWARDS-COMPATIBLE!
+
+static quint32 scalingToInt32(LyrScalingMode scaling)
+{
+	switch(scaling) {
+	case LyrActualScale: return 0;
+	case LyrStretchScale: return 1;
+	default:
+	case LyrSnapToInnerScale: return 2;
+	case LyrSnapToOuterScale: return 3;
+	}
+	return 2; // Should never be reached
+}
+
+static LyrScalingMode int32ToScaling(quint32 scaling)
+{
+	switch(scaling) {
+	case 0: return LyrActualScale;
+	case 1: return LyrStretchScale;
+	default:
+	case 2: return LyrSnapToInnerScale;
+	case 3: return LyrSnapToOuterScale;
+	}
+	return LyrSnapToInnerScale; // Should never be reached
+}
+
+static quint32 alignmentToInt32(LyrAlignment align)
+{
+	switch(align) {
+	case LyrTopLeftAlign: return 0;
+	case LyrTopCenterAlign: return 1;
+	case LyrTopRightAlign: return 2;
+	case LyrMiddleLeftAlign: return 3;
+	default:
+	case LyrMiddleCenterAlign: return 4;
+	case LyrMiddleRightAlign: return 5;
+	case LyrBottomLeftAlign: return 6;
+	case LyrBottomCenterAlign: return 7;
+	case LyrBottomRightAlign: return 8;
+	}
+	return 4; // Should never be reached
+}
+
+static LyrAlignment int32ToAlignment(quint32 align)
+{
+	switch(align) {
+	case 0: return LyrTopLeftAlign;
+	case 1: return LyrTopCenterAlign;
+	case 2: return LyrTopRightAlign;
+	case 3: return LyrMiddleLeftAlign;
+	default:
+	case 4: return LyrMiddleCenterAlign;
+	case 5: return LyrMiddleRightAlign;
+	case 6: return LyrBottomLeftAlign;
+	case 7: return LyrBottomCenterAlign;
+	case 8: return LyrBottomRightAlign;
+	}
+	return LyrMiddleCenterAlign; // Should never be reached
+}
+
+//=============================================================================
+// Layer class
+
 Layer::Layer(LayerGroup *parent)
 	: QObject()
 	, m_isInitializing(true)
@@ -281,8 +351,8 @@ void Layer::serialize(QDataStream *stream) const
 	*stream << m_rect;
 	*stream << (qint32)m_rotationDeg;
 	*stream << m_opacity;
-	*stream << (quint32)m_scaling;
-	*stream << (quint32)m_alignment;
+	*stream << scalingToInt32(m_scaling);
+	*stream << alignmentToInt32(m_alignment);
 }
 
 bool Layer::unserialize(QDataStream *stream)
@@ -325,9 +395,9 @@ bool Layer::unserialize(QDataStream *stream)
 		} else
 			setOpacity(1.0f);
 		*stream >> uint32Data;
-		m_scaling = (LyrScalingMode)uint32Data;
+		m_scaling = int32ToScaling(uint32Data);
 		*stream >> uint32Data;
-		m_alignment = (LyrAlignment)uint32Data;
+		m_alignment = int32ToAlignment(uint32Data);
 	} else {
 		appLog(LOG_CAT, Log::Warning)
 			<< "Unknown version number in scene layer serialized data, "
