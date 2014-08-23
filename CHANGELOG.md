@@ -1,6 +1,11 @@
 Version history
 ===============
 
+v1.0.0 (23 Aug 2014)
+------------------------
+
+No changes since v1.0.0-rc3.
+
 v1.0.0-rc3 (16 Aug 2014)
 ------------------------
 
@@ -23,4 +28,4 @@ New features:
 v1.0.0-rc1 (10 Aug 2014)
 ------------------------
 
-- Initial release
+Initial release.
