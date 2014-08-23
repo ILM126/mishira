@@ -3,6 +3,8 @@ Mishira
 
 Mishira is a personal audiovisual production tool used for editing and broadcasting live video over the internet that has been specifically designed for people who play video games. Mishira allows you to capture, record and broadcast your PC's desktop and speakers and mix them together with your own images, text, webcams, microphones, visual effects and transitions to form a single professional video broadcast. Mishira is completely free and open source software.
 
+![Mishira screenshot](mishira-hero.jpg?raw=true)
+
 This README is written to help existing and future contributors of the Mishira project. For a user-friendly overview of the project as well as for user support and other services please visit the official Mishira website at [www.mishira.com](http://www.mishira.com).
 
 The Mishira user community can regularly be found in the [#mishira](irc://irc.freenode.org/mishira) IRC channel on the [Freenode](http://www.freenode.org/) network. Developers usually also hang out in [#mishira-devel](irc://irc.freenode.org/mishira-devel) from time to time. You can access the user channel via a web interface by clicking [here](http://webchat.freenode.net/?channels=mishira).
