@@ -43,6 +43,62 @@ const QString LOG_CAT_AUD = QStringLiteral("Audio");
 const QString LOG_CAT_TRGT = QStringLiteral("Target");
 const QString LOG_CAT_SCNE = QStringLiteral("Scene");
 
+//=============================================================================
+// Serialization helpers
+
+// These helpers exist so that we do not depend on the order of enums in our
+// serialization and deserialization methods. This is important as if the order
+// changes in a future release then we will be unable to deserialize older
+// versions.
+// WARNING: ALL CHANGES MADE TO THESE METHODS MUST BE BACKWARDS-COMPATIBLE!
+
+static quint32 audioModeToInt32(PrflAudioMode mode)
+{
+	switch(mode) {
+	default:
+	case Prfl441StereoMode: return 0;
+	case Prfl48StereoMode: return 1;
+	}
+	return 0; // Should never be reached
+}
+
+static PrflAudioMode int32ToAudioMode(quint32 mode)
+{
+	switch(mode) {
+	default:
+	case 0: return Prfl441StereoMode;
+	case 1: return Prfl48StereoMode;
+	}
+	return Prfl441StereoMode; // Should never be reached
+}
+
+static quint32 transitionToInt32(PrflTransition trans)
+{
+	switch(trans) {
+	default:
+	case PrflInstantTransition: return 0;
+	case PrflFadeTransition: return 1;
+	case PrflFadeBlackTransition: return 2;
+	case PrflFadeWhiteTransition: return 3;
+	}
+	return 0; // Should never be reached
+}
+
+static PrflTransition int32ToTransition(quint32 trans)
+{
+	switch(trans) {
+	default:
+	case 0: return PrflInstantTransition;
+	case 1: return PrflFadeTransition;
+	case 2: return PrflFadeBlackTransition;
+	case 3: return PrflFadeWhiteTransition;
+	}
+	return PrflInstantTransition; // Should never be reached
+}
+
+//=============================================================================
+// Profile class
+
 static void gfxInitializedHandler(void *opaque, VidgfxContext *context)
 {
 	Profile *profile = static_cast<Profile *>(opaque);
@@ -1488,7 +1544,7 @@ void Profile::serialize(QDataStream *stream) const
 
 	// Write top-level data
 	*stream << m_canvasSize;
-	*stream << (quint32)m_audioMode;
+	*stream << audioModeToInt32(m_audioMode);
 
 	// Write the layer groups
 	QHashIterator<quint32, LayerGroup *> itA(m_layerGroups);
@@ -1509,9 +1565,9 @@ void Profile::serialize(QDataStream *stream) const
 
 	// Write scene transitions
 	Q_ASSERT(NumTransitionSettings == 3);
-	*stream << (quint32)m_transitions[0];
-	*stream << (quint32)m_transitions[1];
-	*stream << (quint32)m_transitions[2];
+	*stream << transitionToInt32(m_transitions[0]);
+	*stream << transitionToInt32(m_transitions[1]);
+	*stream << transitionToInt32(m_transitions[2]);
 	*stream << (quint32)m_transitionDursMsec[0];
 	*stream << (quint32)m_transitionDursMsec[1];
 	*stream << (quint32)m_transitionDursMsec[2];
@@ -1580,7 +1636,7 @@ bool Profile::unserialize(QDataStream *stream)
 		*stream >> sizeData;
 		setCanvasSize(sizeData);
 		*stream >> uint32Data;
-		setAudioMode((PrflAudioMode)uint32Data);
+		setAudioMode(int32ToAudioMode(uint32Data));
 
 		// Read layer groups
 		*stream >> uint32Data;
@@ -1613,11 +1669,11 @@ bool Profile::unserialize(QDataStream *stream)
 		if(version >= 2) {
 			Q_ASSERT(NumTransitionSettings == 3);
 			*stream >> uint32Data;
-			m_transitions[0] = (PrflTransition)uint32Data;
+			m_transitions[0] = int32ToTransition(uint32Data);
 			*stream >> uint32Data;
-			m_transitions[1] = (PrflTransition)uint32Data;
+			m_transitions[1] = int32ToTransition(uint32Data);
 			*stream >> uint32Data;
-			m_transitions[2] = (PrflTransition)uint32Data;
+			m_transitions[2] = int32ToTransition(uint32Data);
 			*stream >> uint32Data;
 			m_transitionDursMsec[0] = uint32Data;
 			*stream >> uint32Data;

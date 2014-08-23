@@ -87,6 +87,7 @@ float		linearToMb(float linear);
 //-----------------------------------------------------------------------------
 // AudioEncoder
 
+// WARNING: This is used in user profiles. Treat it as a public API.
 enum AencType {
 	AencFdkAacType = 0,
 
@@ -214,10 +215,11 @@ struct FdkAacOptions {
 //-----------------------------------------------------------------------------
 // FileTarget
 
+// WARNING: These are used in user profiles. Treat them as a public API.
 enum FileTrgtType {
 	FileTrgtMp4Type = 0,
-	FileTrgtMkvType,
-	//FileTrgtFlvType,
+	FileTrgtMkvType = 1,
+	//FileTrgtFlvType = 2,
 
 	NUM_FILE_TARGET_TYPES // Must be last
 };
@@ -318,16 +320,17 @@ static const char * const SclrScalingModeStrings[] = {
 //-----------------------------------------------------------------------------
 // Layer
 
+// WARNING: This is used in user profiles. Treat it as a public API.
 enum LyrType {
 	LyrColorLayerType = 0,
-	LyrImageLayerType,
-	LyrWindowLayerType,
-	LyrTextLayerType,
-	LyrSyncLayerType,
-	LyrWebcamLayerType,
-	LyrSlideshowLayerType,
-	LyrMonitorLayerType,
-	LyrScriptTextLayerType
+	LyrImageLayerType = 1,
+	LyrWindowLayerType = 2,
+	LyrTextLayerType = 3,
+	LyrSyncLayerType = 4,
+	LyrWebcamLayerType = 5,
+	LyrSlideshowLayerType = 6,
+	LyrMonitorLayerType = 7,
+	LyrScriptTextLayerType = 8
 };
 
 enum LyrScalingMode {
@@ -352,11 +355,12 @@ enum LyrAlignment {
 //-----------------------------------------------------------------------------
 // Target
 
+// WARNING: This is used in user profiles. Treat it as a public API.
 enum TrgtType {
 	TrgtFileType = 0,
 	TrgtRtmpType = 1,
 	TrgtTwitchType = 2,
-	//TrgtJustinType, // Removed
+	//TrgtJustinType = 3, // Removed
 	TrgtUstreamType = 4,
 	TrgtHitboxType = 5
 };
@@ -398,6 +402,7 @@ struct UstreamTrgtOptions {
 //-----------------------------------------------------------------------------
 // VideoEncoder
 
+// WARNING: This is used in user profiles. Treat it as a public API.
 enum VencType {
 	VencX264Type = 0,
 
@@ -554,17 +559,18 @@ struct WizShared {
 // Preset speeds are the rounded average of the following benchmark results:
 // http://blogs.motokado.com/yoshi/2011/06/25/comparison-of-x264-presets/
 // http://doom10.org/index.php?topic=1656.0
+// WARNING: These are used in user profiles. Treat them as a public API.
 enum X264Preset {
 	X264UltraFastPreset = 0,
-	X264SuperFastPreset,
-	X264VeryFastPreset,
-	X264FasterPreset,
-	X264FastPreset,
-	X264MediumPreset,
-	X264SlowPreset,
-	X264SlowerPreset,
-	X264VerySlowPreset,
-	//X264PlaceboPreset, // Crashes on Macbook Pro and Tim Oliver's PC
+	X264SuperFastPreset = 1,
+	X264VeryFastPreset = 2,
+	X264FasterPreset = 3,
+	X264FastPreset = 4,
+	X264MediumPreset = 5,
+	X264SlowPreset = 6,
+	X264SlowerPreset = 7,
+	X264VerySlowPreset = 8,
+	//X264PlaceboPreset = 9, // Crashes on Macbook Pro and Tim Oliver's PC
 
 	NUM_X264_PRESETS // Must be last
 };

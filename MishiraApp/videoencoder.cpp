@@ -20,6 +20,60 @@
 
 const QString LOG_CAT = QStringLiteral("Video");
 
+//=============================================================================
+// Serialization helpers
+
+// These helpers exist so that we do not depend on the order of enums in our
+// serialization and deserialization methods. This is important as if the order
+// changes in a future release then we will be unable to deserialize older
+// versions.
+// WARNING: ALL CHANGES MADE TO THESE METHODS MUST BE BACKWARDS-COMPATIBLE!
+
+static quint32 scalingToInt32(SclrScalingMode scaling)
+{
+	switch(scaling) {
+	case SclrStretchScale: return 0;
+	default:
+	case SclrSnapToInnerScale: return 1;
+	case SclrSnapToOuterScale: return 2;
+	}
+	return 1; // Should never be reached
+}
+
+static SclrScalingMode int32ToScaling(quint32 scaling)
+{
+	switch(scaling) {
+	case 0: return SclrStretchScale;
+	default:
+	case 1: return SclrSnapToInnerScale;
+	case 2: return SclrSnapToOuterScale;
+	}
+	return SclrSnapToInnerScale; // Should never be reached
+}
+
+static quint32 filterToInt32(VidgfxFilter filter)
+{
+	switch(filter) {
+	case GfxPointFilter: return 0;
+	default:
+	case GfxBilinearFilter: return 1;
+	}
+	return 1; // Should never be reached
+}
+
+static VidgfxFilter int32ToFilter(quint32 filter)
+{
+	switch(filter) {
+	case 0: return GfxPointFilter;
+	default:
+	case 1: return GfxBilinearFilter;
+	}
+	return GfxBilinearFilter; // Should never be reached
+}
+
+//=============================================================================
+// VideoEncoder class
+
 VideoEncoder::VideoEncoder(
 	Profile *profile, VencType type, QSize size, SclrScalingMode scaling,
 	VidgfxFilter scaleFilter, Fraction framerate)
@@ -88,8 +142,8 @@ void VideoEncoder::serialize(QDataStream *stream) const
 
 	// Save our data
 	*stream << m_size;
-	*stream << (quint32)m_scaling;
-	*stream << (quint32)m_scaleFilter;
+	*stream << scalingToInt32(m_scaling);
+	*stream << filterToInt32(m_scaleFilter);
 	// We don't store framerate as it's always equal to the profile's
 }
 
@@ -107,9 +161,9 @@ bool VideoEncoder::unserialize(QDataStream *stream)
 	if(version == 0) {
 		*stream >> m_size;
 		*stream >> uint32Data;
-		m_scaling = (SclrScalingMode)uint32Data;
+		m_scaling = int32ToScaling(uint32Data);
 		*stream >> uint32Data;
-		m_scaleFilter = (VidgfxFilter)uint32Data;
+		m_scaleFilter = int32ToFilter(uint32Data);
 		// We assume that `m_framerate` is already properly set
 	} else {
 		appLog(LOG_CAT, Log::Warning)
