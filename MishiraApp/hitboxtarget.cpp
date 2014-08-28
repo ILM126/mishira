@@ -41,12 +41,13 @@ QVector<QString> HitboxTarget::getIngestListNames()
 	ret.append(QStringLiteral("EU East"));
 	ret.append(QStringLiteral("EU North"));
 	ret.append(QStringLiteral("EU West"));
-	ret.append(QStringLiteral("US Central"));
-	ret.append(QStringLiteral("US East"));
-	ret.append(QStringLiteral("US West"));
+	ret.append(QStringLiteral("Oceania"));
 	ret.append(QStringLiteral("South America"));
 	ret.append(QStringLiteral("South Korea"));
 	ret.append(QStringLiteral("United Kingdom"));
+	ret.append(QStringLiteral("US Central"));
+	ret.append(QStringLiteral("US East"));
+	ret.append(QStringLiteral("US West"));
 	return ret;
 }
 
@@ -59,12 +60,13 @@ QVector<QString> HitboxTarget::getIngestListURLs()
 	ret.append(QStringLiteral("rtmp://live.vie.hitbox.tv/push"));
 	ret.append(QStringLiteral("rtmp://live.ams.hitbox.tv/push"));
 	ret.append(QStringLiteral("rtmp://live.fra.hitbox.tv/push"));
-	ret.append(QStringLiteral("rtmp://live.den.hitbox.tv/push"));
-	ret.append(QStringLiteral("rtmp://live.vgn.hitbox.tv/push"));
-	ret.append(QStringLiteral("rtmp://live.lax.hitbox.tv/push"));
+	ret.append(QStringLiteral("rtmp://live.syd.hitbox.tv/push"));
 	ret.append(QStringLiteral("rtmp://live.gru.hitbox.tv/push"));
 	ret.append(QStringLiteral("rtmp://live.icn.hitbox.tv/push"));
 	ret.append(QStringLiteral("rtmp://live.lhr.hitbox.tv/push"));
+	ret.append(QStringLiteral("rtmp://live.den.hitbox.tv/push"));
+	ret.append(QStringLiteral("rtmp://live.vgn.hitbox.tv/push"));
+	ret.append(QStringLiteral("rtmp://live.lax.hitbox.tv/push"));
 	return ret;
 }
 
