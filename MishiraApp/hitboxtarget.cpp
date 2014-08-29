@@ -32,11 +32,12 @@ const QString LOG_CAT = QStringLiteral("Target");
 
 QVector<QString> HitboxTarget::getIngestListNames()
 {
-	// We get our server list from OBS as the Hitbox API doesn't easily allow
-	// us to look at it manually. This list has been sorted alphabetically. The
-	// default ingest should be whatever server has the "live.hitbox.tv" URL.
+	// Official ingest server list: http://api.hitbox.tv/ingests/default_list
+	// This list has been sorted alphabetically. The default ingest should be
+	// whatever server has the "live.hitbox.tv" URL.
 	QVector<QString> ret;
 	ret.append(QStringLiteral("Default")); // Default
+	ret.append(QStringLiteral("Asia"));
 	ret.append(QStringLiteral("EU Central"));
 	ret.append(QStringLiteral("EU East"));
 	ret.append(QStringLiteral("EU North"));
@@ -44,7 +45,6 @@ QVector<QString> HitboxTarget::getIngestListNames()
 	ret.append(QStringLiteral("Oceania"));
 	ret.append(QStringLiteral("South America"));
 	ret.append(QStringLiteral("South Korea"));
-	ret.append(QStringLiteral("United Kingdom"));
 	ret.append(QStringLiteral("US Central"));
 	ret.append(QStringLiteral("US East"));
 	ret.append(QStringLiteral("US West"));
@@ -56,14 +56,14 @@ QVector<QString> HitboxTarget::getIngestListURLs()
 	// Must match `getIngestListNames()`, including order.
 	QVector<QString> ret;
 	ret.append(QStringLiteral("rtmp://live.hitbox.tv/push"));
+	ret.append(QStringLiteral("rtmp://live.lax.hitbox.tv/push")); // sic
 	ret.append(QStringLiteral("rtmp://live.nbg.hitbox.tv/push"));
 	ret.append(QStringLiteral("rtmp://live.vie.hitbox.tv/push"));
-	ret.append(QStringLiteral("rtmp://live.ams.hitbox.tv/push"));
+	ret.append(QStringLiteral("rtmp://live.lhr.hitbox.tv/push"));
 	ret.append(QStringLiteral("rtmp://live.fra.hitbox.tv/push"));
 	ret.append(QStringLiteral("rtmp://live.syd.hitbox.tv/push"));
 	ret.append(QStringLiteral("rtmp://live.gru.hitbox.tv/push"));
 	ret.append(QStringLiteral("rtmp://live.icn.hitbox.tv/push"));
-	ret.append(QStringLiteral("rtmp://live.lhr.hitbox.tv/push"));
 	ret.append(QStringLiteral("rtmp://live.den.hitbox.tv/push"));
 	ret.append(QStringLiteral("rtmp://live.vgn.hitbox.tv/push"));
 	ret.append(QStringLiteral("rtmp://live.lax.hitbox.tv/push"));
