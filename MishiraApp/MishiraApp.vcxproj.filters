@@ -34,12 +34,6 @@
     <Filter Include="Source Files\Widgets">
       <UniqueIdentifier>{cc6cfa27-bb71-4406-b196-1e87cd90d53c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Layers">
-      <UniqueIdentifier>{0e2a08e0-4899-4b79-b19c-bcfa08bc331c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Layers">
-      <UniqueIdentifier>{6f1c2c14-5a8a-496f-aebb-5e6982bcc0c7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Wizards">
       <UniqueIdentifier>{a21dc741-a1d8-43c3-8b2f-b1fe6af58a58}</UniqueIdentifier>
     </Filter>
@@ -49,8 +43,29 @@
     <Filter Include="Form Files\Wizards">
       <UniqueIdentifier>{0accdc1d-726a-481c-b8f2-c378a65d181a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Form Files\Layers">
-      <UniqueIdentifier>{0265cda7-4838-428c-b97c-0f55a245eddd}</UniqueIdentifier>
+    <Filter Include="Layers">
+      <UniqueIdentifier>{5b8de34e-ef70-4636-b4f4-b7cff5e998f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layers\Color">
+      <UniqueIdentifier>{022b6f3f-0c04-439e-b59b-91c44afa42b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layers\Image">
+      <UniqueIdentifier>{e50b73ae-c438-40e8-bd85-078a8dc4d407}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layers\Webcam">
+      <UniqueIdentifier>{719442ff-cef0-40a1-afe3-3c799629bd40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layers\Sync">
+      <UniqueIdentifier>{f53f1c7b-0687-4e9e-9b34-9d73346639a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layers\Slideshow">
+      <UniqueIdentifier>{351b0694-230c-4859-8add-a5bce482cfbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layers\Text">
+      <UniqueIdentifier>{2b904e25-580c-4ccb-b296-d168c4ec5ef7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layers\Desktop Capture">
+      <UniqueIdentifier>{e096a7ab-5733-443b-b17b-79310e4a0ffb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -204,20 +219,8 @@
     <ClCompile Include="GeneratedFiles\Release\moc_profile.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="Layers\colorlayer.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_colorlayerdialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_colorlayerdialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="Widgets\colorbutton.cpp">
       <Filter>Source Files\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\colorlayerdialog.cpp">
-      <Filter>Source Files\Layers</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_colorbutton.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -229,18 +232,6 @@
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_editablelabel.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\imagelayer.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\imagelayerdialog.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_imagelayerdialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_imagelayerdialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="videoencoder.cpp">
@@ -352,18 +343,6 @@
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_winapplication.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_windowlayerdialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\windowlayerdialog.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\windowlayer.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_windowlayerdialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="Wizards\targetlistpage.cpp">
@@ -660,18 +639,6 @@
     <ClCompile Include="asyncio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Layers\textlayer.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\textlayerdialog.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_textlayerdialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_textlayerdialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="Widgets\colortogglebutton.cpp">
       <Filter>Source Files\Widgets</Filter>
     </ClCompile>
@@ -706,18 +673,6 @@
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_rtmptargetsettingspage.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\synclayer.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\synclayerdialog.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_synclayerdialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_synclayerdialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="Widgets\bitratecalcwidget.cpp">
@@ -1029,38 +984,8 @@
     <ClCompile Include="dshowfilters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Layers\webcamlayer.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\webcamlayerdialog.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_webcamlayerdialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_webcamlayerdialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="cropinfo.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_imagelayer.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_imagelayer.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\slideshowlayer.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\slideshowlayerdialog.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_slideshowlayerdialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_slideshowlayerdialog.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_fileimagetexture.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -1070,36 +995,6 @@
     </ClCompile>
     <ClCompile Include="fileimagetexture.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_monitorlayerdialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_monitorlayerdialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\monitorlayer.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\monitorlayerdialog.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\scripttextlayer.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\scripttextlayerdialog.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_scripttextlayerdialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_scripttextlayerdialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_scripttextlayer.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_scripttextlayer.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="appsharedsegment.cpp">
       <Filter>Source Files</Filter>
@@ -1127,6 +1022,126 @@
     </ClCompile>
     <ClCompile Include="layerfactory.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\color\colorlayerdialog.cpp">
+      <Filter>Layers\Color</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_colorlayerdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_colorlayerdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\color\colorlayer.cpp">
+      <Filter>Layers\Color</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\deskcap\windowlayer.cpp">
+      <Filter>Layers\Desktop Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\deskcap\windowlayerdialog.cpp">
+      <Filter>Layers\Desktop Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_windowlayerdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_windowlayerdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\deskcap\monitorlayer.cpp">
+      <Filter>Layers\Desktop Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\deskcap\monitorlayerdialog.cpp">
+      <Filter>Layers\Desktop Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_monitorlayerdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_monitorlayerdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_imagelayer.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_imagelayer.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\image\imagelayerdialog.cpp">
+      <Filter>Layers\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_imagelayerdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_imagelayerdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\image\imagelayer.cpp">
+      <Filter>Layers\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\slideshow\slideshowlayerdialog.cpp">
+      <Filter>Layers\Slideshow</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_slideshowlayerdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_slideshowlayerdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\slideshow\slideshowlayer.cpp">
+      <Filter>Layers\Slideshow</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\sync\synclayerdialog.cpp">
+      <Filter>Layers\Sync</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_synclayerdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_synclayerdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\sync\synclayer.cpp">
+      <Filter>Layers\Sync</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_scripttextlayerdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_scripttextlayerdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\text\textlayer.cpp">
+      <Filter>Layers\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\text\textlayerdialog.cpp">
+      <Filter>Layers\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_textlayerdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_textlayerdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\text\scripttextlayer.cpp">
+      <Filter>Layers\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_scripttextlayer.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_scripttextlayer.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\text\scripttextlayerdialog.cpp">
+      <Filter>Layers\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_webcamlayerdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_webcamlayerdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\webcam\webcamlayer.cpp">
+      <Filter>Layers\Webcam</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\webcam\webcamlayerdialog.cpp">
+      <Filter>Layers\Webcam</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1175,14 +1190,8 @@
     <CustomBuild Include="profile.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="Layers\colorlayerdialog.h">
-      <Filter>Header Files\Layers</Filter>
-    </CustomBuild>
     <CustomBuild Include="Widgets\colorbutton.h">
       <Filter>Header Files\Widgets</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\imagelayerdialog.h">
-      <Filter>Header Files\Layers</Filter>
     </CustomBuild>
     <CustomBuild Include="videoencoder.h">
       <Filter>Header Files</Filter>
@@ -1214,23 +1223,11 @@
     <CustomBuild Include="Wizards\edittargetscontroller.h">
       <Filter>Header Files\Wizards</Filter>
     </CustomBuild>
-    <CustomBuild Include="Layers\colorlayerdialog.ui">
-      <Filter>Form Files\Layers</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\imagelayerdialog.ui">
-      <Filter>Form Files\Layers</Filter>
-    </CustomBuild>
     <CustomBuild Include="Wizards\targetlistpage.ui">
       <Filter>Form Files\Wizards</Filter>
     </CustomBuild>
     <CustomBuild Include="winapplication.h">
       <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\windowlayerdialog.h">
-      <Filter>Header Files\Layers</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\windowlayerdialog.ui">
-      <Filter>Form Files\Layers</Filter>
     </CustomBuild>
     <CustomBuild Include="Wizards\targetlistpage.h">
       <Filter>Header Files\Wizards</Filter>
@@ -1349,12 +1346,6 @@
     <CustomBuild Include="asyncio.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="Layers\textlayerdialog.h">
-      <Filter>Header Files\Layers</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\textlayerdialog.ui">
-      <Filter>Form Files\Layers</Filter>
-    </CustomBuild>
     <CustomBuild Include="Widgets\colortogglebutton.h">
       <Filter>Header Files\Widgets</Filter>
     </CustomBuild>
@@ -1369,12 +1360,6 @@
     </CustomBuild>
     <CustomBuild Include="Wizards\rtmptargetsettingspage.ui">
       <Filter>Form Files\Wizards</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\synclayerdialog.h">
-      <Filter>Header Files\Layers</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\synclayerdialog.ui">
-      <Filter>Form Files\Layers</Filter>
     </CustomBuild>
     <CustomBuild Include="MishiraApp.qrc" />
     <CustomBuild Include="Widgets\bitratecalcwidget.ui">
@@ -1530,41 +1515,11 @@
     <CustomBuild Include="dshowfilters.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="Layers\webcamlayerdialog.h">
-      <Filter>Header Files\Layers</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\webcamlayerdialog.ui">
-      <Filter>Form Files\Layers</Filter>
-    </CustomBuild>
     <CustomBuild Include="cropinfo.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="Layers\imagelayer.h">
-      <Filter>Header Files\Layers</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\slideshowlayerdialog.h">
-      <Filter>Header Files\Layers</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\slideshowlayerdialog.ui">
-      <Filter>Form Files\Layers</Filter>
-    </CustomBuild>
     <CustomBuild Include="fileimagetexture.h">
       <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\monitorlayerdialog.ui">
-      <Filter>Form Files\Layers</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\monitorlayerdialog.h">
-      <Filter>Header Files\Layers</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\scripttextlayerdialog.h">
-      <Filter>Header Files\Layers</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\scripttextlayerdialog.ui">
-      <Filter>Form Files\Layers</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Layers\scripttextlayer.h">
-      <Filter>Header Files\Layers</Filter>
     </CustomBuild>
     <CustomBuild Include="Wizards\hitboxtargetsettingspage.ui">
       <Filter>Form Files\Wizards</Filter>
@@ -1577,6 +1532,66 @@
     </CustomBuild>
     <CustomBuild Include="layerfactory.h">
       <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\color\colorlayerdialog.h">
+      <Filter>Layers\Color</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\color\colorlayerdialog.ui">
+      <Filter>Layers\Color</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\deskcap\monitorlayerdialog.ui">
+      <Filter>Layers\Desktop Capture</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\deskcap\windowlayerdialog.h">
+      <Filter>Layers\Desktop Capture</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\deskcap\windowlayerdialog.ui">
+      <Filter>Layers\Desktop Capture</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\deskcap\monitorlayerdialog.h">
+      <Filter>Layers\Desktop Capture</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\image\imagelayer.h">
+      <Filter>Layers\Image</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\image\imagelayerdialog.h">
+      <Filter>Layers\Image</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\image\imagelayerdialog.ui">
+      <Filter>Layers\Image</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\slideshow\slideshowlayerdialog.h">
+      <Filter>Layers\Slideshow</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\slideshow\slideshowlayerdialog.ui">
+      <Filter>Layers\Slideshow</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\sync\synclayerdialog.h">
+      <Filter>Layers\Sync</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\sync\synclayerdialog.ui">
+      <Filter>Layers\Sync</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\text\scripttextlayerdialog.h">
+      <Filter>Layers\Text</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\text\scripttextlayerdialog.ui">
+      <Filter>Layers\Text</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\text\textlayerdialog.h">
+      <Filter>Layers\Text</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\text\textlayerdialog.ui">
+      <Filter>Layers\Text</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\text\scripttextlayer.h">
+      <Filter>Layers\Text</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\webcam\webcamlayerdialog.h">
+      <Filter>Layers\Webcam</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Layers\webcam\webcamlayerdialog.ui">
+      <Filter>Layers\Webcam</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -1592,15 +1607,6 @@
     <ClInclude Include="sortablewidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Layers\colorlayer.h">
-      <Filter>Header Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_colorlayerdialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_imagelayerdialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
     <ClInclude Include="encodedframe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1608,12 +1614,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_targetlistpage.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Layers\windowlayer.h">
-      <Filter>Header Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_windowlayerdialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_editprofilepage.h">
@@ -1640,19 +1640,7 @@
     <ClInclude Include="resampler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Layers\textlayer.h">
-      <Filter>Header Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_textlayerdialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_rtmptargetsettingspage.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Layers\synclayer.h">
-      <Filter>Header Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_synclayerdialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_bitratecalcwidget.h">
@@ -1700,27 +1688,6 @@
     <ClInclude Include="GeneratedFiles\ui_welcomepage.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="Layers\webcamlayer.h">
-      <Filter>Header Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_webcamlayerdialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Layers\slideshowlayer.h">
-      <Filter>Header Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_slideshowlayerdialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_monitorlayerdialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Layers\monitorlayer.h">
-      <Filter>Header Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_scripttextlayerdialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
     <ClInclude Include="appsharedsegment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1741,6 +1708,54 @@
     </ClInclude>
     <ClInclude Include="versionhelpers.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_colorlayerdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Layers\color\colorlayer.h">
+      <Filter>Layers\Color</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_monitorlayerdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Layers\deskcap\windowlayer.h">
+      <Filter>Layers\Desktop Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_windowlayerdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Layers\deskcap\monitorlayer.h">
+      <Filter>Layers\Desktop Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_imagelayerdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_slideshowlayerdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Layers\slideshow\slideshowlayer.h">
+      <Filter>Layers\Slideshow</Filter>
+    </ClInclude>
+    <ClInclude Include="Layers\sync\synclayer.h">
+      <Filter>Layers\Sync</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_synclayerdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_scripttextlayerdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Layers\text\textlayer.h">
+      <Filter>Layers\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_textlayerdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_webcamlayerdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Layers\webcam\webcamlayer.h">
+      <Filter>Layers\Webcam</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

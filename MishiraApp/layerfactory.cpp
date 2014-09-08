@@ -17,15 +17,15 @@
 
 #include "layerfactory.h"
 #include "application.h"
-#include "Layers/colorlayer.h"
-#include "Layers/imagelayer.h"
-#include "Layers/monitorlayer.h"
-#include "Layers/scripttextlayer.h"
-#include "Layers/slideshowlayer.h"
-#include "Layers/synclayer.h"
-#include "Layers/textlayer.h"
-#include "Layers/webcamlayer.h"
-#include "Layers/windowlayer.h"
+#include "Layers/color/colorlayer.h"
+#include "Layers/deskcap/monitorlayer.h"
+#include "Layers/deskcap/windowlayer.h"
+#include "Layers/image/imagelayer.h"
+#include "Layers/slideshow/slideshowlayer.h"
+#include "Layers/sync/synclayer.h"
+#include "Layers/text/scripttextlayer.h"
+#include "Layers/text/textlayer.h"
+#include "Layers/webcam/webcamlayer.h"
 
 /// <summary>
 /// A helper method for registering all of Mishira's built-in layer factories.
