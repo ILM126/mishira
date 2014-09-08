@@ -15,51 +15,44 @@
 // more details.
 //*****************************************************************************
 
-#ifndef HITBOXTARGET_H
-#define HITBOXTARGET_H
+#ifndef USTREAMTARGET_H
+#define USTREAMTARGET_H
 
-#include "rtmptargetbase.h"
-#include <QtNetwork/QNetworkAccessManager>
+#include "../rtmptargetbase.h"
 
 //=============================================================================
-class HitboxTarget : public RTMPTargetBase
+class UstreamTarget : public RTMPTargetBase
 {
 	Q_OBJECT
 
 protected: // Members ---------------------------------------------------------
-	TargetPane *			m_pane;
-	QTimer					m_paneTimer;
-	QNetworkAccessManager	m_network;
-	quint64					m_prevStreamQueryTime; // Last Hitbox.tv API query
-	int						m_numViewers;
+	TargetPane *		m_pane;
+	QTimer				m_paneTimer;
 
 	// Options
 	quint32				m_videoEncId;
 	quint32				m_audioEncId;
 	RTMPTargetInfo		m_remoteInfo;
-	QString 			m_username;
-
-public: // Static methods -----------------------------------------------------
-	static QVector<QString>	getIngestListNames();
-	static QVector<QString>	getIngestListURLs();
-	static int				getIngestListDefault();
-	static int				getIngestIndexFromURL(const QString &url);
-	static QString			getIngestNameFromURL(const QString &url);
+	bool				m_padVideo;
 
 public: // Constructor/destructor ---------------------------------------------
-	HitboxTarget(
-		Profile *profile, const QString &name, const HitboxTrgtOptions &opt);
-	virtual ~HitboxTarget();
+	UstreamTarget(
+		Profile *profile, const QString &name, const UstreamTrgtOptions &opt);
+	virtual ~UstreamTarget();
 
 public: // Methods ------------------------------------------------------------
-	RTMPTargetInfo	getRemoteInfo() const;
-	QString			getURL() const;
-	QString			getStreamKey() const;
-	QString			getUsername() const;
+	RTMPTargetInfo		getRemoteInfo() const;
+	RTMPProtocolType	getProtocol() const;
+	QString				getHost() const;
+	int					getPort() const;
+	QString				getAppName() const;
+	QString				getAppInstance() const;
+	QString				getURL() const;
+	QString				getStreamName() const;
+	bool				getPadVideo() const;
 
 private:
 	void			updatePaneText(bool fromTimer);
-	void			updateHitboxStats();
 
 private: // Interface ---------------------------------------------------------
 	virtual void	initializedEvent();
@@ -79,28 +72,52 @@ Q_SLOTS: // Slots -------------------------------------------------------------
 	void	connectionStateChanged(bool wasError);
 	void	paneOutdated();
 	void	paneTimeout();
-	void	networkFinished(QNetworkReply *reply);
 };
 //=============================================================================
 
-inline RTMPTargetInfo HitboxTarget::getRemoteInfo() const
+inline RTMPTargetInfo UstreamTarget::getRemoteInfo() const
 {
 	return m_remoteInfo;
 }
 
-inline QString HitboxTarget::getURL() const
+inline RTMPProtocolType UstreamTarget::getProtocol() const
+{
+	return m_remoteInfo.protocol;
+}
+
+inline QString UstreamTarget::getHost() const
+{
+	return m_remoteInfo.host;
+}
+
+inline int UstreamTarget::getPort() const
+{
+	return m_remoteInfo.port;
+}
+
+inline QString UstreamTarget::getAppName() const
+{
+	return m_remoteInfo.appName;
+}
+
+inline QString UstreamTarget::getAppInstance() const
+{
+	return m_remoteInfo.appInstance;
+}
+
+inline QString UstreamTarget::getURL() const
 {
 	return m_remoteInfo.asUrl();
 }
 
-inline QString HitboxTarget::getUsername() const
-{
-	return m_username;
-}
-
-inline QString HitboxTarget::getStreamKey() const
+inline QString UstreamTarget::getStreamName() const
 {
 	return m_remoteInfo.streamName;
 }
 
-#endif // HITBOXTARGET_H
+inline bool UstreamTarget::getPadVideo() const
+{
+	return m_padVideo;
+}
+
+#endif // USTREAMTARGET_H

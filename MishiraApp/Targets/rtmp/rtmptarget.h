@@ -15,13 +15,13 @@
 // more details.
 //*****************************************************************************
 
-#ifndef USTREAMTARGET_H
-#define USTREAMTARGET_H
+#ifndef RTMPTARGET_H
+#define RTMPTARGET_H
 
-#include "rtmptargetbase.h"
+#include "../rtmptargetbase.h"
 
 //=============================================================================
-class UstreamTarget : public RTMPTargetBase
+class RTMPTarget : public RTMPTargetBase
 {
 	Q_OBJECT
 
@@ -33,12 +33,13 @@ protected: // Members ---------------------------------------------------------
 	quint32				m_videoEncId;
 	quint32				m_audioEncId;
 	RTMPTargetInfo		m_remoteInfo;
+	bool				m_hideStreamName;
 	bool				m_padVideo;
 
 public: // Constructor/destructor ---------------------------------------------
-	UstreamTarget(
-		Profile *profile, const QString &name, const UstreamTrgtOptions &opt);
-	virtual ~UstreamTarget();
+	RTMPTarget(
+		Profile *profile, const QString &name, const RTMPTrgtOptions &opt);
+	virtual ~RTMPTarget();
 
 public: // Methods ------------------------------------------------------------
 	RTMPTargetInfo		getRemoteInfo() const;
@@ -49,6 +50,7 @@ public: // Methods ------------------------------------------------------------
 	QString				getAppInstance() const;
 	QString				getURL() const;
 	QString				getStreamName() const;
+	bool				getHideStreamName() const;
 	bool				getPadVideo() const;
 
 private:
@@ -75,49 +77,54 @@ Q_SLOTS: // Slots -------------------------------------------------------------
 };
 //=============================================================================
 
-inline RTMPTargetInfo UstreamTarget::getRemoteInfo() const
+inline RTMPTargetInfo RTMPTarget::getRemoteInfo() const
 {
 	return m_remoteInfo;
 }
 
-inline RTMPProtocolType UstreamTarget::getProtocol() const
+inline RTMPProtocolType RTMPTarget::getProtocol() const
 {
 	return m_remoteInfo.protocol;
 }
 
-inline QString UstreamTarget::getHost() const
+inline QString RTMPTarget::getHost() const
 {
 	return m_remoteInfo.host;
 }
 
-inline int UstreamTarget::getPort() const
+inline int RTMPTarget::getPort() const
 {
 	return m_remoteInfo.port;
 }
 
-inline QString UstreamTarget::getAppName() const
+inline QString RTMPTarget::getAppName() const
 {
 	return m_remoteInfo.appName;
 }
 
-inline QString UstreamTarget::getAppInstance() const
+inline QString RTMPTarget::getAppInstance() const
 {
 	return m_remoteInfo.appInstance;
 }
 
-inline QString UstreamTarget::getURL() const
+inline QString RTMPTarget::getURL() const
 {
 	return m_remoteInfo.asUrl();
 }
 
-inline QString UstreamTarget::getStreamName() const
+inline QString RTMPTarget::getStreamName() const
 {
 	return m_remoteInfo.streamName;
 }
 
-inline bool UstreamTarget::getPadVideo() const
+inline bool RTMPTarget::getHideStreamName() const
+{
+	return m_hideStreamName;
+}
+
+inline bool RTMPTarget::getPadVideo() const
 {
 	return m_padVideo;
 }
 
-#endif // USTREAMTARGET_H
+#endif // RTMPTARGET_H

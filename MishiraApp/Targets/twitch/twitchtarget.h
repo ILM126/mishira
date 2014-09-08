@@ -18,7 +18,7 @@
 #ifndef TWITCHTARGET_H
 #define TWITCHTARGET_H
 
-#include "rtmptargetbase.h"
+#include "../rtmptargetbase.h"
 #include <QtNetwork/QNetworkAccessManager>
 
 //=============================================================================

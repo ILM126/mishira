@@ -154,6 +154,12 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_fileimagetexture.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_filetarget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_filetargetsettingspage.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_hitboxtarget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -203,6 +209,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_rtmptarget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_rtmptargetbase.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_rtmptargetsettingspage.cpp">
@@ -301,6 +310,12 @@
     <ClCompile Include="GeneratedFiles\Release\moc_fileimagetexture.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_filetarget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_filetargetsettingspage.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_hitboxtarget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -350,6 +365,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_rtmptarget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_rtmptargetbase.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_rtmptargetsettingspage.cpp">
@@ -415,7 +433,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_windowlayerdialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="hitboxtarget.cpp" />
     <ClCompile Include="layerfactory.cpp" />
     <ClCompile Include="Layers\color\colorlayer.cpp" />
     <ClCompile Include="Layers\color\colorlayerdialog.cpp" />
@@ -438,14 +455,12 @@
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Pages\mainemptypage.cpp" />
     <ClCompile Include="recommendations.cpp" />
-    <ClCompile Include="rtmptarget.cpp" />
     <ClCompile Include="darkstyle.cpp" />
     <ClCompile Include="encodedframe.cpp" />
     <ClCompile Include="encodedpacket.cpp" />
     <ClCompile Include="encodedsegment.cpp" />
     <ClCompile Include="fdkaacencoder.cpp" />
     <ClCompile Include="fileselectdialog.cpp" />
-    <ClCompile Include="filetarget.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_application.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -518,12 +533,6 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_fileselectdialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_filetarget.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_filetargetsettingspage.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_graphicswidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -543,9 +552,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_profile.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_rtmptargetbase.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_scaler.cpp">
@@ -707,12 +713,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_fileselectdialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_filetarget.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_filetargetsettingspage.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_graphicswidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -732,9 +732,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_profile.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_rtmptargetbase.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_scaler.cpp">
@@ -825,7 +822,6 @@
     <ClCompile Include="profile.cpp" />
     <ClCompile Include="resampler.cpp" />
     <ClCompile Include="asyncio.cpp" />
-    <ClCompile Include="rtmptargetbase.cpp" />
     <ClCompile Include="scaler.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="sceneitem.cpp" />
@@ -837,8 +833,17 @@
     <ClCompile Include="sortablewidget.cpp" />
     <ClCompile Include="stylehelper.cpp" />
     <ClCompile Include="target.cpp" />
-    <ClCompile Include="twitchtarget.cpp" />
-    <ClCompile Include="ustreamtarget.cpp" />
+    <ClCompile Include="Targets\file\filetarget.cpp" />
+    <ClCompile Include="Targets\file\filetargetsettingspage.cpp" />
+    <ClCompile Include="Targets\hitbox\hitboxtarget.cpp" />
+    <ClCompile Include="Targets\hitbox\hitboxtargetsettingspage.cpp" />
+    <ClCompile Include="Targets\rtmptargetbase.cpp" />
+    <ClCompile Include="Targets\rtmp\rtmptarget.cpp" />
+    <ClCompile Include="Targets\rtmp\rtmptargetsettingspage.cpp" />
+    <ClCompile Include="Targets\twitch\twitchtarget.cpp" />
+    <ClCompile Include="Targets\twitch\twitchtargetsettingspage.cpp" />
+    <ClCompile Include="Targets\ustream\ustreamtarget.cpp" />
+    <ClCompile Include="Targets\ustream\ustreamtargetsettingspage.cpp" />
     <ClCompile Include="validators.cpp" />
     <ClCompile Include="videoencoder.cpp" />
     <ClCompile Include="videosource.cpp" />
@@ -887,20 +892,15 @@
     <ClCompile Include="Wizards\editprofilecontroller.cpp" />
     <ClCompile Include="Wizards\editprofilepage.cpp" />
     <ClCompile Include="Wizards\edittargetscontroller.cpp" />
-    <ClCompile Include="Wizards\filetargetsettingspage.cpp" />
-    <ClCompile Include="Wizards\hitboxtargetsettingspage.cpp" />
     <ClCompile Include="Wizards\newedittargetcontroller.cpp" />
     <ClCompile Include="Wizards\newprofilecontroller.cpp" />
     <ClCompile Include="Wizards\newprofilepage.cpp" />
     <ClCompile Include="Wizards\preparebenchmarkpage.cpp" />
     <ClCompile Include="Wizards\profilecompletepage.cpp" />
-    <ClCompile Include="Wizards\rtmptargetsettingspage.cpp" />
     <ClCompile Include="Wizards\scenetemplatepage.cpp" />
     <ClCompile Include="Wizards\targetlistpage.cpp" />
     <ClCompile Include="Wizards\targettypepage.cpp" />
-    <ClCompile Include="Wizards\twitchtargetsettingspage.cpp" />
     <ClCompile Include="Wizards\uploadpage.cpp" />
-    <ClCompile Include="Wizards\ustreamtargetsettingspage.cpp" />
     <ClCompile Include="Wizards\videosettingspage.cpp" />
     <ClCompile Include="Wizards\welcomepage.cpp" />
     <ClCompile Include="wizardwindow.cpp" />
@@ -944,12 +944,17 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
     </CustomBuild>
     <ClInclude Include="GeneratedFiles\ui_colorlayerdialog.h" />
+    <ClInclude Include="GeneratedFiles\ui_filetargetsettingspage.h" />
+    <ClInclude Include="GeneratedFiles\ui_hitboxtargetsettingspage.h" />
     <ClInclude Include="GeneratedFiles\ui_imagelayerdialog.h" />
     <ClInclude Include="GeneratedFiles\ui_monitorlayerdialog.h" />
+    <ClInclude Include="GeneratedFiles\ui_rtmptargetsettingspage.h" />
     <ClInclude Include="GeneratedFiles\ui_scripttextlayerdialog.h" />
     <ClInclude Include="GeneratedFiles\ui_slideshowlayerdialog.h" />
     <ClInclude Include="GeneratedFiles\ui_synclayerdialog.h" />
     <ClInclude Include="GeneratedFiles\ui_textlayerdialog.h" />
+    <ClInclude Include="GeneratedFiles\ui_twitchtargetsettingspage.h" />
+    <ClInclude Include="GeneratedFiles\ui_ustreamtargetsettingspage.h" />
     <ClInclude Include="GeneratedFiles\ui_webcamlayerdialog.h" />
     <ClInclude Include="GeneratedFiles\ui_windowlayerdialog.h" />
     <ClInclude Include="Layers\color\colorlayer.h" />
@@ -1059,17 +1064,117 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
     </CustomBuild>
     <ClInclude Include="Layers\webcam\webcamlayer.h" />
-    <ClInclude Include="versionhelpers.h" />
-    <CustomBuild Include="Wizards\hitboxtargetsettingspage.h">
+    <CustomBuild Include="Targets\rtmptargetbase.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing rtmptargetbase.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing rtmptargetbase.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+    </CustomBuild>
+    <CustomBuild Include="Targets\file\filetargetsettingspage.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing filetargetsettingspage.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing filetargetsettingspage.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+    </CustomBuild>
+    <CustomBuild Include="Targets\file\filetarget.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing filetarget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing filetarget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+    </CustomBuild>
+    <CustomBuild Include="Targets\hitbox\hitboxtargetsettingspage.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing hitboxtargetsettingspage.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing hitboxtargetsettingspage.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
     </CustomBuild>
+    <CustomBuild Include="Targets\hitbox\hitboxtarget.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing hitboxtarget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing hitboxtarget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+    </CustomBuild>
+    <CustomBuild Include="Targets\rtmp\rtmptargetsettingspage.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing rtmptargetsettingspage.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing rtmptargetsettingspage.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+    </CustomBuild>
+    <CustomBuild Include="Targets\rtmp\rtmptarget.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing rtmptarget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing rtmptarget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+    </CustomBuild>
+    <CustomBuild Include="Targets\twitch\twitchtargetsettingspage.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing twitchtargetsettingspage.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing twitchtargetsettingspage.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+    </CustomBuild>
+    <CustomBuild Include="Targets\twitch\twitchtarget.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing twitchtarget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing twitchtarget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+    </CustomBuild>
+    <CustomBuild Include="Targets\ustream\ustreamtargetsettingspage.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing ustreamtargetsettingspage.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing ustreamtargetsettingspage.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+    </CustomBuild>
+    <CustomBuild Include="Targets\ustream\ustreamtarget.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing ustreamtarget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing ustreamtarget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
+    </CustomBuild>
+    <ClInclude Include="versionhelpers.h" />
     <CustomBuild Include="videosource.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing videosource.h...</Message>
@@ -1234,46 +1339,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
     </CustomBuild>
-    <CustomBuild Include="ustreamtarget.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing ustreamtarget.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing ustreamtarget.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-    </CustomBuild>
-    <CustomBuild Include="Wizards\ustreamtargetsettingspage.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing ustreamtargetsettingspage.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing ustreamtargetsettingspage.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-    </CustomBuild>
-    <CustomBuild Include="Wizards\twitchtargetsettingspage.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing twitchtargetsettingspage.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing twitchtargetsettingspage.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-    </CustomBuild>
-    <CustomBuild Include="twitchtarget.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing twitchtarget.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing twitchtarget.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-    </CustomBuild>
     <CustomBuild Include="Widgets\sceneview.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing sceneview.h...</Message>
@@ -1303,16 +1368,6 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing bitratecalcwidget.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-    </CustomBuild>
-    <CustomBuild Include="Wizards\rtmptargetsettingspage.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing rtmptargetsettingspage.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing rtmptargetsettingspage.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
     </CustomBuild>
@@ -1453,16 +1508,6 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing targettypepage.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-    </CustomBuild>
-    <CustomBuild Include="Wizards\filetargetsettingspage.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing filetargetsettingspage.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing filetargetsettingspage.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
     </CustomBuild>
@@ -1613,16 +1658,6 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
     </CustomBuild>
     <ClInclude Include="common.h" />
-    <CustomBuild Include="rtmptarget.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing rtmptarget.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing rtmptarget.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-    </CustomBuild>
     <CustomBuild Include="cpuusage.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </Message>
@@ -1841,16 +1876,6 @@
     </CustomBuild>
     <ClInclude Include="constants.h" />
     <ClInclude Include="encodedframe.h" />
-    <CustomBuild Include="filetarget.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing filetarget.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing filetarget.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-    </CustomBuild>
     <ClInclude Include="encodedsegment.h" />
     <CustomBuild Include="fdkaacencoder.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
@@ -1879,32 +1904,17 @@
     <ClInclude Include="GeneratedFiles\ui_benchmarkresultspage.h" />
     <ClInclude Include="GeneratedFiles\ui_bitratecalcwidget.h" />
     <ClInclude Include="GeneratedFiles\ui_editprofilepage.h" />
-    <ClInclude Include="GeneratedFiles\ui_filetargetsettingspage.h" />
-    <ClInclude Include="GeneratedFiles\ui_hitboxtargetsettingspage.h" />
     <ClInclude Include="GeneratedFiles\ui_layerproperties.h" />
     <ClInclude Include="GeneratedFiles\ui_mainemptypage.h" />
     <ClInclude Include="GeneratedFiles\ui_newprofilepage.h" />
     <ClInclude Include="GeneratedFiles\ui_preparebenchmarkpage.h" />
     <ClInclude Include="GeneratedFiles\ui_profilecompletepage.h" />
-    <ClInclude Include="GeneratedFiles\ui_rtmptargetsettingspage.h" />
     <ClInclude Include="GeneratedFiles\ui_scenetemplatepage.h" />
     <ClInclude Include="GeneratedFiles\ui_targetlistpage.h" />
     <ClInclude Include="GeneratedFiles\ui_targettypepage.h" />
-    <ClInclude Include="GeneratedFiles\ui_twitchtargetsettingspage.h" />
     <ClInclude Include="GeneratedFiles\ui_uploadpage.h" />
-    <ClInclude Include="GeneratedFiles\ui_ustreamtargetsettingspage.h" />
     <ClInclude Include="GeneratedFiles\ui_videosettingspage.h" />
     <ClInclude Include="GeneratedFiles\ui_welcomepage.h" />
-    <CustomBuild Include="hitboxtarget.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing hitboxtarget.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing hitboxtarget.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-    </CustomBuild>
     <ClInclude Include="log.h" />
     <ClInclude Include="logfilemanager.h" />
     <CustomBuild Include="profile.h">
@@ -1999,16 +2009,6 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing asyncio.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-    </CustomBuild>
-    <CustomBuild Include="rtmptargetbase.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing rtmptargetbase.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing rtmptargetbase.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x0600 "-DGIT_REV=\"$(GITREV)\"" -D_WINDLL  "-I." "-I$(LIBBROADCAST_DIR)\include" "-I$(LIBVIDGFX_DIR)\include" "-I$(LIBDESKCAP_DIR)\include" "-I$(QTDIR)\include" "-I$(X264_DIR)\include" "-I$(FFMPEG_DIR)\include" "-I$(FDKAAC_DIR)\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Program Files (x86)\Visual Leak Detector\include"</Command>
     </CustomBuild>
@@ -2237,18 +2237,6 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="Wizards\filetargetsettingspage.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
     <CustomBuild Include="Wizards\targettypepage.ui">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
@@ -2273,18 +2261,6 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="Wizards\rtmptargetsettingspage.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
     <CustomBuild Include="Widgets\bitratecalcwidget.ui">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
@@ -2295,30 +2271,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
       <SubType>Designer</SubType>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="Wizards\twitchtargetsettingspage.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="Wizards\ustreamtargetsettingspage.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -2445,18 +2397,6 @@
     <ResourceCompile Include="MishiraApp.rc" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="Wizards\hitboxtargetsettingspage.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
     <CustomBuild Include="Layers\color\colorlayerdialog.ui">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
@@ -2554,6 +2494,66 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Layers\webcam\webcamlayerdialog.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Targets\file\filetargetsettingspage.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Targets\hitbox\hitboxtargetsettingspage.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Targets\rtmp\rtmptargetsettingspage.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Targets\twitch\twitchtargetsettingspage.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Targets\ustream\ustreamtargetsettingspage.ui">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>

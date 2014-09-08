@@ -67,6 +67,24 @@
     <Filter Include="Layers\Desktop Capture">
       <UniqueIdentifier>{e096a7ab-5733-443b-b17b-79310e4a0ffb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Targets">
+      <UniqueIdentifier>{0374aea3-7c91-4033-9c23-89324f04ba23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Targets\File">
+      <UniqueIdentifier>{be36a11e-1147-4a48-bbb6-f5a1e6f8ebfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Targets\Hitbox">
+      <UniqueIdentifier>{2f2e31c7-3b9a-4741-b1c8-26f357b44e12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Targets\RTMP">
+      <UniqueIdentifier>{2fd70150-6a79-41d1-b429-315912d02593}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Targets\Twitch">
+      <UniqueIdentifier>{d8c28df1-e039-4e59-a3de-5dbd296fcd56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Targets\Ustream">
+      <UniqueIdentifier>{d4f8b880-379c-4067-9093-50ec9c528b98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -288,15 +306,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_target.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="filetarget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_filetarget.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_filetarget.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="common.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -401,15 +410,6 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_validators.cpp">
       <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_filetargetsettingspage.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_filetargetsettingspage.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Wizards\filetargetsettingspage.cpp">
-      <Filter>Source Files\Wizards</Filter>
     </ClCompile>
     <ClCompile Include="fileselectdialog.cpp">
       <Filter>Source Files</Filter>
@@ -648,33 +648,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_colortogglebutton.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_rtmptargetbase.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_rtmptargetbase.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="rtmptargetbase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rtmptarget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_rtmptarget.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_rtmptarget.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Wizards\rtmptargetsettingspage.cpp">
-      <Filter>Source Files\Wizards</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_rtmptargetsettingspage.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_rtmptargetsettingspage.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="Widgets\bitratecalcwidget.cpp">
       <Filter>Source Files\Widgets</Filter>
     </ClCompile>
@@ -791,42 +764,6 @@
     </ClCompile>
     <ClCompile Include="Widgets\sceneview.cpp">
       <Filter>Source Files\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="twitchtarget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_twitchtarget.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_twitchtarget.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_twitchtargetsettingspage.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_twitchtargetsettingspage.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Wizards\twitchtargetsettingspage.cpp">
-      <Filter>Source Files\Wizards</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ustreamtargetsettingspage.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ustreamtargetsettingspage.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Wizards\ustreamtargetsettingspage.cpp">
-      <Filter>Source Files\Wizards</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ustreamtarget.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ustreamtarget.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="ustreamtarget.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Widgets\elidedlabel.cpp">
       <Filter>Source Files\Widgets</Filter>
@@ -1002,24 +939,6 @@
     <ClCompile Include="log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Wizards\hitboxtargetsettingspage.cpp">
-      <Filter>Source Files\Wizards</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_hitboxtargetsettingspage.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_hitboxtargetsettingspage.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_hitboxtarget.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_hitboxtarget.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="hitboxtarget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="layerfactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1143,6 +1062,105 @@
     <ClCompile Include="Layers\webcam\webcamlayerdialog.cpp">
       <Filter>Layers\Webcam</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_rtmptargetbase.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_rtmptargetbase.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Targets\rtmptargetbase.cpp">
+      <Filter>Targets</Filter>
+    </ClCompile>
+    <ClCompile Include="Targets\file\filetargetsettingspage.cpp">
+      <Filter>Targets\File</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_filetargetsettingspage.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_filetargetsettingspage.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Targets\file\filetarget.cpp">
+      <Filter>Targets\File</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_filetarget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_filetarget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_hitboxtargetsettingspage.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_hitboxtargetsettingspage.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Targets\hitbox\hitboxtarget.cpp">
+      <Filter>Targets\Hitbox</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_hitboxtarget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_hitboxtarget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Targets\hitbox\hitboxtargetsettingspage.cpp">
+      <Filter>Targets\Hitbox</Filter>
+    </ClCompile>
+    <ClCompile Include="Targets\rtmp\rtmptargetsettingspage.cpp">
+      <Filter>Targets\RTMP</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_rtmptargetsettingspage.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_rtmptargetsettingspage.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Targets\rtmp\rtmptarget.cpp">
+      <Filter>Targets\RTMP</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_rtmptarget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_rtmptarget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_twitchtargetsettingspage.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_twitchtargetsettingspage.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Targets\twitch\twitchtarget.cpp">
+      <Filter>Targets\Twitch</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_twitchtarget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_twitchtarget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Targets\twitch\twitchtargetsettingspage.cpp">
+      <Filter>Targets\Twitch</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ustreamtargetsettingspage.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ustreamtargetsettingspage.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Targets\ustream\ustreamtarget.cpp">
+      <Filter>Targets\Ustream</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ustreamtarget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ustreamtarget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Targets\ustream\ustreamtargetsettingspage.cpp">
+      <Filter>Targets\Ustream</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -1208,9 +1226,6 @@
     <CustomBuild Include="target.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="filetarget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="wizardwindow.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
@@ -1255,12 +1270,6 @@
     </CustomBuild>
     <CustomBuild Include="validators.h">
       <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Wizards\filetargetsettingspage.ui">
-      <Filter>Form Files\Wizards</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Wizards\filetargetsettingspage.h">
-      <Filter>Header Files\Wizards</Filter>
     </CustomBuild>
     <CustomBuild Include="fileselectdialog.h">
       <Filter>Header Files</Filter>
@@ -1349,18 +1358,6 @@
     <CustomBuild Include="Widgets\colortogglebutton.h">
       <Filter>Header Files\Widgets</Filter>
     </CustomBuild>
-    <CustomBuild Include="rtmptargetbase.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="rtmptarget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Wizards\rtmptargetsettingspage.h">
-      <Filter>Header Files\Wizards</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Wizards\rtmptargetsettingspage.ui">
-      <Filter>Form Files\Wizards</Filter>
-    </CustomBuild>
     <CustomBuild Include="MishiraApp.qrc" />
     <CustomBuild Include="Widgets\bitratecalcwidget.ui">
       <Filter>Form Files</Filter>
@@ -1406,24 +1403,6 @@
     </CustomBuild>
     <CustomBuild Include="Widgets\sceneview.h">
       <Filter>Header Files\Widgets</Filter>
-    </CustomBuild>
-    <CustomBuild Include="twitchtarget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Wizards\twitchtargetsettingspage.ui">
-      <Filter>Form Files\Wizards</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Wizards\twitchtargetsettingspage.h">
-      <Filter>Header Files\Wizards</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Wizards\ustreamtargetsettingspage.ui">
-      <Filter>Form Files\Wizards</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Wizards\ustreamtargetsettingspage.h">
-      <Filter>Header Files\Wizards</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ustreamtarget.h">
-      <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="Widgets\elidedlabel.h">
       <Filter>Header Files\Widgets</Filter>
@@ -1521,15 +1500,6 @@
     <CustomBuild Include="fileimagetexture.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="Wizards\hitboxtargetsettingspage.ui">
-      <Filter>Form Files\Wizards</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Wizards\hitboxtargetsettingspage.h">
-      <Filter>Header Files\Wizards</Filter>
-    </CustomBuild>
-    <CustomBuild Include="hitboxtarget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="layerfactory.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
@@ -1593,6 +1563,54 @@
     <CustomBuild Include="Layers\webcam\webcamlayerdialog.ui">
       <Filter>Layers\Webcam</Filter>
     </CustomBuild>
+    <CustomBuild Include="Targets\rtmptargetbase.h">
+      <Filter>Targets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\file\filetargetsettingspage.h">
+      <Filter>Targets\File</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\file\filetargetsettingspage.ui">
+      <Filter>Targets\File</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\file\filetarget.h">
+      <Filter>Targets\File</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\hitbox\hitboxtargetsettingspage.h">
+      <Filter>Targets\Hitbox</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\hitbox\hitboxtargetsettingspage.ui">
+      <Filter>Targets\Hitbox</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\hitbox\hitboxtarget.h">
+      <Filter>Targets\Hitbox</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\rtmp\rtmptargetsettingspage.h">
+      <Filter>Targets\RTMP</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\rtmp\rtmptargetsettingspage.ui">
+      <Filter>Targets\RTMP</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\rtmp\rtmptarget.h">
+      <Filter>Targets\RTMP</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\twitch\twitchtargetsettingspage.h">
+      <Filter>Targets\Twitch</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\twitch\twitchtargetsettingspage.ui">
+      <Filter>Targets\Twitch</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\twitch\twitchtarget.h">
+      <Filter>Targets\Twitch</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\ustream\ustreamtargetsettingspage.h">
+      <Filter>Targets\Ustream</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\ustream\ustreamtargetsettingspage.ui">
+      <Filter>Targets\Ustream</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Targets\ustream\ustreamtarget.h">
+      <Filter>Targets\Ustream</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logfilemanager.h">
@@ -1622,9 +1640,6 @@
     <ClInclude Include="GeneratedFiles\ui_videosettingspage.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_filetargetsettingspage.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_targettypepage.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
@@ -1640,9 +1655,6 @@
     <ClInclude Include="resampler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_rtmptargetsettingspage.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_bitratecalcwidget.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
@@ -1651,12 +1663,6 @@
     </ClInclude>
     <ClInclude Include="animatedfloat.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_twitchtargetsettingspage.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_ustreamtargetsettingspage.h">
-      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_audiomixerpage.h">
       <Filter>Generated Files</Filter>
@@ -1702,9 +1708,6 @@
     </ClInclude>
     <ClInclude Include="constants.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_hitboxtargetsettingspage.h">
-      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="versionhelpers.h">
       <Filter>Header Files</Filter>
@@ -1756,6 +1759,21 @@
     </ClInclude>
     <ClInclude Include="Layers\webcam\webcamlayer.h">
       <Filter>Layers\Webcam</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_filetargetsettingspage.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_hitboxtargetsettingspage.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_rtmptargetsettingspage.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_twitchtargetsettingspage.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_ustreamtargetsettingspage.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
