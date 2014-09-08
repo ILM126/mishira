@@ -211,9 +211,9 @@ void ImageLayer::render(
 	}
 }
 
-LyrType ImageLayer::getType() const
+quint32 ImageLayer::getTypeId() const
 {
-	return LyrImageLayerType;
+	return (quint32)LyrImageLayerTypeId;
 }
 
 bool ImageLayer::hasSettingsDialog()
@@ -292,4 +292,27 @@ void ImageLayer::queuedFrameEvent(uint frameNum, int numDropped)
 	// Apply scroll
 	QPointF scroll = scrollPerFrame * (qreal)(numDropped + 1);
 	vidgfx_texdecalbuf_scroll_by(m_vertBuf, scroll);
+}
+
+//=============================================================================
+// ImageLayerFactory class
+
+quint32 ImageLayerFactory::getTypeId() const
+{
+	return (quint32)LyrImageLayerTypeId;
+}
+
+QByteArray ImageLayerFactory::getTypeString() const
+{
+	return QByteArrayLiteral("ImageLayer");
+}
+
+Layer *ImageLayerFactory::createBlankLayer(LayerGroup *parent)
+{
+	return new ImageLayer(parent);
+}
+
+Layer *ImageLayerFactory::createLayerWithDefaults(LayerGroup *parent)
+{
+	return new ImageLayer(parent);
 }

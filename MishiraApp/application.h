@@ -36,6 +36,7 @@ class DarkStyle;
 class Layer;
 class LayerDialog;
 class LayerDialogWindow;
+class LayerFactory;
 class MainWindow;
 class Profile;
 class Scene;
@@ -44,6 +45,8 @@ class VideoSourceManager;
 class WizardWindow;
 class QAbstractButton;
 class QMessageBox;
+
+typedef QVector<LayerFactory *> LayerFactoryList;
 
 // Convenience
 #define App Application::getSingleton()
@@ -108,6 +111,9 @@ protected: // Members ---------------------------------------------------------
 	// Menu bar
 	QVector<QAction *>		m_profileActions;
 
+	// Factories
+	LayerFactoryList		m_layerFactoryList;
+
 	// Common message boxes
 	QMessageBox *			m_deleteLayerDialog;
 	QMessageBox *			m_deleteLayerGroupDialog;
@@ -149,6 +155,10 @@ public: // Methods ------------------------------------------------------------
 	AudioSourceManager *	getAudioSourceManager() const;
 	VideoSourceManager *	getVideoSourceManager() const;
 	AsyncIO *				getAsyncIO() const;
+
+	// Factories
+	void				registerLayerFactory(LayerFactory *factory);
+	LayerFactoryList	getLayerFactories() const;
 
 	void				setActiveCursor(Qt::CursorShape cursor);
 	Qt::CursorShape		getActiveCursor() const;
@@ -298,6 +308,16 @@ inline VideoSourceManager *Application::getVideoSourceManager() const
 inline AsyncIO *Application::getAsyncIO() const
 {
 	return m_asyncIo;
+}
+
+inline void Application::registerLayerFactory(LayerFactory *factory)
+{
+	m_layerFactoryList.push_back(factory);
+}
+
+inline LayerFactoryList Application::getLayerFactories() const
+{
+	return m_layerFactoryList;
 }
 
 inline Qt::CursorShape Application::getActiveCursor() const

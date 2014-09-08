@@ -1125,6 +1125,9 @@
     <ClCompile Include="hitboxtarget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="layerfactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -1570,6 +1573,9 @@
       <Filter>Header Files\Wizards</Filter>
     </CustomBuild>
     <CustomBuild Include="hitboxtarget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="layerfactory.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

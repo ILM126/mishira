@@ -472,9 +472,9 @@ void SlideshowLayer::render(
 	}
 }
 
-LyrType SlideshowLayer::getType() const
+quint32 SlideshowLayer::getTypeId() const
 {
-	return LyrSlideshowLayerType;
+	return (quint32)LyrSlideshowLayerTypeId;
 }
 
 bool SlideshowLayer::hasSettingsDialog()
@@ -565,4 +565,27 @@ void SlideshowLayer::queuedFrameEvent(uint frameNum, int numDropped)
 		else
 			switchToNextImage();
 	}
+}
+
+//=============================================================================
+// SlideshowLayerFactory class
+
+quint32 SlideshowLayerFactory::getTypeId() const
+{
+	return (quint32)LyrSlideshowLayerTypeId;
+}
+
+QByteArray SlideshowLayerFactory::getTypeString() const
+{
+	return QByteArrayLiteral("SlideshowLayer");
+}
+
+Layer *SlideshowLayerFactory::createBlankLayer(LayerGroup *parent)
+{
+	return new SlideshowLayer(parent);
+}
+
+Layer *SlideshowLayerFactory::createLayerWithDefaults(LayerGroup *parent)
+{
+	return new SlideshowLayer(parent);
 }

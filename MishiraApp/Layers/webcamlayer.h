@@ -19,6 +19,7 @@
 #define WEBCAMLAYER_H
 
 #include "layer.h"
+#include "layerfactory.h"
 
 class LayerDialog;
 class VideoSource;
@@ -26,7 +27,7 @@ class VideoSource;
 //=============================================================================
 class WebcamLayer : public Layer
 {
-	friend class LayerGroup;
+	friend class WebcamLayerFactory;
 
 private: // Members -----------------------------------------------------------
 	quint64				m_deviceId;
@@ -61,7 +62,7 @@ public: // Interface ----------------------------------------------------------
 	virtual void	render(
 		VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped);
 
-	virtual LyrType	getType() const;
+	virtual quint32	getTypeId() const;
 
 	virtual bool			hasSettingsDialog();
 	virtual LayerDialog *	createSettingsDialog(QWidget *parent = NULL);
@@ -85,5 +86,16 @@ inline VidgfxOrientation WebcamLayer::getOrientation() const
 {
 	return m_orientation;
 }
+
+//=============================================================================
+class WebcamLayerFactory : public LayerFactory
+{
+public: // Interface ----------------------------------------------------------
+	virtual quint32		getTypeId() const;
+	virtual QByteArray	getTypeString() const;
+	virtual Layer *		createBlankLayer(LayerGroup *parent);
+	virtual Layer *		createLayerWithDefaults(LayerGroup *parent);
+};
+//=============================================================================
 
 #endif // WEBCAMLAYER_H

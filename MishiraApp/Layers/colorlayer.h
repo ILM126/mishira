@@ -19,6 +19,7 @@
 #define COLORLAYER_H
 
 #include "layer.h"
+#include "layerfactory.h"
 #include <QtGui/QColor>
 
 class LayerDialog;
@@ -33,7 +34,7 @@ enum GradientPattern {
 //=============================================================================
 class ColorLayer : public Layer
 {
-	friend class LayerGroup;
+	friend class ColorLayerFactory;
 
 private: // Members -----------------------------------------------------------
 	VidgfxVertBuf *	m_vertBuf;
@@ -60,7 +61,7 @@ public: // Interface ----------------------------------------------------------
 	virtual void	render(
 		VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped);
 
-	virtual LyrType	getType() const;
+	virtual quint32	getTypeId() const;
 
 	virtual bool			hasSettingsDialog();
 	virtual LayerDialog *	createSettingsDialog(QWidget *parent = NULL);
@@ -84,5 +85,16 @@ inline QColor ColorLayer::getBColor() const
 {
 	return m_bColor;
 }
+
+//=============================================================================
+class ColorLayerFactory : public LayerFactory
+{
+public: // Interface ----------------------------------------------------------
+	virtual quint32		getTypeId() const;
+	virtual QByteArray	getTypeString() const;
+	virtual Layer *		createBlankLayer(LayerGroup *parent);
+	virtual Layer *		createLayerWithDefaults(LayerGroup *parent);
+};
+//=============================================================================
 
 #endif // COLORLAYER_H

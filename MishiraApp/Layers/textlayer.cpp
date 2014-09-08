@@ -558,9 +558,9 @@ void TextLayer::render(
 	vidgfx_context_set_tex_decal_mod_color(gfx, prevCol);
 }
 
-LyrType TextLayer::getType() const
+quint32 TextLayer::getTypeId() const
 {
-	return LyrTextLayerType;
+	return (quint32)LyrTextLayerTypeId;
 }
 
 bool TextLayer::hasSettingsDialog()
@@ -660,4 +660,27 @@ void TextLayer::queuedFrameEvent(uint frameNum, int numDropped)
 	// Apply scroll
 	QPointF scroll = scrollPerFrame * (qreal)(numDropped + 1);
 	vidgfx_texdecalbuf_scroll_by(m_vertBuf, scroll);
+}
+
+//=============================================================================
+// TextLayerFactory class
+
+quint32 TextLayerFactory::getTypeId() const
+{
+	return (quint32)LyrTextLayerTypeId;
+}
+
+QByteArray TextLayerFactory::getTypeString() const
+{
+	return QByteArrayLiteral("TextLayer");
+}
+
+Layer *TextLayerFactory::createBlankLayer(LayerGroup *parent)
+{
+	return new TextLayer(parent);
+}
+
+Layer *TextLayerFactory::createLayerWithDefaults(LayerGroup *parent)
+{
+	return new TextLayer(parent);
 }

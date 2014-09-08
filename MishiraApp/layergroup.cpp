@@ -16,18 +16,10 @@
 //*****************************************************************************
 
 #include "layergroup.h"
+#include "layerfactory.h"
 #include "profile.h"
 #include "scene.h"
 #include "sceneitem.h"
-#include "Layers/colorlayer.h"
-#include "Layers/imagelayer.h"
-#include "Layers/monitorlayer.h"
-#include "Layers/scripttextlayer.h"
-#include "Layers/slideshowlayer.h"
-#include "Layers/synclayer.h"
-#include "Layers/textlayer.h"
-#include "Layers/webcamlayer.h"
-#include "Layers/windowlayer.h"
 
 const QString LOG_CAT = QStringLiteral("Scene");
 
@@ -127,33 +119,15 @@ bool LayerGroup::isShared() const
 	return false; // Group is not shared
 }
 
-Layer *LayerGroup::constructLayer(LyrType type)
+Layer *LayerGroup::constructLayer(quint32 typeId)
 {
-	switch(type) {
-	default:
-		return NULL;
-	case LyrColorLayerType:
-		return new ColorLayer(this);
-	case LyrImageLayerType:
-		return new ImageLayer(this);
-	case LyrSlideshowLayerType:
-		return new SlideshowLayer(this);
-	case LyrWindowLayerType:
-		return new WindowLayer(this);
-	case LyrTextLayerType:
-		return new TextLayer(this);
-	case LyrSyncLayerType:
-		return new SyncLayer(this);
-	case LyrWebcamLayerType:
-		return new WebcamLayer(this);
-	case LyrMonitorLayerType:
-		return new MonitorLayer(this);
-	case LyrScriptTextLayerType:
-		return new ScriptTextLayer(this);
-	}
+	LayerFactory *factory = LayerFactory::findFactory(typeId);
+	if(factory == NULL)
+		return NULL; // Layer type not found
+	return factory->createBlankLayer(this);
 }
 
-Layer *LayerGroup::createLayer(LyrType type, const QString &name, int before)
+Layer *LayerGroup::createLayer(quint32 typeId, const QString &name, int before)
 {
 	if(before < 0) {
 		// Position is relative to the right
@@ -161,7 +135,7 @@ Layer *LayerGroup::createLayer(LyrType type, const QString &name, int before)
 	}
 	before = qBound(0, before, m_layers.count());
 
-	Layer *layer = constructLayer(type);
+	Layer *layer = constructLayer(typeId);
 	if(layer == NULL)
 		return NULL;
 	if(!name.isEmpty())
@@ -175,7 +149,7 @@ Layer *LayerGroup::createLayer(LyrType type, const QString &name, int before)
 }
 
 Layer *LayerGroup::createLayerSerialized(
-	LyrType type, QDataStream *stream, int before)
+	quint32 typeId, QDataStream *stream, int before)
 {
 	if(before < 0) {
 		// Position is relative to the right
@@ -183,7 +157,7 @@ Layer *LayerGroup::createLayerSerialized(
 	}
 	before = qBound(0, before, m_layers.count());
 
-	Layer *layer = constructLayer(type);
+	Layer *layer = constructLayer(typeId);
 	if(layer == NULL)
 		return NULL;
 	appLog(LOG_CAT)
@@ -272,7 +246,8 @@ bool LayerGroup::duplicateLayer(Layer *layer)
 		return false;
 	}
 	buf.seek(0);
-	Layer *newLayer = createLayerSerialized(layer->getType(), &stream, index);
+	Layer *newLayer = createLayerSerialized(
+		layer->getTypeId(), &stream, index);
 	if(stream.status() != QDataStream::Ok) {
 		appLog(Log::Warning)
 			<< "An error occurred while duplicating (Unserializing)";
@@ -294,7 +269,7 @@ void LayerGroup::serialize(QDataStream *stream) const
 	*stream << (quint32)m_layers.count();
 	for(int i = 0; i < m_layers.count(); i++) {
 		Layer *layer = m_layers.at(i);
-		*stream << (quint32)layer->getType();
+		*stream << layer->getTypeId();
 		layer->serialize(stream);
 	}
 }
@@ -327,8 +302,8 @@ bool LayerGroup::unserialize(QDataStream *stream)
 		int count = uint32Data;
 		for(int i = 0; i < count; i++) {
 			*stream >> uint32Data;
-			LyrType type = (LyrType)uint32Data;
-			if(createLayerSerialized(type, stream) == NULL) {
+			quint32 typeId = uint32Data;
+			if(createLayerSerialized(typeId, stream) == NULL) {
 				// The reason has already been logged
 				return false;
 			}

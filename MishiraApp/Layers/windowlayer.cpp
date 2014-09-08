@@ -424,9 +424,9 @@ void WindowLayer::render(
 	vidgfx_context_set_tex_decal_mod_color(gfx, prevCol);
 }
 
-LyrType WindowLayer::getType() const
+quint32 WindowLayer::getTypeId() const
 {
-	return LyrWindowLayerType;
+	return (quint32)LyrWindowLayerTypeId;
 }
 
 bool WindowLayer::hasSettingsDialog()
@@ -564,4 +564,27 @@ void WindowLayer::windowDestroyed(WinId winId)
 	// HACK to find another window in our list
 	m_windowListChanged = true;
 	updateResourcesIfLoaded();
+}
+
+//=============================================================================
+// WindowLayerFactory class
+
+quint32 WindowLayerFactory::getTypeId() const
+{
+	return (quint32)LyrWindowLayerTypeId;
+}
+
+QByteArray WindowLayerFactory::getTypeString() const
+{
+	return QByteArrayLiteral("WindowLayer");
+}
+
+Layer *WindowLayerFactory::createBlankLayer(LayerGroup *parent)
+{
+	return new WindowLayer(parent);
+}
+
+Layer *WindowLayerFactory::createLayerWithDefaults(LayerGroup *parent)
+{
+	return new WindowLayer(parent);
 }

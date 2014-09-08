@@ -320,19 +320,6 @@ static const char * const SclrScalingModeStrings[] = {
 //-----------------------------------------------------------------------------
 // Layer
 
-// WARNING: This is used in user profiles. Treat it as a public API.
-enum LyrType {
-	LyrColorLayerType = 0,
-	LyrImageLayerType = 1,
-	LyrWindowLayerType = 2,
-	LyrTextLayerType = 3,
-	LyrSyncLayerType = 4,
-	LyrWebcamLayerType = 5,
-	LyrSlideshowLayerType = 6,
-	LyrMonitorLayerType = 7,
-	LyrScriptTextLayerType = 8
-};
-
 enum LyrScalingMode {
 	LyrActualScale = 0,
 	LyrStretchScale,

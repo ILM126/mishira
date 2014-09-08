@@ -677,9 +677,9 @@ void ScriptTextLayer::destroyResources(VidgfxContext *gfx)
 	TextLayer::destroyResources(gfx);
 }
 
-LyrType ScriptTextLayer::getType() const
+quint32 ScriptTextLayer::getTypeId() const
 {
-	return LyrScriptTextLayerType;
+	return (quint32)LyrScriptTextLayerTypeId;
 }
 
 bool ScriptTextLayer::hasSettingsDialog()
@@ -847,4 +847,27 @@ void ScriptTextLayer::textUpdated(const QString &text)
 	m_ignoreUpdate = true;
 	setDocumentHtml(html);
 	m_ignoreUpdate = false;
+}
+
+//=============================================================================
+// ScriptTextLayerFactory class
+
+quint32 ScriptTextLayerFactory::getTypeId() const
+{
+	return (quint32)LyrScriptTextLayerTypeId;
+}
+
+QByteArray ScriptTextLayerFactory::getTypeString() const
+{
+	return QByteArrayLiteral("ScriptTextLayer");
+}
+
+Layer *ScriptTextLayerFactory::createBlankLayer(LayerGroup *parent)
+{
+	return new ScriptTextLayer(parent);
+}
+
+Layer *ScriptTextLayerFactory::createLayerWithDefaults(LayerGroup *parent)
+{
+	return new ScriptTextLayer(parent);
 }

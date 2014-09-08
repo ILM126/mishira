@@ -60,9 +60,9 @@ public: // Methods ------------------------------------------------------------
 
 	LayerList	getLayers() const;
 	Layer *		createLayer(
-		LyrType type, const QString &name = QString(), int before = -1);
+		quint32 typeId, const QString &name = QString(), int before = -1);
 	Layer *		createLayerSerialized(
-		LyrType type, QDataStream *stream, int before = -1);
+		quint32 typeId, QDataStream *stream, int before = -1);
 	void		destroyLayer(Layer *layer);
 	Layer *		layerAtIndex(int index) const;
 	int			indexOfLayer(Layer *layer) const;
@@ -76,7 +76,7 @@ public: // Methods ------------------------------------------------------------
 
 private:
 	LayerList &	getLayersMutable();
-	Layer *		constructLayer(LyrType type);
+	Layer *		constructLayer(quint32 typeId);
 
 	void		initializedEvent();
 	void		showEvent();

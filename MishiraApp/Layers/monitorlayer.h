@@ -21,6 +21,7 @@
 #include "common.h"
 #include "cropinfo.h"
 #include "layer.h"
+#include "layerfactory.h"
 #include <QtCore/QStringList>
 #include <QtCore/QMargins>
 
@@ -30,7 +31,7 @@ class LayerDialog;
 //=============================================================================
 class MonitorLayer : public Layer
 {
-	friend class LayerGroup;
+	friend class MonitorLayerFactory;
 
 private: // Members -----------------------------------------------------------
 	CaptureObject *	m_captureObj;
@@ -96,7 +97,7 @@ public: // Interface ----------------------------------------------------------
 	virtual void	render(
 		VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped);
 
-	virtual LyrType	getType() const;
+	virtual quint32	getTypeId() const;
 
 	virtual bool			hasSettingsDialog();
 	virtual LayerDialog *	createSettingsDialog(QWidget *parent = NULL);
@@ -154,5 +155,16 @@ inline int MonitorLayer::getSaturation() const
 {
 	return m_saturation;
 }
+
+//=============================================================================
+class MonitorLayerFactory : public LayerFactory
+{
+public: // Interface ----------------------------------------------------------
+	virtual quint32		getTypeId() const;
+	virtual QByteArray	getTypeString() const;
+	virtual Layer *		createBlankLayer(LayerGroup *parent);
+	virtual Layer *		createLayerWithDefaults(LayerGroup *parent);
+};
+//=============================================================================
 
 #endif // MONITORLAYER_H

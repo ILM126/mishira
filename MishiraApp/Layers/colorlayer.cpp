@@ -125,9 +125,9 @@ void ColorLayer::render(
 	vidgfx_context_draw_buf(gfx, m_vertBuf);
 }
 
-LyrType ColorLayer::getType() const
+quint32 ColorLayer::getTypeId() const
 {
-	return LyrColorLayerType;
+	return (quint32)LyrColorLayerTypeId;
 }
 
 bool ColorLayer::hasSettingsDialog()
@@ -181,4 +181,27 @@ bool ColorLayer::unserialize(QDataStream *stream)
 	}
 
 	return true;
+}
+
+//=============================================================================
+// ColorLayerFactory class
+
+quint32 ColorLayerFactory::getTypeId() const
+{
+	return (quint32)LyrColorLayerTypeId;
+}
+
+QByteArray ColorLayerFactory::getTypeString() const
+{
+	return QByteArrayLiteral("ColorLayer");
+}
+
+Layer *ColorLayerFactory::createBlankLayer(LayerGroup *parent)
+{
+	return new ColorLayer(parent);
+}
+
+Layer *ColorLayerFactory::createLayerWithDefaults(LayerGroup *parent)
+{
+	return new ColorLayer(parent);
 }

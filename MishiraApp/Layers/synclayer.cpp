@@ -204,9 +204,9 @@ void SyncLayer::render(
 	vidgfx_context_draw_buf(gfx, m_vertBufC);
 }
 
-LyrType SyncLayer::getType() const
+quint32 SyncLayer::getTypeId() const
 {
-	return LyrSyncLayerType;
+	return (quint32)LyrSyncLayerTypeId;
 }
 
 bool SyncLayer::hasSettingsDialog()
@@ -250,4 +250,27 @@ bool SyncLayer::unserialize(QDataStream *stream)
 	}
 
 	return true;
+}
+
+//=============================================================================
+// SyncLayerFactory class
+
+quint32 SyncLayerFactory::getTypeId() const
+{
+	return (quint32)LyrSyncLayerTypeId;
+}
+
+QByteArray SyncLayerFactory::getTypeString() const
+{
+	return QByteArrayLiteral("SyncLayer");
+}
+
+Layer *SyncLayerFactory::createBlankLayer(LayerGroup *parent)
+{
+	return new SyncLayer(parent);
+}
+
+Layer *SyncLayerFactory::createLayerWithDefaults(LayerGroup *parent)
+{
+	return new SyncLayer(parent);
 }

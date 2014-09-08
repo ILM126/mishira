@@ -1109,7 +1109,7 @@ LayerGroup *NewProfileController::createBlankScenes()
 	// Create wallpaper layer
 	QDir mediaDir = QDir(App->applicationDirPath() + "/Media");
 	ImageLayer *imgLayer = static_cast<ImageLayer *>(
-		group->createLayer(LyrImageLayerType, tr("Wallpaper")));
+		group->createLayer(LyrImageLayerTypeId, tr("Wallpaper")));
 	imgLayer->setVisible(true);
 	//if(profile->getCanvasSize().height() <= 540) {
 	//	imgLayer->setFilename(
@@ -1326,7 +1326,7 @@ void NewProfileController::createTutorialScenes()
 
 	// "Red box" layer
 	ColorLayer *boxLayer = static_cast<ColorLayer *>(
-		group->createLayer(LyrColorLayerType, tr("Red box")));
+		group->createLayer(LyrColorLayerTypeId, tr("Red box")));
 	boxLayer->setVisible(true);
 	boxLayer->setRect(BIG_EXAMPLE_BOX_RECT.translated(
 		canvasSize.width() - BIG_EXAMPLE_BOX_RECT.width() - 40, 40));
@@ -1386,7 +1386,7 @@ void NewProfileController::createTutorialScenes()
 	// title to make sure that the layer actually displays a window during the
 	// tutorial.
 	WindowLayer *winLayer = static_cast<WindowLayer *>(
-		group->createLayer(LyrWindowLayerType, tr("Window capture")));
+		group->createLayer(LyrWindowLayerTypeId, tr("Window capture")));
 	winLayer->setVisible(true);
 	winLayer->setRect(CAPTURE_LEFT_WITH_MARGIN_RECT);
 	winLayer->beginAddingWindows();
@@ -1449,7 +1449,7 @@ void NewProfileController::createTutorialScenes()
 		canvasSize.width() - SMALL_EXAMPLE_BOX_RECT.width() - 20,
 		canvasSize.height() - SMALL_EXAMPLE_BOX_RECT.height() - 20);
 	boxLayer = static_cast<ColorLayer *>(
-		group->createLayer(LyrColorLayerType, tr("Green box")));
+		group->createLayer(LyrColorLayerTypeId, tr("Green box")));
 	boxLayer->setVisible(true);
 	boxLayer->setRect(
 		rect.translated(-rect.width() / 4, -rect.height() / 3));
@@ -1459,7 +1459,7 @@ void NewProfileController::createTutorialScenes()
 
 	// "Red box" layer
 	boxLayer = static_cast<ColorLayer *>(
-		group->createLayer(LyrColorLayerType, tr("Red box")));
+		group->createLayer(LyrColorLayerTypeId, tr("Red box")));
 	boxLayer->setVisible(true);
 	boxLayer->setRect(
 		rect.translated(-rect.width() * 2 / 3, -rect.height() / 6));
@@ -1469,7 +1469,7 @@ void NewProfileController::createTutorialScenes()
 
 	// "Blue box" layer
 	boxLayer = static_cast<ColorLayer *>(
-		group->createLayer(LyrColorLayerType, tr("Blue box")));
+		group->createLayer(LyrColorLayerTypeId, tr("Blue box")));
 	boxLayer->setVisible(true);
 	boxLayer->setRect(rect);
 	boxLayer->setPattern(VerticalPattern);
@@ -1526,7 +1526,7 @@ TextLayer *NewProfileController::createTextLayer(
 	const QRect &rect, LyrAlignment align)
 {
 	TextLayer *txtLayer = static_cast<TextLayer *>(
-		group->createLayer(LyrTextLayerType, name));
+		group->createLayer(LyrTextLayerTypeId, name));
 	txtLayer->setVisible(true);
 	txtLayer->setRect(rect);
 	txtLayer->setAlignment(align);

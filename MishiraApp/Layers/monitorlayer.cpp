@@ -444,9 +444,9 @@ void MonitorLayer::render(
 	vidgfx_context_set_tex_decal_mod_color(gfx, prevCol);
 }
 
-LyrType MonitorLayer::getType() const
+quint32 MonitorLayer::getTypeId() const
 {
-	return LyrMonitorLayerType;
+	return (quint32)LyrMonitorLayerTypeId;
 }
 
 bool MonitorLayer::hasSettingsDialog()
@@ -527,4 +527,27 @@ void MonitorLayer::monitorInfoChanged()
 	// A monitor was added or removed
 	m_monitorChanged = true;
 	updateResourcesIfLoaded();
+}
+
+//=============================================================================
+// MonitorLayerFactory class
+
+quint32 MonitorLayerFactory::getTypeId() const
+{
+	return (quint32)LyrMonitorLayerTypeId;
+}
+
+QByteArray MonitorLayerFactory::getTypeString() const
+{
+	return QByteArrayLiteral("MonitorLayer");
+}
+
+Layer *MonitorLayerFactory::createBlankLayer(LayerGroup *parent)
+{
+	return new MonitorLayer(parent);
+}
+
+Layer *MonitorLayerFactory::createLayerWithDefaults(LayerGroup *parent)
+{
+	return new MonitorLayer(parent);
 }

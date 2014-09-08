@@ -102,7 +102,7 @@ public: // Interface ----------------------------------------------------------
 	virtual void	render(
 		VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped);
 
-	virtual LyrType	getType() const = 0;
+	virtual quint32	getTypeId() const = 0;
 
 	virtual bool			hasSettingsDialog();
 	virtual LayerDialog *	createSettingsDialog(QWidget *parent = NULL);

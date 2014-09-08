@@ -26,6 +26,7 @@
 #include "cpuusage.h"
 #include "darkstyle.h"
 #include "layer.h"
+#include "layerfactory.h"
 #include "layerdialogwindow.h"
 #include "logfilemanager.h"
 #include "mainwindow.h"
@@ -239,6 +240,9 @@ Application::Application(int &argc, char **argv, AppSharedSegment *shm)
 	// Menu bar
 	, m_profileActions()
 
+	// Factories
+	, m_layerFactoryList()
+
 	// Common message boxes
 	, m_deleteLayerDialog(NULL)
 	, m_deleteLayerGroupDialog(NULL)
@@ -438,6 +442,9 @@ bool Application::initialize()
 	connect(this, &Application::queuedFrameEvent,
 		mgr, &CaptureManager::queuedFrameEvent);
 	mgr->setGraphicsContext(m_gfxContext); // Should still be NULL
+
+	// Register built-in factories
+	LayerFactory::registerBuiltInFactories();
 
 	//-------------------------------------------------------------------------
 
@@ -932,6 +939,13 @@ int Application::shutdown(int returnCode)
 	// Destroy global menu bar
 	delete m_menuBar;
 	m_menuBar = NULL;
+
+	// Destroy factories
+	while(!m_layerFactoryList.isEmpty()) {
+		LayerFactory *factory = m_layerFactoryList.last();
+		m_layerFactoryList.pop_back();
+		delete factory;
+	}
 
 	// Destroy asynchronous IO worker thread
 	AsyncIO::destroyWorker();

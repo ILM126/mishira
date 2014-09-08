@@ -113,7 +113,7 @@ Q_SIGNALS: // Signals ---------------------------------------------------------
 //=============================================================================
 class ScriptTextLayer : public TextLayer
 {
-	friend class LayerGroup;
+	friend class ScriptTextLayerFactory;
 	Q_OBJECT
 
 private: // Members -----------------------------------------------------------
@@ -158,7 +158,7 @@ public: // Interface ----------------------------------------------------------
 	virtual void	updateResources(VidgfxContext *gfx);
 	virtual void	destroyResources(VidgfxContext *gfx);
 
-	virtual LyrType	getType() const;
+	virtual quint32	getTypeId() const;
 
 	virtual bool			hasSettingsDialog();
 	virtual LayerDialog *	createSettingsDialog(QWidget *parent = NULL);
@@ -210,5 +210,16 @@ inline QColor ScriptTextLayer::getFontColor()
 {
 	return m_fontColor;
 }
+
+//=============================================================================
+class ScriptTextLayerFactory : public LayerFactory
+{
+public: // Interface ----------------------------------------------------------
+	virtual quint32		getTypeId() const;
+	virtual QByteArray	getTypeString() const;
+	virtual Layer *		createBlankLayer(LayerGroup *parent);
+	virtual Layer *		createLayerWithDefaults(LayerGroup *parent);
+};
+//=============================================================================
 
 #endif // SCRIPTTEXTLAYER_H

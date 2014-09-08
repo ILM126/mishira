@@ -19,6 +19,7 @@
 #define IMAGELAYER_H
 
 #include "layer.h"
+#include "layerfactory.h"
 
 class FileImageTexture;
 class LayerDialog;
@@ -26,7 +27,7 @@ class LayerDialog;
 //=============================================================================
 class ImageLayer : public Layer
 {
-	friend class LayerGroup;
+	friend class ImageLayerFactory;
 	Q_OBJECT
 
 private: // Members -----------------------------------------------------------
@@ -58,7 +59,7 @@ public: // Interface ----------------------------------------------------------
 	virtual void	render(
 		VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped);
 
-	virtual LyrType	getType() const;
+	virtual quint32	getTypeId() const;
 
 	virtual bool			hasSettingsDialog();
 	virtual LayerDialog *	createSettingsDialog(QWidget *parent = NULL);
@@ -87,5 +88,16 @@ inline QPoint ImageLayer::getScrollSpeed() const
 {
 	return m_scrollSpeed;
 }
+
+//=============================================================================
+class ImageLayerFactory : public LayerFactory
+{
+public: // Interface ----------------------------------------------------------
+	virtual quint32		getTypeId() const;
+	virtual QByteArray	getTypeString() const;
+	virtual Layer *		createBlankLayer(LayerGroup *parent);
+	virtual Layer *		createLayerWithDefaults(LayerGroup *parent);
+};
+//=============================================================================
 
 #endif // IMAGELAYER_H

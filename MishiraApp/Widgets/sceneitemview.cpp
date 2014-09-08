@@ -19,6 +19,7 @@
 #include "application.h"
 #include "borderspacer.h"
 #include "layer.h"
+#include "layerfactory.h"
 #include "layergroup.h"
 #include "profile.h"
 #include "scene.h"
@@ -994,31 +995,31 @@ void SceneItemView::addLayerTriggered(QAction *action)
 	Layer *layer = NULL;
 	if(action == m_addColorLayerAction) {
 		layer = m_addLayerGroup->createLayer(
-			LyrColorLayerType, QString(), before);
+			LyrColorLayerTypeId, QString(), before);
 	} else if(action == m_addImageLayerAction) {
 		layer = m_addLayerGroup->createLayer(
-			LyrImageLayerType, QString(), before);
+			LyrImageLayerTypeId, QString(), before);
 	} else if(action == m_addMonitorLayerAction) {
 		layer = m_addLayerGroup->createLayer(
-			LyrMonitorLayerType, QString(), before);
+			LyrMonitorLayerTypeId, QString(), before);
 	} else if(action == m_addScriptTextLayerAction) {
 		layer = m_addLayerGroup->createLayer(
-			LyrScriptTextLayerType, QString(), before);
+			LyrScriptTextLayerTypeId, QString(), before);
 	} else if(action == m_addSlideshowLayerAction) {
 		layer = m_addLayerGroup->createLayer(
-			LyrSlideshowLayerType, QString(), before);
+			LyrSlideshowLayerTypeId, QString(), before);
 	} else if(action == m_addSyncLayerAction) {
 		layer = m_addLayerGroup->createLayer(
-			LyrSyncLayerType, QString(), before);
+			LyrSyncLayerTypeId, QString(), before);
 	} else if(action == m_addTextLayerAction) {
 		layer = m_addLayerGroup->createLayer(
-			LyrTextLayerType, QString(), before);
+			LyrTextLayerTypeId, QString(), before);
 	} else if(action == m_addWindowLayerAction) {
 		layer = m_addLayerGroup->createLayer(
-			LyrWindowLayerType, QString(), before);
+			LyrWindowLayerTypeId, QString(), before);
 	} else if(action == m_addWebcamLayerAction) {
 		layer = m_addLayerGroup->createLayer(
-			LyrWebcamLayerType, QString(), before);
+			LyrWebcamLayerTypeId, QString(), before);
 	}
 
 	if(layer == NULL)

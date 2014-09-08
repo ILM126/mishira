@@ -19,6 +19,7 @@
 #define SYNCLAYER_H
 
 #include "layer.h"
+#include "layerfactory.h"
 #include <QtGui/QColor>
 
 class LayerDialog;
@@ -26,7 +27,7 @@ class LayerDialog;
 //=============================================================================
 class SyncLayer : public Layer
 {
-	friend class LayerGroup;
+	friend class SyncLayerFactory;
 
 private: // Members -----------------------------------------------------------
 	VidgfxVertBuf *	m_vertBufA; // Moving metronome
@@ -54,7 +55,7 @@ public: // Interface ----------------------------------------------------------
 	virtual void	render(
 		VidgfxContext *gfx, Scene *scene, uint frameNum, int numDropped);
 
-	virtual LyrType	getType() const;
+	virtual quint32	getTypeId() const;
 
 	virtual bool			hasSettingsDialog();
 	virtual LayerDialog *	createSettingsDialog(QWidget *parent = NULL);
@@ -74,5 +75,16 @@ inline QColor SyncLayer::getColor() const
 {
 	return m_color;
 }
+
+//=============================================================================
+class SyncLayerFactory : public LayerFactory
+{
+public: // Interface ----------------------------------------------------------
+	virtual quint32		getTypeId() const;
+	virtual QByteArray	getTypeString() const;
+	virtual Layer *		createBlankLayer(LayerGroup *parent);
+	virtual Layer *		createLayerWithDefaults(LayerGroup *parent);
+};
+//=============================================================================
 
 #endif // SYNCLAYER_H

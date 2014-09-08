@@ -268,9 +268,9 @@ void WebcamLayer::render(
 	vidgfx_context_set_tex_decal_mod_color(gfx, prevCol);
 }
 
-LyrType WebcamLayer::getType() const
+quint32 WebcamLayer::getTypeId() const
 {
-	return LyrWebcamLayerType;
+	return (quint32)LyrWebcamLayerTypeId;
 }
 
 bool WebcamLayer::hasSettingsDialog()
@@ -348,4 +348,27 @@ void WebcamLayer::removingSource(VideoSource *source)
 	m_lastTexSize = QSize(0, 0);
 	updateResourcesIfLoaded();
 	m_parent->layerChanged(this); // Remote emit
+}
+
+//=============================================================================
+// WebcamLayerFactory class
+
+quint32 WebcamLayerFactory::getTypeId() const
+{
+	return (quint32)LyrWebcamLayerTypeId;
+}
+
+QByteArray WebcamLayerFactory::getTypeString() const
+{
+	return QByteArrayLiteral("WebcamLayer");
+}
+
+Layer *WebcamLayerFactory::createBlankLayer(LayerGroup *parent)
+{
+	return new WebcamLayer(parent);
+}
+
+Layer *WebcamLayerFactory::createLayerWithDefaults(LayerGroup *parent)
+{
+	return new WebcamLayer(parent);
 }
