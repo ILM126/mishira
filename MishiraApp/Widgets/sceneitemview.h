@@ -31,6 +31,8 @@ class StyledButton;
 class VisibleCheckBox;
 class QLabel;
 
+typedef QVector<QAction *> QActionList;
+
 //=============================================================================
 class SceneItemViewBar : public StyledSortableBar
 {
@@ -104,15 +106,7 @@ private: // Members -----------------------------------------------------------
 	// "Add layer" popup menu
 	LayerGroup *	m_addLayerGroup;
 	QMenu			m_addLayerMenu;
-	QAction *		m_addColorLayerAction;
-	QAction *		m_addImageLayerAction;
-	QAction *		m_addMonitorLayerAction;
-	QAction *		m_addScriptTextLayerAction;
-	QAction *		m_addSlideshowLayerAction;
-	QAction *		m_addSyncLayerAction;
-	QAction *		m_addTextLayerAction;
-	QAction *		m_addWindowLayerAction;
-	QAction *		m_addWebcamLayerAction;
+	QActionList		m_addLayerActions;
 
 	// Right-click layer context menu
 	Layer *			m_contextLayer;

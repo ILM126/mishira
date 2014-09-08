@@ -589,3 +589,8 @@ Layer *SlideshowLayerFactory::createLayerWithDefaults(LayerGroup *parent)
 {
 	return new SlideshowLayer(parent);
 }
+
+QString SlideshowLayerFactory::getAddLayerString() const
+{
+	return QObject::tr("Add slideshow layer");
+}

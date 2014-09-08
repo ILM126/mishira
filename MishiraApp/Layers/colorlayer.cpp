@@ -205,3 +205,8 @@ Layer *ColorLayerFactory::createLayerWithDefaults(LayerGroup *parent)
 {
 	return new ColorLayer(parent);
 }
+
+QString ColorLayerFactory::getAddLayerString() const
+{
+	return QObject::tr("Add color/gradient layer");
+}

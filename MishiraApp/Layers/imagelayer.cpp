@@ -316,3 +316,8 @@ Layer *ImageLayerFactory::createLayerWithDefaults(LayerGroup *parent)
 {
 	return new ImageLayer(parent);
 }
+
+QString ImageLayerFactory::getAddLayerString() const
+{
+	return QObject::tr("Add image layer");
+}

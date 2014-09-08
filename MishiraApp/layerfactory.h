@@ -75,6 +75,12 @@ public: // Interface ----------------------------------------------------------
 	/// create a new layer of this type in the UI.
 	/// </summary>
 	virtual Layer *createLayerWithDefaults(LayerGroup *parent) = 0;
+
+	/// <summary>
+	/// Returns the translated string that will be displayed in the "add layer"
+	/// menu in the UI. Should be in the format "Add ____ layer".
+	/// </summary>
+	virtual QString getAddLayerString() const = 0;
 };
 //=============================================================================
 

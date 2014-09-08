@@ -468,15 +468,7 @@ SceneItemView::SceneItemView(Scene *scene, QWidget *parent)
 	// "Add layer" popup menu
 	, m_addLayerGroup(NULL)
 	, m_addLayerMenu(this)
-	, m_addColorLayerAction(NULL)
-	, m_addImageLayerAction(NULL)
-	, m_addMonitorLayerAction(NULL)
-	, m_addScriptTextLayerAction(NULL)
-	, m_addSlideshowLayerAction(NULL)
-	, m_addSyncLayerAction(NULL)
-	, m_addTextLayerAction(NULL)
-	, m_addWindowLayerAction(NULL)
-	, m_addWebcamLayerAction(NULL)
+	, m_addLayerActions()
 
 	// Right-click layer context menu
 	, m_contextLayer(NULL)
@@ -515,24 +507,13 @@ SceneItemView::SceneItemView(Scene *scene, QWidget *parent)
 	App->applyDarkStyle(horizontalScrollBar());
 
 	// Populate "add layer" popup menu
-	m_addColorLayerAction = m_addLayerMenu.addAction(tr(
-		"Add color/gradient layer"));
-	m_addImageLayerAction = m_addLayerMenu.addAction(tr(
-		"Add image layer"));
-	m_addMonitorLayerAction = m_addLayerMenu.addAction(tr(
-		"Add monitor capture layer"));
-	m_addScriptTextLayerAction = m_addLayerMenu.addAction(tr(
-		"Add scriptable text layer"));
-	m_addSlideshowLayerAction = m_addLayerMenu.addAction(tr(
-		"Add slideshow layer"));
-	m_addSyncLayerAction = m_addLayerMenu.addAction(tr(
-		"Add metronome layer"));
-	m_addTextLayerAction = m_addLayerMenu.addAction(tr(
-		"Add text layer"));
-	m_addWindowLayerAction = m_addLayerMenu.addAction(tr(
-		"Add window/game capture layer"));
-	m_addWebcamLayerAction = m_addLayerMenu.addAction(tr(
-		"Add webcam layer"));
+	LayerFactoryList factories = App->getLayerFactories();
+	for(int i = 0; i < factories.size(); i++) {
+		LayerFactory *factory = factories.at(i);
+		QAction *action =
+			m_addLayerMenu.addAction(factory->getAddLayerString());
+		m_addLayerActions.append(action);
+	}
 	connect(&m_addLayerMenu, &QMenu::triggered,
 		this, &SceneItemView::addLayerTriggered);
 
@@ -992,36 +973,18 @@ void SceneItemView::addLayerTriggered(QAction *action)
 		before = 0;
 	}
 
+	// Create a new layer of the appropriate type by searching for the QAction
+	// and then calling the matching factory
 	Layer *layer = NULL;
-	if(action == m_addColorLayerAction) {
-		layer = m_addLayerGroup->createLayer(
-			LyrColorLayerTypeId, QString(), before);
-	} else if(action == m_addImageLayerAction) {
-		layer = m_addLayerGroup->createLayer(
-			LyrImageLayerTypeId, QString(), before);
-	} else if(action == m_addMonitorLayerAction) {
-		layer = m_addLayerGroup->createLayer(
-			LyrMonitorLayerTypeId, QString(), before);
-	} else if(action == m_addScriptTextLayerAction) {
-		layer = m_addLayerGroup->createLayer(
-			LyrScriptTextLayerTypeId, QString(), before);
-	} else if(action == m_addSlideshowLayerAction) {
-		layer = m_addLayerGroup->createLayer(
-			LyrSlideshowLayerTypeId, QString(), before);
-	} else if(action == m_addSyncLayerAction) {
-		layer = m_addLayerGroup->createLayer(
-			LyrSyncLayerTypeId, QString(), before);
-	} else if(action == m_addTextLayerAction) {
-		layer = m_addLayerGroup->createLayer(
-			LyrTextLayerTypeId, QString(), before);
-	} else if(action == m_addWindowLayerAction) {
-		layer = m_addLayerGroup->createLayer(
-			LyrWindowLayerTypeId, QString(), before);
-	} else if(action == m_addWebcamLayerAction) {
-		layer = m_addLayerGroup->createLayer(
-			LyrWebcamLayerTypeId, QString(), before);
+	for(int i = 0; i < m_addLayerActions.size(); i++) {
+		if(action == m_addLayerActions.at(i)) {
+			LayerFactoryList factories = App->getLayerFactories();
+			LayerFactory *factory = factories.at(i);
+			layer = m_addLayerGroup->createLayer(
+				factory->getTypeId(), QString(), before);
+			break;
+		}
 	}
-
 	if(layer == NULL)
 		return;
 

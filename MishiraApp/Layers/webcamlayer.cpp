@@ -372,3 +372,8 @@ Layer *WebcamLayerFactory::createLayerWithDefaults(LayerGroup *parent)
 {
 	return new WebcamLayer(parent);
 }
+
+QString WebcamLayerFactory::getAddLayerString() const
+{
+	return QObject::tr("Add webcam layer");
+}

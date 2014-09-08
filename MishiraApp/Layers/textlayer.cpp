@@ -684,3 +684,8 @@ Layer *TextLayerFactory::createLayerWithDefaults(LayerGroup *parent)
 {
 	return new TextLayer(parent);
 }
+
+QString TextLayerFactory::getAddLayerString() const
+{
+	return QObject::tr("Add text layer");
+}

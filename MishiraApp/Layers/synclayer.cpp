@@ -274,3 +274,8 @@ Layer *SyncLayerFactory::createLayerWithDefaults(LayerGroup *parent)
 {
 	return new SyncLayer(parent);
 }
+
+QString SyncLayerFactory::getAddLayerString() const
+{
+	return QObject::tr("Add metronome layer");
+}

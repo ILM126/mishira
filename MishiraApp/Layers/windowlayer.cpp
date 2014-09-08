@@ -588,3 +588,8 @@ Layer *WindowLayerFactory::createLayerWithDefaults(LayerGroup *parent)
 {
 	return new WindowLayer(parent);
 }
+
+QString WindowLayerFactory::getAddLayerString() const
+{
+	return QObject::tr("Add window/game capture layer");
+}

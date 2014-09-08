@@ -84,6 +84,7 @@ public: // Interface ----------------------------------------------------------
 	virtual QByteArray	getTypeString() const;
 	virtual Layer *		createBlankLayer(LayerGroup *parent);
 	virtual Layer *		createLayerWithDefaults(LayerGroup *parent);
+	virtual QString		getAddLayerString() const;
 };
 //=============================================================================
 

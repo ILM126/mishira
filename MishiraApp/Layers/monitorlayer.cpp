@@ -551,3 +551,8 @@ Layer *MonitorLayerFactory::createLayerWithDefaults(LayerGroup *parent)
 {
 	return new MonitorLayer(parent);
 }
+
+QString MonitorLayerFactory::getAddLayerString() const
+{
+	return QObject::tr("Add monitor capture layer");
+}

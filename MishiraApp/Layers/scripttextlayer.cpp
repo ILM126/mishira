@@ -871,3 +871,8 @@ Layer *ScriptTextLayerFactory::createLayerWithDefaults(LayerGroup *parent)
 {
 	return new ScriptTextLayer(parent);
 }
+
+QString ScriptTextLayerFactory::getAddLayerString() const
+{
+	return QObject::tr("Add scriptable text layer");
+}
